@@ -11,17 +11,7 @@ module.exports ={
         CONFLICT: 409,
         SERVER_ERROR: 500,
     },
-    isEmpty: function(values) {
-        return values.some((value) => {
-            if (Array.isArray(value)) {
-                return value.length;
-            }
-            if (typeof value === 'object' && value !== null) {
-                return _.isEmpty(value);
-            }
-            return ['', undefined, null].includes(value);
-            });
-    },
+  
     validateEmail: function (email) {
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
@@ -94,6 +84,23 @@ module.exports ={
     isBoolean: function (obj) {
         return typeof obj === 'boolean';
     },
-    
+    isNull: function (obj) {
+        return obj === null;
+    },
+    isUndefined: function (obj) {
+        return obj === undefined;
+    },
+    isEmpty: function(values) {
+        return values.some((value) => {
+            if (Array.isArray(value)) {
+                return value.length;
+            }
+            if (typeof value === 'object' && value !== null) {
+                return _.isEmpty(value);
+            }
+            return ['', undefined, null].includes(value);
+            });
+    },
+
 
 }
