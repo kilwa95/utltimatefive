@@ -1,5 +1,4 @@
 const express = require('express');
-const routing = require('./routes');
 const cookieParser = require('cookie-parser');
 var cors = require('cors');
 const routes = require('./routes');
