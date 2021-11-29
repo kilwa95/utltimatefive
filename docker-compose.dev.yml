@@ -1,0 +1,48 @@
+version: "3.8"
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile.dev
+    environment:
+      PORT: 4000
+      MONGO_URL: "mongodb://root:password@mongo/app"
+      DATABASE_URL: "postgres://root:password@db/app"
+    volumes:
+      - type: bind
+        source: ./api/src
+        target: /app/src
+    ports:
+      - 4000:4000
+    depends_on:
+      - mongo
+      - db
+
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - type: volume
+        source: mongo-data
+        target: /data/db
+
+  db:
+    image: postgres:alpine
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_DB: app
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+    volumes:
+      - db-data:/var/lib/postgresql/data:rw
+
+volumes: 
+  mongo-data: {}
+  db-data: {}
+
+  
