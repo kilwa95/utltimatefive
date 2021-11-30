@@ -10,6 +10,5 @@ router.use('/api', swaggerUi.serve);
 router.get('/api', swaggerUi.setup(swaggerDocument));
 
 //users
-
 module.exports = router;
 
