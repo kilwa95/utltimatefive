@@ -1,7 +1,7 @@
 const {findAllUsers, findUserById, saveUser, updateUser, deleteUser} = require('../queries/user.queries');
 const Helper = require('../Helper');
 
-exports.getListUsers = (req, res) => {
+exports.getListUsers = async (req, res) => {
     try {
         const users = await findAllUsers();
         res.status(Helper.HTTP.OK).json({data: users});
@@ -11,12 +11,12 @@ exports.getListUsers = (req, res) => {
     }  
 }
 
-exports.getUserById = (req, res) => {
-    if(Helper.isEmpty([req.params.id])) {
+exports.getUserById = async (req, res) => {
+    if(Helper.isEmpty([req.params.uid])) {
         res.status(Helper.HTTP.BAD_REQUEST).send('uid is required');
     }
     try {
-        const uid = parseInt(req.params.id);
+        const uid = parseInt(req.params.uid);
         const user = await findUserById(uid);
         res.status(Helper.HTTP.OK).json({data: user});
     } catch (error) {
@@ -25,7 +25,7 @@ exports.getUserById = (req, res) => {
     }
 }
 
-exports.createUser = (req, res) => {
+exports.createUser = async (req, res) => {
     const {firstName,lastName,email,password,birthday} = req.body;
     if(Helper.isEmpty([firstName,lastName,email,password,birthday])) {
         res.status(Helper.HTTP.BAD_REQUEST).send('firstName, lastName, email, password, birthday is required');
@@ -33,7 +33,7 @@ exports.createUser = (req, res) => {
     if(!Helper.validateEmail(email)) {
         res.status(Helper.HTTP.BAD_REQUEST).send('email is invalid');
     }
-    if(!Helper.validateBirthday(birthday)) {
+    if(!Helper.validateDate(birthday)) {
         res.status(Helper.HTTP.BAD_REQUEST).send('birthday is invalid');
     }
     if(!Helper.validatePassword(password)) {
@@ -45,7 +45,9 @@ exports.createUser = (req, res) => {
             lastName:Helper.sqlescstr(lastName),
             email:Helper.sqlescstr(email),
             password:Helper.sqlescstr(password),
-            birthday:Helper.sqlescstr(birthday)
+            birthday:Helper.sqlescstr(birthday),
+            status: "created",
+            roles: ['PLAYER']
         });
         res.status(Helper.HTTP.CREATED).json({data: user});
     }
@@ -56,7 +58,7 @@ exports.createUser = (req, res) => {
 
 }
 
-exports.updatePlayer = (req, res) => {
+exports.updatePlayer = async (req, res) => {
     const {firstName,lastName,email,password,birthday} = req.body;
     if(Helper.isEmpty([firstName,lastName,email,password,birthday])) {
         res.status(Helper.HTTP.BAD_REQUEST).send('firstName, lastName, email, password, birthday is required');
@@ -71,7 +73,7 @@ exports.updatePlayer = (req, res) => {
         res.status(Helper.HTTP.BAD_REQUEST).send('password is invalid');
     }
     try {
-        const uid = parseInt(req.params.id);
+        const uid = parseInt(req.params.uid);
         const user = await updateUser(uid, {
             firstName:Helper.sqlescstr(firstName),
             lastName:Helper.sqlescstr(lastName),
@@ -87,12 +89,12 @@ exports.updatePlayer = (req, res) => {
     }
 }
 
-exports.removeUser = (req, res) => {
-    if(Helper.isEmpty([req.params.id])) {
+exports.removeUser = async (req, res) => {
+    if(Helper.isEmpty([req.params.uid])) {
         res.status(Helper.HTTP.BAD_REQUEST).send('uid is required');
     }
     try {
-        const uid = parseInt(req.params.id);
+        const uid = parseInt(req.params.uid);
         const user = await deleteUser(uid);
         res.status(Helper.HTTP.OK).json({data: user});
     }
