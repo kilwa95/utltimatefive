@@ -140,6 +140,17 @@ exports.isSelfUser = (req,res,next) => {
         return res.status(Helper.HTTP.SERVER_ERROR).json({ error });
     }
 }
+exports.isSelfUserOrAdmin = (req,res,next) => {
+    try {
+        const uid = req.params.uid || req.body.uid || req.query.uid;
+        if (req.decoded && (req.decoded.id === uid || req.decoded.isAdmin)) {
+            return next();
+        }
+        return res.status(Helper.HTTP.UNAUTHORIZED).json({ error: 'only user self or Admin can edit or delete this ressource' });
+    } catch (error) {
+        return res.status(Helper.HTTP.SERVER_ERROR).json({ error });
+    }
+}
 
 
 

@@ -106,3 +106,21 @@ exports.removeUser = async (req, res) => {
         res.status(Helper.HTTP.SERVER_ERROR).send(error);
     }
 }
+exports.disableUser = async (req, res) => {
+    if(Helper.isEmpty([req.params.uid])) {
+        res.status(Helper.HTTP.BAD_REQUEST).send('uid is required');
+    }
+    try {
+        const uid = parseInt(req.params.uid);
+        const user = await updateUser(uid, {
+            enable: false
+        });
+        res.status(Helper.HTTP.OK).json({
+            message: `User ${user} disabled`
+        });
+    }
+    catch (error) {
+        console.log(error);
+        res.status(Helper.HTTP.SERVER_ERROR).send(error);
+    }
+}
