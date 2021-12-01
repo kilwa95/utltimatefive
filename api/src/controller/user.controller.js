@@ -47,7 +47,10 @@ exports.createUser = async (req, res) => {
             password:Helper.sqlescstr(password),
             birthday:Helper.sqlescstr(birthday),
         });
-        res.status(Helper.HTTP.CREATED).json({data: user});
+        res.status(Helper.HTTP.CREATED).json({
+            message: `User ${user.id} created`,
+            data: user
+        });
     }
     catch (error) {
         console.error(error);

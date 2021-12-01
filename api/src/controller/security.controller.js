@@ -58,3 +58,18 @@ exports.login = async (req, res) => {
         });
     }
 }
+
+exports.logout = (req, res) => {
+    try {
+        res.clearCookie('token');
+        req.decoded = null;
+        return res.status(Helper.HTTP.OK).json({
+            message: 'Logout successful'
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(Helper.HTTP.SERVER_ERROR).json({
+            message: 'Internal server error'
+        });  
+    }
+}
