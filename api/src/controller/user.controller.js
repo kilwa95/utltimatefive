@@ -46,13 +46,11 @@ exports.createUser = async (req, res) => {
             email:Helper.sqlescstr(email),
             password:Helper.sqlescstr(password),
             birthday:Helper.sqlescstr(birthday),
-            status: "created",
-            roles: ['PLAYER']
         });
         res.status(Helper.HTTP.CREATED).json({data: user});
     }
     catch (error) {
-        console.log(error);
+        console.error(error);
         res.status(Helper.HTTP.SERVER_ERROR).send(error);
     }
 
@@ -96,7 +94,9 @@ exports.removeUser = async (req, res) => {
     try {
         const uid = parseInt(req.params.uid);
         const user = await deleteUser(uid);
-        res.status(Helper.HTTP.OK).json({data: user});
+        res.status(Helper.HTTP.OK).json({
+            message: `User ${user} deleted`
+        });
     }
     catch (error) {
         console.log(error);

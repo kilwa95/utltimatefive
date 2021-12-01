@@ -24,7 +24,7 @@ module.exports ={
         if (!token) {
             return '';
           }
-          const decoded = await jwt.verify(token, SECRET_KEY);
+          const decoded = jwt.verify(token, SECRET_KEY);
           return decoded;
     },
 }

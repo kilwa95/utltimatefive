@@ -29,6 +29,18 @@ exports.findUserById = async (uid) => {
     }
 }
 
+exports.findUserByEmail = async (email) => {
+    try {
+        return await User.findOne({
+            where: {
+                email: email
+            }
+        });
+    } catch (error) {
+        console.error(error)
+    }
+}
+
 exports.updateUser = async (data,uid) => {
     try {
         return await User.update(data, {
@@ -52,3 +64,4 @@ exports.deleteUser = async (uid) => {
         console.error(error)
     }
 }
+

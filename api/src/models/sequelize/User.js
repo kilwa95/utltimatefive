@@ -10,9 +10,9 @@ User.init(
         email:{ type: DataTypes.STRING,allowNull:false,unique:true,validate:{isEmail:true}},
         password:{ type: DataTypes.STRING,allowNull:false,unique:true},
         enable:{ type: DataTypes.BOOLEAN,defaultValue:true},
-        roles:{ type: DataTypes.ARRAY(DataTypes.STRING),allowNull:false},
+        roles:{ type: DataTypes.ARRAY(DataTypes.STRING),allowNull:false,defaultValue:['player']},
         birthday:{ type: DataTypes.DATEONLY,allowNull:true},
-        status:{ type: DataTypes.STRING,allowNull:false},
+        status:{ type: DataTypes.STRING,allowNull:false,defaultValue:'created'},
     },
     {
         sequelize: connection,
