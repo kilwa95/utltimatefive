@@ -73,3 +73,76 @@ exports.logout = (req, res) => {
         });  
     }
 }
+
+exports.authJwt = (req, res, next) => {
+    try {
+        const token = Security.getTokenFromRequest(req);
+        const decoded = Security.getDecodedFromToken(token);
+        if (!token || !decoded) {
+            return res.status(Helper.HTTP.UNAUTHORIZED).json({ error: 'jwt token required' });
+        }
+        req.decoded = decoded;
+        return next();
+        } catch (error) {
+        return res.status(Helper.HTTP.SERVER_ERROR).json({ error });
+        }
+}
+
+
+exports.onlyAdmin = (req,res,next) => {
+    try {
+        if (req.decoded && req.decoded.isAdmin) {
+            return next();
+        }
+        return res.status(Helper.HTTP.UNAUTHORIZED).json({ error: 'only Admin can access this route' });
+    } catch (error) {
+        return res.status(Helper.HTTP.SERVER_ERROR).json({ error });
+    }
+}
+exports.onlyPlayer = (req,res,next) => {
+    try {
+        if (req.decoded && req.decoded.isPlayer) {
+            return next();
+        }
+        return res.status(Helper.HTTP.UNAUTHORIZED).json({ error: 'only Player can access this route' });
+    } catch (error) {
+        return res.status(Helper.HTTP.SERVER_ERROR).json({ error });
+    }
+}
+exports.onlyOrganizer = (req,res,next) => {
+    try {
+        if (req.decoded && req.decoded.isOrganizer) {
+            return next();
+        }
+        return res.status(Helper.HTTP.UNAUTHORIZED).json({ error: 'only Organizer can access this route' });
+    } catch (error) {
+        return res.status(Helper.HTTP.SERVER_ERROR).json({ error });
+    }
+}
+exports.onlyCaptiner = (req,res,next) => {
+    try {
+        if (req.decoded && req.decoded.isCaptiner) {
+            return next();
+        }
+        return res.status(Helper.HTTP.UNAUTHORIZED).json({ error: 'only Captiner can access this route' });
+    } catch (error) {
+        return res.status(Helper.HTTP.SERVER_ERROR).json({ error });
+    }
+}
+exports.isSelfUser = (req,res,next) => {
+    try {
+        const uid = req.params.uid || req.body.uid || req.query.uid;
+        if (req.decoded && req.decoded.id === uid) {
+            return next();
+        }
+        return res.status(Helper.HTTP.UNAUTHORIZED).json({ error: 'only user self can edit or delete this ressource' });
+    } catch (error) {
+        return res.status(Helper.HTTP.SERVER_ERROR).json({ error });
+    }
+}
+
+
+
+
+
+
