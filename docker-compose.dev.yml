@@ -8,6 +8,7 @@ services:
       PORT: 4000
       MONGO_URL: "mongodb://root:password@mongo/app"
       DATABASE_URL: "postgres://root:password@db/app"
+      SECRET_KEY: RXCT34ZE5GFDSFD756
     volumes:
       - type: bind
         source: ./api/src
