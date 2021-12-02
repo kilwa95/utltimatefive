@@ -106,6 +106,7 @@ exports.removeUser = async (req, res) => {
         res.status(Helper.HTTP.SERVER_ERROR).send(error);
     }
 }
+
 exports.disableUser = async (req, res) => {
     if(Helper.isEmpty([req.params.uid])) {
         res.status(Helper.HTTP.BAD_REQUEST).send('uid is required');
@@ -120,7 +121,7 @@ exports.disableUser = async (req, res) => {
         });
     }
     catch (error) {
-        console.log(error);
+        console.error(error);
         res.status(Helper.HTTP.SERVER_ERROR).send(error);
     }
 }

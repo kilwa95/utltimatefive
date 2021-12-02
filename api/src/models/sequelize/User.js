@@ -1,6 +1,7 @@
 const {Model,DataTypes} = require('sequelize');
 const bcrypt = require('bcryptjs');
 const connection = require('../../config/sequelize');
+const Level = require('./Level');
 
 class User extends Model {}
 User.init(
@@ -23,6 +24,11 @@ User.init(
 const haschPassword = async (user) => {
     user.password = await bcrypt.hash(user.password, await bcrypt.genSalt());
 }
+
+User.belongsTo(Level, { as: 'level' });
+Level.hasMany(User, { foreignKey: 'levelId', as: 'users' });
+
+
 User.addHook('beforeCreate',haschPassword)
 User.addHook('beforeUpdate', haschPassword);
 

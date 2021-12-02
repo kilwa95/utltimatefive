@@ -395,6 +395,43 @@
                 "x-codegen-request-body-name": "body"
             }
         },
+        "/users/{uid}/disable": {
+            "patch": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Disable User By Id",
+                "operationId": "disableUserById",
+                "parameters": [
+                    {
+                        "name": "uid",
+                        "in": "path",
+                        "description": "ID of user to disable",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/login": {
             "post": {
                 "tags": [

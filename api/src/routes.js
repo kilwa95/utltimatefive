@@ -14,12 +14,12 @@ router.get('/api', swaggerUi.setup(swaggerDocument));
 /**
  * API users
  */
-router.get('/users',authJwt,getListUsers);
+router.get('/users',getListUsers);
 router.get('/users/:uid',getUserById);
 router.post('/users',createUser);
-router.put('/users/:uid',authJwt,isSelfUser,updatePlayer);
-router.patch('/users/:uid/disable',authJwt,isSelfUserOrAdmin,disableUser);
-router.delete('/users/:uid',authJwt,isSelfUserOrAdmin,removeUser);
+router.put('/users/:uid',updatePlayer);
+router.patch('/users/:uid/disable',disableUser);
+router.delete('/users/:uid',removeUser);
 
 /**
  * API Auth
