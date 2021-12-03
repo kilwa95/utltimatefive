@@ -36,6 +36,7 @@ exports.getMatchById = async (req,res) => {
 
 exports.createMatch = async (req,res) => {
     const {name,levelId,organizerId} = req.body;
+    console.log(req.body);
 
     if(Helper.isEmpty([name,levelId,organizerId])) {
         res.status(Helper.HTTP.BAD_REQUEST).send('name,levelId,organizerId is required');
@@ -43,15 +44,22 @@ exports.createMatch = async (req,res) => {
     try {
         const match = await saveMatch({
             name:Helper.sqlescstr(name),
-            levelId:parseInt(levelId),
+            // levelId:parseInt(levelId),
             organizerId:parseInt(organizerId)
         });
-        res.status(Helper.HTTP.CREATED).json({
-            message: 'Match created',
-            data: match,
-        });
+        if(match) {
+            res.status(Helper.HTTP.CREATED).json({
+                message: 'Match created',
+                data: match,
+            });
+        }
+        else {
+            res.status(Helper.HTTP.BAD_REQUEST).json({
+                message: 'Match not created',
+            });
+        }
     } catch (error) {
-        console.error(error);
+        console.error(error.message);
         res.status(500).json({
             message: error.message
         });
@@ -67,12 +75,19 @@ exports.updateMatch = async (req,res) => {
         const mid = parseInt(req.params.mid);
         const match = await updateMatch(parseInt(mid),{
             name:Helper.sqlescstr(name),
-            levelId:parseInt(levelId),
+            // levelId: parseInt(levelId), //TODO: check if levelId is valid
         });
-        res.status(Helper.HTTP.OK).json({
-            message: 'Match updated',
-            data: match,
-        });
+        if(match) {
+            res.status(Helper.HTTP.OK).json({
+                message: 'Match updated',
+                data: match,
+            });
+        }
+        else {
+            res.status(Helper.HTTP.BAD_REQUEST).json({
+                message: 'Match not updated',
+            });
+        }
     } catch (error) {
         console.error(error);
         res.status(500).json({

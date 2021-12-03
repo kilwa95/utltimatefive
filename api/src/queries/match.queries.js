@@ -1,4 +1,5 @@
 const Match = require('../models/sequelize/Match');
+const User = require('../models/sequelize/User');
 
 exports.saveMatch = async (data) => {
     try {
@@ -10,14 +11,28 @@ exports.saveMatch = async (data) => {
 }
 exports.findAllMatches = async () => {
     try {
-        return await Match.findAll();
+        return await Match.findAll({
+            attributes: ['id', 'name', 'status'],
+            include: [{
+                model: User,
+                as: 'organizer',
+                attributes: ['id', 'firstName', 'lastName','email']
+            }]
+        });
     } catch (error) {
         console.error(error)
     }
 }
 exports.findMatchById = async (matchId) => {
     try {
-        return await Match.findByPk(matchId);
+        return await Match.findByPk(matchId,{
+            attributes: ['id', 'name', 'status'],
+            include: [{
+                model: User,
+                as: 'organizer',
+                attributes: ['id', 'firstName', 'lastName','email']
+            }]
+        });
     } catch (error) {
         console.error(error)
     }
