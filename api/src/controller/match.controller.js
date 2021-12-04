@@ -44,7 +44,7 @@ exports.createMatch = async (req,res) => {
     try {
         const match = await saveMatch({
             name:Helper.sqlescstr(name),
-            // levelId:parseInt(levelId),
+            levelId:parseInt(levelId),
             organizerId:parseInt(organizerId)
         });
         if(match) {
@@ -75,7 +75,7 @@ exports.updateMatch = async (req,res) => {
         const mid = parseInt(req.params.mid);
         const match = await updateMatch(parseInt(mid),{
             name:Helper.sqlescstr(name),
-            // levelId: parseInt(levelId), //TODO: check if levelId is valid
+            levelId: parseInt(levelId), //TODO: check if levelId is valid
         });
         if(match) {
             res.status(Helper.HTTP.OK).json({

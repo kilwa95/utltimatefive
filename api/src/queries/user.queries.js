@@ -1,4 +1,5 @@
 const User = require('../models/sequelize/User');
+const Level = require('../models/sequelize/Level');
 
 exports.saveUser = async (data) => {
     try {
@@ -11,7 +12,14 @@ exports.saveUser = async (data) => {
 
 exports.findAllUsers = async () => {
     try {
-        return await User.findAll({});
+        return await User.findAll({
+            attributes: ['id','firstName','lastName','email','enable','roles','birthday','status'],
+            include: [{
+                model: Level,
+                as: 'level',
+                attributes: ['name']
+            }]
+        });
     } catch (error) {
         console.error(error)
     }
@@ -20,6 +28,12 @@ exports.findAllUsers = async () => {
 exports.findUserById = async (uid) => {
     try {
         return await User.findOne({
+            attributes: ['id','firstName','lastName','email','enable','roles','birthday','status'],
+            include: [{
+                model: Level,
+                as: 'level',
+                attributes: ['name']
+            }],
             where: {
                 id: uid
             }
@@ -41,13 +55,16 @@ exports.findUserByEmail = async (email) => {
     }
 }
 
-exports.updateUser = async (data,uid) => {
+exports.updateUser = async (uid,data) => {
     try {
-        return await User.update(data, {
+         const ressource = await User.update(data, {
             where: {
                 id: uid
-            }
+            },
+            returning: true,
+            plain: true,
         });
+        return ressource[1];
     } catch (error) {
         console.error(error)
     }

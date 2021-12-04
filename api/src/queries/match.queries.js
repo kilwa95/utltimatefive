@@ -1,5 +1,6 @@
 const Match = require('../models/sequelize/Match');
 const User = require('../models/sequelize/User');
+const Level = require('../models/sequelize/Level');
 
 exports.saveMatch = async (data) => {
     try {
@@ -17,6 +18,11 @@ exports.findAllMatches = async () => {
                 model: User,
                 as: 'organizer',
                 attributes: ['id', 'firstName', 'lastName','email']
+            },
+            {
+                model: Level,
+                as: 'level',
+                attributes: ['name']
             }]
         });
     } catch (error) {

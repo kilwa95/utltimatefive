@@ -25,6 +25,18 @@
         {
             "name": "Matchs",
             "description": "Match routes"
+        },
+        {
+            "name": "Levels",
+            "description": "levels routes"
+        },
+        {
+            "name": "Teams",
+            "description": "teams routes"
+        },
+        {
+            "name": "Tournaments",
+            "description": "tournaments routes"
         }
     ],
     "paths": {
@@ -207,7 +219,7 @@
                 "operationId": "updateUserById",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "uid",
                         "in": "path",
                         "description": "ID of user to update",
                         "required": true,
@@ -220,7 +232,7 @@
                     "required": true,
                     "description": "User fields to update",
                     "content": {
-                        "application/x-www-form-urlencoded": {
+                        "application/json": {
                             "schema": {
                                 "$ref": "#/components/schemas/User"
                             }
@@ -269,7 +281,7 @@
                         }
                     },
                     "400": {
-                        "description": "Missing credentials",
+                        "description": "bad Request",
                         "content": {}
                     },
                     "401": {
@@ -871,6 +883,255 @@
                     }
                 }
             }
+        },
+        "/levels": {
+            "get": {
+                "tags": [
+                    "Levels"
+                ],
+                "summary": "Retrieve all levels",
+                "operationId": "getAllLevels",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Levels"
+                ],
+                "summary": "Create a new level",
+                "operationId": "createLevel",
+                "requestBody": {
+                    "required": true,
+                    "description": "Level to create",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Level created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/levels/{lid}": {
+            "get": {
+                "tags": [
+                    "Levels"
+                ],
+                "summary": "Retrieve level by lid",
+                "operationId": "getLevelById",
+                "parameters": [
+                    {
+                        "name": "lid",
+                        "in": "path",
+                        "description": "Level id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Levels"
+                ],
+                "summary": "Update level by lid",
+                "operationId": "updateLevelById",
+                "parameters": [
+                    {
+                        "name": "lid",
+                        "in": "path",
+                        "description": "Level id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "description": "Level to update",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Level updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Levels"
+                ],
+                "summary": "Delete level by lid",
+                "operationId": "deleteLevelById",
+                "parameters": [
+                    {
+                        "name": "lid",
+                        "in": "path",
+                        "description": "Level id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Level deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -893,6 +1154,9 @@
                     "birthday": {
                         "type": "string",
                         "format": "date"
+                    },
+                    "levelId": {
+                        "type": "integer"
                     }
                 },
                 "xml": {

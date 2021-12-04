@@ -60,19 +60,21 @@ exports.createUser = async (req, res) => {
 }
 
 exports.updatePlayer = async (req, res) => {
-    const {firstName,lastName,email,password,birthday} = req.body;
-    if(Helper.isEmpty([firstName,lastName,email,password,birthday])) {
-        res.status(Helper.HTTP.BAD_REQUEST).send('firstName, lastName, email, password, birthday is required');
+    const {firstName,lastName,email,password,birthday,levelId} = req.body;
+
+    if(Helper.isEmpty([req.params.uid])) {
+        res.status(Helper.HTTP.BAD_REQUEST).send('uid is required');
     }
-    if(!Helper.validateEmail(email)) {
-        res.status(Helper.HTTP.BAD_REQUEST).send('email is invalid');
-    }
-    if(!Helper.validateBirthday(birthday)) {
-        res.status(Helper.HTTP.BAD_REQUEST).send('birthday is invalid');
-    }
-    if(!Helper.validatePassword(password)) {
-        res.status(Helper.HTTP.BAD_REQUEST).send('password is invalid');
-    }
+
+    // if(!Helper.validateEmail(email)) {
+    //     res.status(Helper.HTTP.BAD_REQUEST).send('email is invalid');
+    // }
+    // if(!Helper.validateDate(birthday)) {
+    //     res.status(Helper.HTTP.BAD_REQUEST).send('birthday is invalid');
+    // }
+    // if(!Helper.validatePassword(password)) {
+    //     res.status(Helper.HTTP.BAD_REQUEST).send('password is invalid');
+    // }
     try {
         const uid = parseInt(req.params.uid);
         const user = await updateUser(uid, {
@@ -80,9 +82,18 @@ exports.updatePlayer = async (req, res) => {
             lastName:Helper.sqlescstr(lastName),
             email:Helper.sqlescstr(email),
             password:Helper.sqlescstr(password),
-            birthday:Helper.sqlescstr(birthday)
+            birthday:Helper.sqlescstr(birthday),
+            levelId:parseInt(levelId)
         });
-        res.status(Helper.HTTP.OK).json({data: user});
+        if(user) {
+            res.status(Helper.HTTP.OK).json({
+                message: `User ${uid} updated`,
+                data: user
+            });
+        }
+        else {
+            res.status(Helper.HTTP.BAD_REQUEST).send('User not Update');
+        }
     }
     catch (error) {
         console.log(error);

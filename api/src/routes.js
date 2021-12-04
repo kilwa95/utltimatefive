@@ -4,6 +4,7 @@ const swaggerDocument = require('./swagger.json');
 const {getListUsers,getUserById,createUser,updatePlayer,removeUser,disableUser} = require('./controller/user.controller');
 const {login,logout,authJwt,isSelfUser,onlyAdmin,onlyPlayer,onlyCaptiner,onlyOrganizer,isSelfUserOrAdmin} = require('./controller/security.controller');
 const {getListMatchs,getMatchById,createMatch,updateMatch,deleteMatch} = require('./controller/match.controller');
+const {getListLevels,getLevelById,createLevel,updateLevel,deleteLevel} = require('./controller/level.controller');
 const router = express.Router();
 router.use(express.json());
 
@@ -32,6 +33,18 @@ router.post('/matchs',createMatch);
 router.get('/matchs/:mid',getMatchById);
 router.put('/matchs/:mid',updateMatch);
 router.delete('/matchs/:mid',deleteMatch);
+/**
+ * API level
+ */
+router.get('/levels',getListLevels);
+router.post('/levels',createLevel);
+router.get('/levels/:lid',getLevelById);
+router.put('/levels/:lid',updateLevel);
+router.delete('/levels/:lid',deleteLevel);
+/**
+ * 
+ */
+
 
 
 module.exports = router;

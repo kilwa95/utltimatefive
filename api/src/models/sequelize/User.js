@@ -22,11 +22,12 @@ User.init(
 )
 
 const haschPassword = async (user) => {
+    console.log("beforeUpdate",user);
     user.password = await bcrypt.hash(user.password, await bcrypt.genSalt());
 }
 
 User.belongsTo(Level, { as: 'level' });
-Level.hasMany(User, { foreignKey: 'levelId', as: 'users' });
+Level.hasMany(User, { foreignKey: 'levelId', as: 'users',defaultValue:1 });
 
 
 User.addHook('beforeCreate',haschPassword)
