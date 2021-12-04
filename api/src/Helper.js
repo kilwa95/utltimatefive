@@ -11,6 +11,20 @@ module.exports ={
         CONFLICT: 409,
         SERVER_ERROR: 500,
     },
+    level:{
+        silverA:1,
+        silverB:2,
+        silverC:3,
+        goldA:4,
+        goldB:5,
+        goldC:6,
+        masterA:7,
+        masterB:8,
+        masterC:9,
+        legendary_eagle:10,
+        legendary_dragon:11,
+        global_elite:12,
+    },
   
     validateEmail: function (email) {
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

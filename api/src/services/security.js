@@ -1,7 +1,5 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const oidcTokenHash = require('oidc-token-hash');
-const Helper = require('../Helper');
 const { SECRET_KEY } = process.env;
 const TOKEN_EXPIRE_IN = 24 * 60 * 60;
 

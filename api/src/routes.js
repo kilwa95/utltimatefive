@@ -5,6 +5,7 @@ const {getListUsers,getUserById,createUser,updatePlayer,removeUser,disableUser} 
 const {login,logout,authJwt,isSelfUser,onlyAdmin,onlyPlayer,onlyCaptiner,onlyOrganizer,isSelfUserOrAdmin} = require('./controller/security.controller');
 const {getListMatchs,getMatchById,createMatch,updateMatch,deleteMatch} = require('./controller/match.controller');
 const {getListLevels,getLevelById,createLevel,updateLevel,deleteLevel} = require('./controller/level.controller');
+const {getListTeams,getTeamById,createTeam,updateTeam,deleteTeam} = require('./controller/team.controller');
 const router = express.Router();
 router.use(express.json());
 
@@ -34,7 +35,7 @@ router.get('/matchs/:mid',getMatchById);
 router.put('/matchs/:mid',updateMatch);
 router.delete('/matchs/:mid',deleteMatch);
 /**
- * API level
+ * API levels
  */
 router.get('/levels',getListLevels);
 router.post('/levels',createLevel);
@@ -42,9 +43,13 @@ router.get('/levels/:lid',getLevelById);
 router.put('/levels/:lid',updateLevel);
 router.delete('/levels/:lid',deleteLevel);
 /**
- * 
+ * API teams
  */
-
+router.get('/teams',getListTeams);
+router.post('/teams',createTeam);
+router.get('/teams/:tid',getTeamById);
+router.put('/teams/:tid',updateTeam);
+router.delete('/teams/:tid',deleteTeam);
 
 
 module.exports = router;

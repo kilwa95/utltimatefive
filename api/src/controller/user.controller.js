@@ -46,6 +46,7 @@ exports.createUser = async (req, res) => {
             email:Helper.sqlescstr(email),
             password:Helper.sqlescstr(password),
             birthday:Helper.sqlescstr(birthday),
+            levelId: Helper.level.silverA,
         });
         res.status(Helper.HTTP.CREATED).json({
             message: `User ${user.id} created`,
@@ -60,21 +61,20 @@ exports.createUser = async (req, res) => {
 }
 
 exports.updatePlayer = async (req, res) => {
-    const {firstName,lastName,email,password,birthday,levelId} = req.body;
+    const {firstName,lastName,email,password,birthday} = req.body;
 
     if(Helper.isEmpty([req.params.uid])) {
         res.status(Helper.HTTP.BAD_REQUEST).send('uid is required');
     }
-
-    // if(!Helper.validateEmail(email)) {
-    //     res.status(Helper.HTTP.BAD_REQUEST).send('email is invalid');
-    // }
-    // if(!Helper.validateDate(birthday)) {
-    //     res.status(Helper.HTTP.BAD_REQUEST).send('birthday is invalid');
-    // }
-    // if(!Helper.validatePassword(password)) {
-    //     res.status(Helper.HTTP.BAD_REQUEST).send('password is invalid');
-    // }
+    if(!Helper.validateEmail(email)) {
+        res.status(Helper.HTTP.BAD_REQUEST).send('email is invalid');
+    }
+    if(!Helper.validateDate(birthday)) {
+        res.status(Helper.HTTP.BAD_REQUEST).send('birthday is invalid');
+    }
+    if(!Helper.validatePassword(password)) {
+        res.status(Helper.HTTP.BAD_REQUEST).send('password is invalid');
+    }
     try {
         const uid = parseInt(req.params.uid);
         const user = await updateUser(uid, {
@@ -83,7 +83,6 @@ exports.updatePlayer = async (req, res) => {
             email:Helper.sqlescstr(email),
             password:Helper.sqlescstr(password),
             birthday:Helper.sqlescstr(birthday),
-            levelId:parseInt(levelId)
         });
         if(user) {
             res.status(Helper.HTTP.OK).json({
