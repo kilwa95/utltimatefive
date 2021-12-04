@@ -1,4 +1,4 @@
-const {findUserByEmail} = require('../queries/user.queries');
+const {findUserByEmail,findUserById} = require('../queries/user.queries');
 const Helper = require('../Helper');
 const Security = require('../services/security');
 
@@ -132,7 +132,7 @@ exports.onlyCaptiner = (req,res,next) => {
 exports.isSelfUser = (req,res,next) => {
     try {
         const uid = req.params.uid || req.body.uid || req.query.uid;
-        if (req.decoded && req.decoded.id === uid) {
+        if (req.decoded && req.decoded.id == uid) {
             return next();
         }
         return res.status(Helper.HTTP.UNAUTHORIZED).json({ error: 'only user self can edit or delete this ressource' });
@@ -151,6 +151,30 @@ exports.isSelfUserOrAdmin = (req,res,next) => {
         return res.status(Helper.HTTP.SERVER_ERROR).json({ error });
     }
 }
+
+exports.isUserExist = async (req, res, next) => {
+    try {
+        const uid = req.params.uid || req.body.uid || req.query.uid;
+        if(Helper.isEmpty([uid])) {
+            res.status(Helper.HTTP.BAD_REQUEST).send('uid is required');
+        }
+        const user = await findUserById(uid);
+        if(user){
+            return next();
+        }
+        else{
+            return res.status(Helper.HTTP.NOT_FOUND).json({
+                error: 'User not found'
+            });
+        }
+    } catch (error) {
+        console.error(error);
+        return res.status(Helper.HTTP.SERVER_ERROR).json({
+            message: 'Internal server error'
+        });
+    }
+}
+
 
 
 

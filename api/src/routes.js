@@ -2,7 +2,7 @@ const express = require('express');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 const {getListUsers,getUserById,createUser,updatePlayer,removeUser,disableUser} = require('./controller/user.controller');
-const {login,logout,authJwt,isSelfUser,onlyAdmin,onlyPlayer,onlyCaptiner,onlyOrganizer,isSelfUserOrAdmin} = require('./controller/security.controller');
+const {login,logout,authJwt,isSelfUser,onlyAdmin,onlyPlayer,onlyCaptiner,onlyOrganizer,isSelfUserOrAdmin,isUserExist} = require('./controller/security.controller');
 const {getListMatchs,getMatchById,createMatch,updateMatch,deleteMatch} = require('./controller/match.controller');
 const {getListLevels,getLevelById,createLevel,updateLevel,deleteLevel} = require('./controller/level.controller');
 const {getListTeams,getTeamById,createTeam,updateTeam,deleteTeam} = require('./controller/team.controller');
@@ -21,12 +21,12 @@ router.post('/logout',logout);
 /**
  * API users
  */
-router.get('/users',getListUsers);
+router.get('/users',authJwt,onlyAdmin,getListUsers);
 router.post('/users',createUser);
-router.get('/users/:uid',getUserById);
-router.put('/users/:uid',updatePlayer);
-router.patch('/users/:uid/disable',disableUser);
-router.delete('/users/:uid',removeUser);
+router.get('/users/:uid',authJwt,isUserExist,getUserById);
+router.put('/users/:uid',authJwt,isUserExist,isSelfUser,updatePlayer);
+router.delete('/users/:uid',authJwt,isUserExist,isSelfUser,removeUser);
+router.patch('/users/:uid/disable',authJwt,isUserExist,disableUser);
 /**
  * API Match
  */

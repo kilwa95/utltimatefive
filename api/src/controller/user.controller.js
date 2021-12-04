@@ -12,13 +12,17 @@ exports.getListUsers = async (req, res) => {
 }
 
 exports.getUserById = async (req, res) => {
-    if(Helper.isEmpty([req.params.uid])) {
-        res.status(Helper.HTTP.BAD_REQUEST).send('uid is required');
-    }
     try {
         const uid = parseInt(req.params.uid);
         const user = await findUserById(uid);
-        res.status(Helper.HTTP.OK).json({data: user});
+        if(user) {
+            res.status(Helper.HTTP.OK).json({
+                data: user
+            });
+        }
+        else {
+            res.status(Helper.HTTP.NOT_FOUND).send('User not found');
+        }
     } catch (error) {
         console.log(error);
         res.status(Helper.HTTP.SERVER_ERROR).send(error);
@@ -48,10 +52,16 @@ exports.createUser = async (req, res) => {
             birthday:Helper.sqlescstr(birthday),
             levelId: Helper.level.silverA,
         });
-        res.status(Helper.HTTP.CREATED).json({
-            message: `User ${user.id} created`,
-            data: user
-        });
+        if(user) {
+            res.status(Helper.HTTP.OK).json({
+                message: `User ${user.id} created`,
+                data: user
+            });
+        }
+        else {
+            res.status(Helper.HTTP.SERVER_ERROR).send('User not created');
+        }
+       
     }
     catch (error) {
         console.error(error);
@@ -118,9 +128,6 @@ exports.removeUser = async (req, res) => {
 }
 
 exports.disableUser = async (req, res) => {
-    if(Helper.isEmpty([req.params.uid])) {
-        res.status(Helper.HTTP.BAD_REQUEST).send('uid is required');
-    }
     try {
         const uid = parseInt(req.params.uid);
         const user = await updateUser(uid, {

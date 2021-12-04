@@ -72,6 +72,51 @@
                                 }
                             }
                         }
+                    },
+                    "400": {
+                        "description": "email or password is invalid",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "email already exists",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -109,6 +154,15 @@
                                                             "email": {
                                                                 "type": "string"
                                                             },
+                                                            "enable": {
+                                                                "type": "boolean"
+                                                            },
+                                                            "roles": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "type": "string"
+                                                                }
+                                                            },
                                                             "birthday": {
                                                                 "type": "string",
                                                                 "format": "date"
@@ -116,16 +170,33 @@
                                                             "status": {
                                                                 "type": "string"
                                                             },
-                                                            "roles": {
-                                                                "type": "array",
-                                                                "items": {
-                                                                    "type": "string"
+                                                            "level": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "name": {
+                                                                        "type": "string"
+                                                                    }
                                                                 }
                                                             }
                                                         }
                                                     }
                                                 }
                                             }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
                                         }
                                     }
                                 }
@@ -206,6 +277,21 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -249,37 +335,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "status": {
-                                            "type": "string"
-                                        },
-                                        "message": {
-                                            "type": "string"
-                                        },
-                                        "data": {
-                                            "type": "object",
-                                            "properties": {
-                                                "user": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "_id": {
-                                                            "type": "string"
-                                                        },
-                                                        "email": {
-                                                            "type": "string"
-                                                        },
-                                                        "username": {
-                                                            "type": "string"
-                                                        },
-                                                        "__v": {
-                                                            "type": "number"
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
+                                    "$ref": "#/components/schemas/User"
                                 }
                             }
                         }
@@ -287,37 +343,6 @@
                     "400": {
                         "description": "bad Request",
                         "content": {}
-                    },
-                    "401": {
-                        "description": "Invalid token, please log in or sign up",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "status": {
-                                            "type": "string"
-                                        },
-                                        "error": {
-                                            "type": "object",
-                                            "properties": {
-                                                "message": {
-                                                    "type": "string"
-                                                },
-                                                "trace": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "statusCode": {
-                                                            "type": "number"
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
                     },
                     "404": {
                         "description": "Resource not found",
@@ -367,44 +392,35 @@
                             }
                         }
                     },
-                    "400": {
-                        "description": "Missing credentials",
-                        "content": {}
-                    },
-                    "401": {
-                        "description": "Invalid token, please log in or sign up",
+                    "404": {
+                        "description": "user not found",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "type": "object",
                                     "properties": {
-                                        "status": {
+                                        "message": {
                                             "type": "string"
-                                        },
-                                        "error": {
-                                            "type": "object",
-                                            "properties": {
-                                                "message": {
-                                                    "type": "string"
-                                                },
-                                                "trace": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "statusCode": {
-                                                            "type": "number"
-                                                        }
-                                                    }
-                                                }
-                                            }
                                         }
                                     }
                                 }
                             }
                         }
                     },
-                    "404": {
-                        "description": "Resource not found",
-                        "content": {}
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -448,8 +464,28 @@
                                 }
                             }
                         }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/login": {
@@ -488,6 +524,29 @@
                                     "properties": {
                                         "message": {
                                             "type": "string"
+                                        },
+                                        "token": {
+                                            "type": "string"
+                                        },
+                                        "user": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "firstName": {
+                                                    "type": "string"
+                                                },
+                                                "lastName": {
+                                                    "type": "string"
+                                                },
+                                                "role": {
+                                                    "type": "string"
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -1658,12 +1717,21 @@
                     "password": {
                         "type": "string"
                     },
+                    "enable": {
+                        "type": "boolean"
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
                     "birthday": {
                         "type": "string",
                         "format": "date"
                     },
-                    "levelId": {
-                        "type": "integer"
+                    "status": {
+                        "type": "string"
                     }
                 },
                 "xml": {
