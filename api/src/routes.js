@@ -6,6 +6,7 @@ const {login,logout,authJwt,isSelfUser,onlyAdmin,onlyPlayer,onlyCaptiner,onlyOrg
 const {getListMatchs,getMatchById,createMatch,updateMatch,deleteMatch} = require('./controller/match.controller');
 const {getListLevels,getLevelById,createLevel,updateLevel,deleteLevel} = require('./controller/level.controller');
 const {getListTeams,getTeamById,createTeam,updateTeam,deleteTeam} = require('./controller/team.controller');
+const {getListSports,getSportById,createSport,deleteSport,updateSport} = require('./controller/sport.controller');
 const router = express.Router();
 router.use(express.json());
 
@@ -50,6 +51,15 @@ router.post('/teams',createTeam);
 router.get('/teams/:tid',getTeamById);
 router.put('/teams/:tid',updateTeam);
 router.delete('/teams/:tid',deleteTeam);
+/**
+ * API sports
+ */
+router.get('/sports',getListSports);
+router.post('/sports',createSport);
+router.get('/sports/:sid',getSportById);
+router.put('/sports/:sid',updateSport);
+router.delete('/sports/:sid',deleteSport);
+
 
 
 module.exports = router;

@@ -35,6 +35,10 @@
             "description": "teams routes"
         },
         {
+            "name": "Sports",
+            "description": "Sports routes"
+        },
+        {
             "name": "Tournaments",
             "description": "tournaments routes"
         }
@@ -1429,6 +1433,197 @@
                     },
                     "500": {
                         "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sports": {
+            "get": {
+                "tags": [
+                    "Sports"
+                ],
+                "summary": "Retrieve all sports",
+                "operationId": "getAllSports",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Sports"
+                ],
+                "summary": "Create new sport",
+                "operationId": "createSport",
+                "requestBody": {
+                    "required": true,
+                    "description": "Sport to create",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sports/{sid}": {
+            "get": {
+                "tags": [
+                    "Sports"
+                ],
+                "summary": "Retrieve sport by sid",
+                "operationId": "getSportById",
+                "parameters": [
+                    {
+                        "name": "sid",
+                        "in": "path",
+                        "description": "Sport id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Sports"
+                ],
+                "summary": "Update sport by sid",
+                "operationId": "updateSportById",
+                "parameters": [
+                    {
+                        "name": "sid",
+                        "in": "path",
+                        "description": "Sport id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "description": "Sport to update",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Sport updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Sports"
+                ],
+                "summary": "Delete sport by sid",
+                "operationId": "deleteSportById",
+                "parameters": [
+                    {
+                        "name": "sid",
+                        "in": "path",
+                        "description": "Sport id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sport deleted",
                         "content": {
                             "application/json": {
                                 "schema": {
