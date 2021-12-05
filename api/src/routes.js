@@ -6,7 +6,7 @@ const {login,logout,authJwt,isSelfUser,onlyAdmin,onlyPlayer,onlyCaptiner,onlyOrg
 const {getListMatchs,getMatchById,createMatch,updateMatch,deleteMatch,isMatchExist} = require('./controller/match.controller');
 const {getListLevels,getLevelById,createLevel,updateLevel,deleteLevel,isLevelExist} = require('./controller/level.controller');
 const {getListTeams,getTeamById,createTeam,updateTeam,deleteTeam,isTeamExist} = require('./controller/team.controller');
-const {getListSports,getSportById,createSport,deleteSport,updateSport} = require('./controller/sport.controller');
+const {getListSports,getSportById,createSport,deleteSport,updateSport,isSportExist} = require('./controller/sport.controller');
 const router = express.Router();
 router.use(express.json());
 
@@ -54,11 +54,11 @@ router.delete('/teams/:tid',authJwt,onlyCaptiner,isTeamExist,isSelfCaptiner,dele
 /**
  * API sports
  */
-router.get('/sports',getListSports);
-router.post('/sports',createSport);
-router.get('/sports/:sid',getSportById);
-router.put('/sports/:sid',updateSport);
-router.delete('/sports/:sid',deleteSport);
+router.get('/sports',authJwt,getListSports);
+router.post('/sports',authJwt,onlyAdmin,createSport);
+router.get('/sports/:sid',authJwt,onlyAdmin,isSportExist,getSportById);
+router.put('/sports/:sid',authJwt,onlyAdmin,isSportExist,updateSport);
+router.delete('/sports/:sid',authJwt,onlyAdmin,isSportExist,deleteSport);
 
 
 

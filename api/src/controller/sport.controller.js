@@ -104,3 +104,25 @@ exports.deleteSport = async (req, res) => {
         });
     }
 }
+
+exports.isSportExist = async (req, res, next) => {
+    try {
+        const sid = req.params.sid || req.body.sid || req.query.sid;
+        if(Helper.isEmpty([sid])) {
+            res.status(Helper.HTTP.BAD_REQUEST).send('sid is required');
+        }
+        const sport = await findSportById(sid);
+        if(sport){
+            return next();
+        }else{
+            return res.status(Helper.HTTP.NOT_FOUND).json({
+                error: "Sport not found"
+            });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(Helper.HTTP.SERVER_ERROR).json({
+            error: error.message
+        });
+    }
+}
