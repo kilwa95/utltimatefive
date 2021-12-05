@@ -5,7 +5,7 @@ const {getListUsers,getUserById,createUser,updatePlayer,removeUser,disableUser} 
 const {login,logout,authJwt,isSelfUser,onlyAdmin,onlyCaptiner,onlyOrganizer,onlyPlayer,isSelfOrganizer,isSelfCaptiner,isUserExist} = require('./controller/security.controller');
 const {getListMatchs,getMatchById,createMatch,updateMatch,deleteMatch,isMatchExist} = require('./controller/match.controller');
 const {getListLevels,getLevelById,createLevel,updateLevel,deleteLevel,isLevelExist} = require('./controller/level.controller');
-const {getListTeams,getTeamById,createTeam,updateTeam,deleteTeam,isTeamExist,joinTeamMember} = require('./controller/team.controller');
+const {getListTeams,getTeamById,createTeam,updateTeam,deleteTeam,isTeamExist,joinTeamMember,leaveTeamMember} = require('./controller/team.controller');
 const {getListSports,getSportById,createSport,deleteSport,updateSport,isSportExist} = require('./controller/sport.controller');
 const router = express.Router();
 router.use(express.json());
@@ -52,6 +52,8 @@ router.get('/teams/:tid',authJwt,onlyCaptiner,isTeamExist,getTeamById);
 router.put('/teams/:tid',authJwt,onlyCaptiner,isTeamExist,isSelfCaptiner,updateTeam);
 router.delete('/teams/:tid',authJwt,onlyCaptiner,isTeamExist,isSelfCaptiner,deleteTeam);
 router.post('/teams/:tid/join',authJwt,onlyPlayer,isTeamExist,joinTeamMember);
+router.delete('/teams/:tid/left',authJwt,onlyPlayer,isTeamExist,leaveTeamMember);
+
 /**
  * API sports
  */

@@ -122,3 +122,16 @@ exports.joinTeam = async (data) => {
     }
 }
 
+exports.leaveTeam = async (data) => {
+    try {
+        return await Player_team.destroy({
+            where: {
+                TeamId: data.TeamId,
+                UserId: data.UserId
+            }
+        });
+    } catch (error) {
+        console.error(error)
+    }
+}
+

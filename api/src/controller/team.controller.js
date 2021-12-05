@@ -1,4 +1,4 @@
-const {findAllTeams,findTeamById,saveTeam,updateTeamQuery,removeTeam,joinTeam} = require('../queries/team.queries');
+const {findAllTeams,findTeamById,saveTeam,updateTeamQuery,removeTeam,joinTeam,leaveTeam} = require('../queries/team.queries');
 const Helper = require('../Helper');
 
 
@@ -125,6 +125,29 @@ exports.joinTeamMember = async (req, res) => {
         }
         else {
             res.status(Helper.HTTP.BAD_REQUEST).json({message: 'Join team failed'});
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(Helper.HTTP.SERVER_ERROR).json(error);
+    }
+}
+
+exports.leaveTeamMember = async (req, res) => {
+    try {
+        const tid = parseInt(req.params.tid);
+        const uid = parseInt(req.decoded.id);
+        const team = await leaveTeam({
+            TeamId: tid,
+            UserId: uid
+        });
+        if(team) {
+            res.status(Helper.HTTP.OK).json({
+                message: 'Leave team success',
+                data: team
+            });
+        }
+        else {
+            res.status(Helper.HTTP.BAD_REQUEST).json({message: 'Leave team failed'});
         }
     } catch (error) {
         console.error(error);
