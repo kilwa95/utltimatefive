@@ -713,6 +713,21 @@
                                 }
                             }
                         }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -988,6 +1003,21 @@
                             }
                         }
                     },
+                    "404": {
+                        "description": "Match not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
                     "500": {
                         "description": "Internal server error",
                         "content": {
@@ -1044,8 +1074,28 @@
                                 }
                             }
                         }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -1070,7 +1120,7 @@
                     }
                 },
                 "responses": {
-                    "200": {
+                    "201": {
                         "description": "Level created",
                         "content": {
                             "application/json": {
@@ -1111,7 +1161,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/levels/{lid}": {
@@ -1155,8 +1210,58 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Level not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "put": {
                 "tags": [
@@ -1207,6 +1312,21 @@
                             }
                         }
                     },
+                    "404": {
+                        "description": "Level not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
                     "500": {
                         "description": "Internal server error",
                         "content": {
@@ -1222,7 +1342,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -1256,8 +1381,43 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Level not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/teams": {
@@ -1318,8 +1478,28 @@
                                 }
                             }
                         }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -1338,9 +1518,6 @@
                                     "name": {
                                         "type": "string"
                                     },
-                                    "captainId": {
-                                        "type": "integer"
-                                    },
                                     "levelId": {
                                         "type": "integer"
                                     }
@@ -1350,7 +1527,7 @@
                     }
                 },
                 "responses": {
-                    "200": {
+                    "201": {
                         "description": "Team created",
                         "content": {
                             "application/json": {
@@ -1379,8 +1556,28 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/teams/{tid}": {
@@ -1449,8 +1646,58 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Team not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "put": {
                 "tags": [
@@ -1504,6 +1751,36 @@
                             }
                         }
                     },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Team not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
                     "500": {
                         "description": "Internal server error",
                         "content": {
@@ -1519,7 +1796,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -1554,6 +1836,36 @@
                             }
                         }
                     },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Team not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
                     "500": {
                         "description": "Internal server error",
                         "content": {
@@ -1569,7 +1881,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/sports": {

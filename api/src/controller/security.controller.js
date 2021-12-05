@@ -1,5 +1,6 @@
 const {findUserByEmail,findUserById} = require('../queries/user.queries');
 const {findAllMatchesByUserId} = require('../queries/match.queries');
+const {findAllTeamsByUserId} = require('../queries/team.queries');
 const Helper = require('../Helper');
 const Security = require('../services/security');
 
@@ -141,6 +142,7 @@ exports.isSelfUser = (req,res,next) => {
         return res.status(Helper.HTTP.SERVER_ERROR).json({ error });
     }
 }
+
 exports.isSelfOrganizer = async (req,res,next) => {
     try {
         const uid = req.decoded.id;
@@ -156,6 +158,24 @@ exports.isSelfOrganizer = async (req,res,next) => {
         return res.status(Helper.HTTP.SERVER_ERROR).json({ error });
     }
 }
+
+exports.isSelfCaptiner = async (req,res,next) => {
+    try {
+        const uid = req.decoded.id;
+        console.log('uid', uid);
+        const teams = await findAllTeamsByUserId(uid);
+        const teamsJson = teams.map(team => team.toJSON());
+        const captinersIds = teamsJson.map(team => team.captineId);
+        if (req.decoded && captinersIds.includes(uid)) {
+            return next();
+        }
+        return res.status(Helper.HTTP.UNAUTHORIZED).json({ error: 'only captiner self can edit or delete this ressource' });
+    } catch (error) {
+        console.error(error);
+        return res.status(Helper.HTTP.SERVER_ERROR).json({ error });
+    }
+}
+
 exports.isSelfUserOrAdmin = (req,res,next) => {
     try {
         const uid = req.params.uid || req.body.uid || req.query.uid;

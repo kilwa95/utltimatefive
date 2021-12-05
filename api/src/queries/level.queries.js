@@ -39,11 +39,14 @@ exports.saveLevel = async (data) => {
 
 exports.updateLevelQuery = async (lid, data) => {
     try {
-        return await Level.update(data, {
+        const level = await Level.update(data, {
             where: {
                 id: lid
-            }
+            },
+            returning: true,
+            plain: true
         });
+        return level[1];
     } catch (error) {
         console.error(error)
     }

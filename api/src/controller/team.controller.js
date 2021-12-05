@@ -23,11 +23,12 @@ exports.getTeamById = async (req, res) => {
 }
 
 exports.createTeam = async (req, res) => {
-    const {name,captineId,levelId} = req.body;
-    if(Helper.isEmpty([name,captineId,levelId])) {
-        res.status(Helper.HTTP.BAD_REQUEST).json({message: 'name,captine,level is required'});
+    const {name,levelId} = req.body;
+    if(Helper.isEmpty([name,levelId])) {
+        res.status(Helper.HTTP.BAD_REQUEST).json({message: 'name,level is required'});
     }
     try {
+        const captineId = req.decoded.id;
         const team = await saveTeam({
             name: Helper.sqlescstr(name),
             captineId: parseInt(captineId),
@@ -86,6 +87,21 @@ exports.deleteTeam = async (req, res) => {
         }
         else {
             res.status(Helper.HTTP.BAD_REQUEST).json({message: 'Delete team failed'});
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(Helper.HTTP.SERVER_ERROR).json(error);
+    }
+}
+
+exports.isTeamExist = async (req, res, next) => {
+    try {
+        const tid = req.params.tid || req.body.tid || req.query.tid;
+        const team = await findTeamById(tid);
+        if(team) {
+            next();
+        } else {
+            res.status(Helper.HTTP.BAD_REQUEST).json({message: 'Team not found'});
         }
     } catch (error) {
         console.error(error);

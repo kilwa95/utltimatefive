@@ -23,6 +23,18 @@ exports.findAllTeams = async () => {
     }
 }
 
+exports.findAllTeamsByUserId = async (uid) => {
+    try {
+        return await Team.findAll({
+            where: {
+                captineId: uid
+            }
+        });
+    } catch (error) {
+        console.error(error)
+    }
+}
+
 exports.findTeamById = async (tid) => {
     try {
         return await Team.findOne({

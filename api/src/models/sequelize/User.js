@@ -12,7 +12,7 @@ User.init(
  
         password:{ type: DataTypes.STRING,allowNull:false,unique:true},
         enable:{ type: DataTypes.BOOLEAN,defaultValue:true},
-        roles:{ type: DataTypes.ARRAY(DataTypes.STRING),allowNull:false,defaultValue:['organizer','user']},
+        roles:{ type: DataTypes.ARRAY(DataTypes.STRING),allowNull:false,defaultValue:['captain','user']},
         birthday:{ type: DataTypes.DATEONLY,allowNull:true},
         status:{ type: DataTypes.STRING,allowNull:false,defaultValue:'created'},
     },
