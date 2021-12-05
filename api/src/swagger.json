@@ -37,10 +37,6 @@
         {
             "name": "Sports",
             "description": "Sports routes"
-        },
-        {
-            "name": "Tournaments",
-            "description": "tournaments routes"
         }
     ],
     "paths": {
@@ -1889,6 +1885,95 @@
                 ]
             }
         },
+        "/teams/{tid}/join": {
+            "post": {
+                "tags": [
+                    "Teams"
+                ],
+                "summary": "Join team by tid",
+                "operationId": "joinTeamById",
+                "parameters": [
+                    {
+                        "name": "tid",
+                        "in": "path",
+                        "description": "Team id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Team joined",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Team not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "get": {
         "/sports": {
             "get": {
                 "tags": [

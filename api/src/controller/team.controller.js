@@ -1,4 +1,4 @@
-const {findAllTeams,findTeamById,saveTeam,updateTeamQuery,removeTeam} = require('../queries/team.queries');
+const {findAllTeams,findTeamById,saveTeam,updateTeamQuery,removeTeam,joinTeam} = require('../queries/team.queries');
 const Helper = require('../Helper');
 
 
@@ -102,6 +102,29 @@ exports.isTeamExist = async (req, res, next) => {
             next();
         } else {
             res.status(Helper.HTTP.BAD_REQUEST).json({message: 'Team not found'});
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(Helper.HTTP.SERVER_ERROR).json(error);
+    }
+}
+
+exports.joinTeamMember = async (req, res) => {
+    try {
+        const tid = parseInt(req.params.tid);
+        const uid = parseInt(req.decoded.id);
+        const team = await joinTeam({
+            TeamId: tid,
+            UserId: uid
+        });
+        if(team) {
+            res.status(Helper.HTTP.OK).json({
+                message: 'Join team success',
+                data: team
+            });
+        }
+        else {
+            res.status(Helper.HTTP.BAD_REQUEST).json({message: 'Join team failed'});
         }
     } catch (error) {
         console.error(error);

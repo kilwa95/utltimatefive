@@ -1,6 +1,7 @@
 const Team = require('../models/sequelize/Team');
 const User = require('../models/sequelize/User');
 const Level = require('../models/sequelize/Level');
+const Player_team = require('../models/sequelize/Player_team');
 
 exports.findAllTeams = async () => {
     try {
@@ -15,7 +16,13 @@ exports.findAllTeams = async () => {
                 model: Level,
                 as: 'level',
                 attributes: ['name']
+            },
+            {
+                model: User,
+                as: 'players',
+                attributes: ['id', 'firstName','lastName', 'email']
             }
+
         ]
         });
     } catch (error) {
@@ -101,6 +108,15 @@ exports.removeTeam = async (tid) => {
                 id: tid
             }
         });
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+exports.joinTeam = async (data) => {
+    try {
+        const player_team = new Player_team(data);
+        return await player_team.save();
     } catch (error) {
         console.error(error)
     }
