@@ -2,8 +2,8 @@ const express = require('express');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 const {getListUsers,getUserById,createUser,updatePlayer,removeUser,disableUser} = require('./controller/user.controller');
-const {login,logout,authJwt,isSelfUser,onlyAdmin,onlyPlayer,onlyCaptiner,onlyOrganizer,isSelfUserOrAdmin,isUserExist} = require('./controller/security.controller');
-const {getListMatchs,getMatchById,createMatch,updateMatch,deleteMatch} = require('./controller/match.controller');
+const {login,logout,authJwt,isSelfUser,onlyAdmin,onlyPlayer,onlyCaptiner,onlyOrganizer,isSelfOrganizer,isUserExist} = require('./controller/security.controller');
+const {getListMatchs,getMatchById,createMatch,updateMatch,deleteMatch,isMatchExist} = require('./controller/match.controller');
 const {getListLevels,getLevelById,createLevel,updateLevel,deleteLevel} = require('./controller/level.controller');
 const {getListTeams,getTeamById,createTeam,updateTeam,deleteTeam} = require('./controller/team.controller');
 const {getListSports,getSportById,createSport,deleteSport,updateSport} = require('./controller/sport.controller');
@@ -30,11 +30,11 @@ router.patch('/users/:uid/disable',authJwt,isUserExist,disableUser);
 /**
  * API Match
  */
-router.get('/matchs',getListMatchs);
-router.post('/matchs',createMatch);
-router.get('/matchs/:mid',getMatchById);
-router.put('/matchs/:mid',updateMatch);
-router.delete('/matchs/:mid',deleteMatch);
+router.get('/matchs',authJwt,getListMatchs);
+router.post('/matchs',authJwt,onlyOrganizer,createMatch);
+router.get('/matchs/:mid',authJwt,isMatchExist,getMatchById);
+router.put('/matchs/:mid',authJwt,onlyOrganizer,isMatchExist,isSelfOrganizer,updateMatch);
+router.delete('/matchs/:mid',authJwt,onlyOrganizer,isMatchExist,isSelfOrganizer,deleteMatch);
 /**
  * API levels
  */

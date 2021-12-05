@@ -35,13 +35,14 @@ exports.getMatchById = async (req,res) => {
 }
 
 exports.createMatch = async (req,res) => {
-    const {name,levelId,organizerId} = req.body;
+    const {name,levelId} = req.body;
     console.log(req.body);
 
-    if(Helper.isEmpty([name,levelId,organizerId])) {
-        res.status(Helper.HTTP.BAD_REQUEST).send('name,levelId,organizerId is required');
+    if(Helper.isEmpty([name,levelId])) {
+        res.status(Helper.HTTP.BAD_REQUEST).send('name,levelId is required');
     }
     try {
+        const organizerId = parseInt(req.decoded.id);
         const match = await saveMatch({
             name:Helper.sqlescstr(name),
             levelId:parseInt(levelId),
@@ -75,7 +76,7 @@ exports.updateMatch = async (req,res) => {
         const mid = parseInt(req.params.mid);
         const match = await updateMatch(parseInt(mid),{
             name:Helper.sqlescstr(name),
-            levelId: parseInt(levelId), //TODO: check if levelId is valid
+            levelId: parseInt(levelId),
         });
         if(match) {
             res.status(Helper.HTTP.OK).json({
@@ -127,6 +128,29 @@ exports.getMatchByLevelId = async (req,res) => {
     } catch (error) {
         console.error(error);
         res.status(Helper.HTTP.SERVER_ERROR).json({
+            message: error.message
+        });
+    }
+}
+
+exports.isMatchExist = async (req,res,next) => {
+    try {
+        const mid = req.params.mid || req.body.mid || req.query.mid;
+        if(Helper.isEmpty([mid])) {
+            res.status(Helper.HTTP.BAD_REQUEST).send('mid is required');
+        }
+        const match = await findMatchById(mid);
+        if(match) {
+            return next();
+        }
+        else {
+            res.status(Helper.HTTP.NOT_FOUND).json({
+                message: 'Match not found',
+            });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
             message: error.message
         });
     }

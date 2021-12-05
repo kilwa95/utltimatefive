@@ -1,4 +1,5 @@
 const {findUserByEmail,findUserById} = require('../queries/user.queries');
+const {findAllMatchesByUserId} = require('../queries/match.queries');
 const Helper = require('../Helper');
 const Security = require('../services/security');
 
@@ -137,6 +138,21 @@ exports.isSelfUser = (req,res,next) => {
         }
         return res.status(Helper.HTTP.UNAUTHORIZED).json({ error: 'only user self can edit or delete this ressource' });
     } catch (error) {
+        return res.status(Helper.HTTP.SERVER_ERROR).json({ error });
+    }
+}
+exports.isSelfOrganizer = async (req,res,next) => {
+    try {
+        const uid = req.decoded.id;
+        const matches = await findAllMatchesByUserId(uid);
+        const matchesJson = matches.map(match => match.toJSON());
+        const organizerIds = matchesJson.map(match => match.organizerId);
+        if (req.decoded && organizerIds.includes(uid)) {
+            return next();
+        }
+        return res.status(Helper.HTTP.UNAUTHORIZED).json({ error: 'only organizer self can edit or delete this ressource' });
+    } catch (error) {
+        console.error(error);
         return res.status(Helper.HTTP.SERVER_ERROR).json({ error });
     }
 }

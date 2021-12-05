@@ -29,6 +29,18 @@ exports.findAllMatches = async () => {
         console.error(error)
     }
 }
+exports.findAllMatchesByUserId = async (uid) => {
+    try {
+        return await Match.findAll({
+            where: {
+                organizerId: uid
+            }
+        });
+    } catch (error) {
+        console.error(error)
+    }
+}
+
 exports.findMatchById = async (matchId) => {
     try {
         return await Match.findByPk(matchId,{
@@ -80,11 +92,14 @@ exports.findMatchByUserIdAndMatchId = async (userId, matchId) => {
 }
 exports.updateMatch = async (matchId, data) => {
     try {
-        return await Match.update(data, {
+        const match =  await Match.update(data, {
             where: {
                 id: matchId
-            }
+            },
+            returning: true,
+            plain: true
         });
+        return match[1];
     } catch (error) {
         console.error(error)
     }
