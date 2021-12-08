@@ -1,5 +1,18 @@
 version: "3.8"
 services:
+  admin:
+    build:
+      context: ./admin
+      dockerfile: Dockerfile.dev
+    volumes:
+      - type: bind
+        source: ./admin
+        target: /home/node/app
+      - type: volume
+        target: /home/node/app/node_modules
+    ports: 
+      - 4001:3000
+    
   api:
     build:
       context: ./api
