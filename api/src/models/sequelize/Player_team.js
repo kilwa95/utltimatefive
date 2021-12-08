@@ -13,7 +13,7 @@ Player_team.init(
   }
 );
 
-Team.belongsToMany(User, { as: 'players', through: 'Player_team' });
+Team.belongsToMany(User, { as: 'membres', through: 'Player_team' });
 User.belongsToMany(Team, { as: 'equibes', through: 'Player_team' });
 
 Player_team.sync({

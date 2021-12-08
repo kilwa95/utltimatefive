@@ -13,8 +13,8 @@ Player_match.init(
   }
 );
 
-Match.belongsToMany(User, { as: 'players', through: 'Player_match' });
-User.belongsToMany(Match, { as: 'matchs', through: 'Player_match' });
+Match.belongsToMany(User, {through:'Player_match', as: 'players'});
+User.belongsToMany(Match, {through:'Player_match' });
 
 Player_match.sync({
   alter: true,

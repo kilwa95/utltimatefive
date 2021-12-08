@@ -19,7 +19,7 @@ exports.findAllTeams = async () => {
             },
             {
                 model: User,
-                as: 'players',
+                as: 'membres',
                 attributes: ['id', 'firstName','lastName', 'email']
             }
 

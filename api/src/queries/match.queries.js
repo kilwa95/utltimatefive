@@ -1,6 +1,7 @@
 const Match = require('../models/sequelize/Match');
 const User = require('../models/sequelize/User');
 const Level = require('../models/sequelize/Level');
+const Player_match = require('../models/sequelize/Player_match');
 
 exports.saveMatch = async (data) => {
     try {
@@ -23,7 +24,13 @@ exports.findAllMatches = async () => {
                 model: Level,
                 as: 'level',
                 attributes: ['name']
-            }]
+            },
+            {
+                model: User,
+                as: 'players',
+                attributes: ['id', 'firstName', 'lastName','email']
+            }
+            ]
         });
     } catch (error) {
         console.error(error)
@@ -111,6 +118,15 @@ exports.deleteMatch = async (matchId) => {
                 id: matchId
             }
         });
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+exports.joinMatch = async (data) => {
+    try {
+        const player_match = new Player_match(data);
+        return await player_match.save();
     } catch (error) {
         console.error(error)
     }

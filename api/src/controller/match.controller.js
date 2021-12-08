@@ -1,4 +1,4 @@
-const {saveMatch,findAllMatches,findMatchById,findMatchByLevelId,updateMatch,deleteMatch} = require('../queries/match.queries');
+const {saveMatch,findAllMatches,findMatchById,findMatchByLevelId,updateMatch,deleteMatch,joinMatch} = require('../queries/match.queries');
 const Helper = require('../Helper');
 
 
@@ -155,4 +155,33 @@ exports.isMatchExist = async (req,res,next) => {
         });
     }
 }
+
+exports.joinMatchPlayers = async (req,res) => {
+    try {
+        const matchId = req.params.mid;
+        const playerId = req.decoded.id;
+        const match = await joinMatch({
+            MatchId: parseInt(matchId),
+            UserId: parseInt(playerId)
+        });
+        if(match) {
+            res.status(Helper.HTTP.CREATED).json({
+                message: 'Match joined',
+                data: match,
+            });
+        }
+        else {
+            res.status(Helper.HTTP.BAD_REQUEST).json({
+                message: 'Match not joined',
+            });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: error.message
+        });
+    }
+}
+
+
 
