@@ -6,6 +6,7 @@ import navs from '../../routes/navs';
 import Wrapper from '../wrapper/Wrapper';
 import Header from '../header/Header';
 import NavSearch from '../navSearch/NavSearch';
+import Body from '../body/Body';
 import './Layout.css';
 
 const Layout = () => {
@@ -17,6 +18,7 @@ const Layout = () => {
             <Wrapper>
                 <Header />
                 <NavSearch />
+                <Body />
             </Wrapper>
         </div>
     );
