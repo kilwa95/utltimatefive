@@ -1,11 +1,18 @@
+import React from 'react';
+import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import  Layout  from './components/layout/Layout';
 
-function App() {
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-  
-      </header>
-    </div>
+	  <div className="App">
+		<Router>
+			<Routes>
+				<Route path="/" element={<Layout />} />
+			</Routes>
+		</Router>
+	  </div>
   );
 }
 

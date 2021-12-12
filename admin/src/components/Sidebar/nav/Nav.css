@@ -1,0 +1,32 @@
+.nav{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 18px;
+    background: #46546C;
+    height: 49px;
+    width: 216px;
+}
+
+.nav-text{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px;
+    width: 252px;
+}
+.nav-text-logo{
+    width: 20px;
+    height: 20px;
+}
+.nav-text-name{
+    font-family: Segoe UI;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 21px;
+    color: #FFFFFF;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
