@@ -11,6 +11,10 @@ const navs = [
 		name: 'Sports',
 		to: '/admin/sports'
 	},
+	{
+		name: 'Teams',
+		to: '/admin/teams'
+	},
 ];
 
 export default navs;
