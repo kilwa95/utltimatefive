@@ -9,7 +9,7 @@ import NavSearch from '../navSearch/NavSearch';
 import Body from '../body/Body';
 import './Layout.css';
 
-const Layout = () => {
+const Layout = (props) => {
     return (
         <div className="layout">
             <Sidebar>

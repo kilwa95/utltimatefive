@@ -1,17 +1,17 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router,HashRouter,Route,Routes } from 'react-router-dom';
+import {Route, Switch, BrowserRouter } from 'react-router-dom';
 import  Layout  from './components/layout/Layout';
 
 const App = () => {
   return (
-	  <div className="App">
-		<Router>
-			<Routes>
-				<Route path="/" element={<Layout />} />
-			</Routes>
-		</Router>
-	  </div>
+	<React.Suspense>
+		<BrowserRouter>
+			<Switch>
+				<Route path="/" name="Home" render={(props) => <Layout {...props} />} />
+			</Switch>
+		</BrowserRouter>
+	</React.Suspense>
   );
 }
 
