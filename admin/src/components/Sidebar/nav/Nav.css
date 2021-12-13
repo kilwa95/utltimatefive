@@ -3,12 +3,13 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 18px;
+    padding: 14px 18px;
     background: #46546C;
     height: 49px;
-    width: 216px;
+    width: 252px;
     cursor: pointer;
-}x
+    margin: 0px 0px;
+}
 
 .nav:hover{
     background: red;
@@ -30,6 +31,7 @@
     font-style: normal;
     font-weight: normal;
     line-height: 21px;
+    font-size: 14px; 
     color: #FFFFFF;
     text-decoration: none;
     margin-left: 20px;

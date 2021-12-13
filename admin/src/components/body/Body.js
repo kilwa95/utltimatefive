@@ -1,29 +1,20 @@
 import React from 'react';
-import {Route, Switch} from 'react-router-dom';
-import routes from '../../routes/routes';
+import {BrowserRouter,Redirect,Route, Switch} from 'react-router-dom';
+import UserPage from '../../views/UserPage';
+
 import './Body.css';
 
 const Body = () => {
     return (
         <div className="body">
-            <Switch>
-                {routes.map((route, index) => () => {
-                    return (
-                            <Route
-                                key={index}
-                                path={route.path}
-                                exact={route.exact}
-                                name={route.name}
-                                render={(props) => {
-                                    <route.provider>
-                                        <route.component {...props}/>
-                                    </route.provider>
-                                }}
-                            />
-                    );
-                })} 
-                {/* <Route path="*" element={<Navigate to ="/admin/users" />}/> */}
-            </Switch>
+            <React.Suspense>
+                <BrowserRouter>
+                    <Switch>
+                        <Route exact path="/admin/users" name="Home" render={(props) => <UserPage {...props} />} />
+                        <Redirect from="/admin" to="/admin/users" />
+                    </Switch>
+                </BrowserRouter>
+            </React.Suspense>
         </div>
     );
 }
