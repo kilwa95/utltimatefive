@@ -3,8 +3,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 14px 18px;
-    background: #46546C;
+    padding: 17px 21px;
     height: 49px;
     width: 252px;
     cursor: pointer;
@@ -12,7 +11,7 @@
 }
 
 .nav:hover{
-    background: red;
+    background: #46546C;
 }
 
 .nav-text{
@@ -25,15 +24,16 @@
 .nav-text-logo{
     width: 20px;
     height: 20px;
+    margin: 0px 18px;
 }
 .nav-text-name{
     font-family: Segoe UI;
     font-style: normal;
     font-weight: normal;
+    font-size: 18px;
     line-height: 21px;
-    font-size: 14px; 
     color: #FFFFFF;
     text-decoration: none;
-    margin-left: 20px;
+    margin: 0px 18px;
 }
 

@@ -7,7 +7,7 @@ const Nav = ({name,to,icon}) => {
     return (
         <nav className="nav">
             <div className="nav-text">
-                <span className="nav-text-logo">{icon}</span>
+                {/* <image className="nav-text-logo" src={icon}/> */}
                 <Link to={to} className="nav-text-name">{name}</Link>
             </div>
         </nav>
