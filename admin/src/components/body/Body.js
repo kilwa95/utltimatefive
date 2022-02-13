@@ -11,8 +11,8 @@ const Body = () => {
                 <BrowserRouter>
                     <Switch>
                         <Route exact path="/admin/users" name="Home" render={(props) => <UserPage {...props} />} />
-                        <Redirect from="/admin" to="/admin/users" />
                     </Switch>
+                        <Redirect from="/admin" to="/admin/users" />
                 </BrowserRouter>
             </React.Suspense>
         </div>
