@@ -21,7 +21,7 @@ router.post('/logout',logout);
 /**
  * API users
  */
-router.get('/users',authJwt,onlyAdmin,getListUsers);
+router.get('/users',getListUsers);// authJwt,onlyAdmin
 router.post('/users',createUser);
 router.get('/users/:uid',authJwt,isUserExist,getUserById);
 router.put('/users/:uid',authJwt,isUserExist,isSelfUser,updatePlayer);
@@ -30,7 +30,7 @@ router.patch('/users/:uid/disable',authJwt,isUserExist,disableUser);
 /**
  * API Match
  */
-router.get('/matchs',authJwt,getListMatchs);
+router.get('/matchs',getListMatchs); //authJwt
 router.post('/matchs',authJwt,onlyOrganizer,createMatch);
 router.get('/matchs/:mid',authJwt,isMatchExist,getMatchById);
 router.put('/matchs/:mid',authJwt,onlyOrganizer,isMatchExist,isSelfOrganizer,updateMatch);
