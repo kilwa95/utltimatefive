@@ -2,8 +2,7 @@ import React , {useState} from 'react';
 import {CButton,CModal,CModalHeader,CModalBody,CModalFooter} from '@coreui/react';
 
 
-const Modal = ({title,description,buttonTitle,children,modal,toggle}) => {
-
+const Modal = ({title,buttonTitle,children,modal,toggle}) => {
     return (
         <CModal
         show={modal}
@@ -11,7 +10,6 @@ const Modal = ({title,description,buttonTitle,children,modal,toggle}) => {
         >
         <CModalHeader closeButton>{title}</CModalHeader>
         <CModalBody>
-            <div>{description}</div>
             {children}
         </CModalBody>
         <CModalFooter>

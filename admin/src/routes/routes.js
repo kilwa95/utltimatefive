@@ -1,4 +1,5 @@
 import UserPage from '../views/UserPage';
+import MatchPage from '../views/MatchPage';
 
 const routes = [
     {
@@ -9,6 +10,11 @@ const routes = [
      path: '/admin/users',
      name: 'users',
      component: UserPage
+	},
+    {
+     path: '/admin/matchs',
+     name: 'matches',
+     component: MatchPage
 	},
 ]
 
