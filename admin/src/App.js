@@ -3,6 +3,7 @@ import './App.css';
 // import './scss/style.scss'
 import {Route, Switch, BrowserRouter } from 'react-router-dom';
 import  Layout  from './components/layout/Layout';
+import LoginPage from './views/LoginPage';
 
 
 const App = () => {
@@ -10,7 +11,8 @@ const App = () => {
 	<React.Suspense>
 		<BrowserRouter>
 			<Switch>
-				<Route path="/" name="Home" render={(props) => <Layout {...props} />} />
+				<Route exact path="/login" name="Home" render={(props) => <LoginPage {...props} />} />
+				<Route exact path="/" name="Home" render={(props) => <Layout {...props} />} />
 			</Switch>
 		</BrowserRouter>
 	</React.Suspense>
