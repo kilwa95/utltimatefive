@@ -1,30 +1,41 @@
-import React from 'react';
-import {BrowserRouter,Redirect,Route, Switch} from 'react-router-dom';
-import UserPage from '../../views/UserPage';
-import MatchPage from '../../views/MatchPage';
-import UserProvider from '../../contexts/UserContext';
-import MatchProvider from '../../contexts/MatchContext';
+import React, { Suspense } from "react";
+import { CContainer, CFade } from "@coreui/react";
+import { Redirect, Route, Switch } from "react-router-dom";
+import routes from "../../routes/routes";
 
+import "./Body.css";
 
-import './Body.css';
+const Body = (props) => {
+  return (
+    <div className="body">
+      <CContainer>
+        <Suspense>
+          <Switch>
+            {routes.map((route, index) => {
+              return (
+                route.component && (
+                  <Route
+                    key={index}
+                    path={route.path}
+                    exact={route.exact}
+                    name={route.name}
+                    render={(props) => (
+                      <CFade>
+                        <route.provider>
+                          <route.component {...props} />
+                        </route.provider>
+                      </CFade>
+                    )}
+                  />
+                )
+              );
+            })}
+            <Redirect from="/admin" to="/admin/merchants" />
+          </Switch>
+        </Suspense>
+      </CContainer>
+    </div>
+  );
+};
 
-const Body = () => {
-    return (
-        <div className="body">
-            <React.Suspense>
-                <BrowserRouter>
-                    <Switch>
-                        {/* <UserProvider>
-                            <Route exact path="/admin/users" name="users" render={(props) => <UserPage {...props} />} />
-                        </UserProvider> */}
-                        <MatchProvider>
-                            <Route exact path="/admin/matches" name="Matchs" render={(props) => <MatchPage {...props} />} />
-                        </MatchProvider>
-                    </Switch>
-                        {/* <Redirect from="/admin" to="/admin/users" /> */}
-                </BrowserRouter>
-            </React.Suspense>
-        </div>
-    );
-}
 export default Body;

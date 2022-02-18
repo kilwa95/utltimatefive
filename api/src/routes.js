@@ -39,8 +39,8 @@ router.post('/matchs/:mid/join',authJwt,onlyPlayer,isMatchExist,joinMatchPlayers
 /**
  * API levels
  */
-router.get('/levels',authJwt,getListLevels);
-router.post('/levels',authJwt,onlyAdmin,createLevel);
+router.get('/levels',getListLevels); //authJwt
+router.post('/levels',createLevel); //authJwt,onlyAdmin
 router.get('/levels/:lid',authJwt,isLevelExist,getLevelById);
 router.put('/levels/:lid',authJwt,isLevelExist,onlyAdmin,updateLevel);
 router.delete('/levels/:lid',authJwt,isLevelExist,onlyAdmin,deleteLevel);

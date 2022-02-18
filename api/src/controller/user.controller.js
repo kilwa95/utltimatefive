@@ -30,7 +30,7 @@ exports.getUserById = async (req, res) => {
 }
 
 exports.createUser = async (req, res) => {
-    const {firstName,lastName,email,password,birthday} = req.body;
+    const {firstName,lastName,email,password,birthday,roles} = req.body;
     if(Helper.isEmpty([firstName,lastName,email,password,birthday])) {
         res.status(Helper.HTTP.BAD_REQUEST).send('firstName, lastName, email, password, birthday is required');
     }
@@ -51,6 +51,7 @@ exports.createUser = async (req, res) => {
             password:Helper.sqlescstr(password),
             birthday:Helper.sqlescstr(birthday),
             levelId: Helper.level.silverA,
+            roles: roles
         });
         if(user) {
             res.status(Helper.HTTP.OK).json({

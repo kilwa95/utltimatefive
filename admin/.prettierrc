@@ -1,0 +1,6 @@
+{
+    "prettier.arrowParens": true,
+    "prettier.tabWidth": 4,
+    "prettier.eslintIntegration": true,
+    "prettier.stylelintIntegration": true
+}
