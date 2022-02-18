@@ -1,0 +1,39 @@
+.nav{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 17px 21px;
+    height: 49px;
+    width: 252px;
+    cursor: pointer;
+    margin: 0px 0px;
+}
+
+.nav:hover{
+    background: #46546C;
+}
+
+.nav-text{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px;
+    width: 252px;
+}
+.nav-text-logo{
+    width: 20px;
+    height: 20px;
+    margin: 0px 18px;
+}
+.nav-text-name{
+    font-family: Segoe UI;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    color: #FFFFFF;
+    text-decoration: none;
+    margin: 0px 18px;
+}
+

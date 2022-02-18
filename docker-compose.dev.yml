@@ -1,5 +1,18 @@
 version: "3.8"
 services:
+  admin:
+    build:
+      context: ./admin
+      dockerfile: Dockerfile.dev
+    volumes:
+      - type: bind
+        source: ./admin
+        target: /home/node/app
+      - type: volume
+        target: /home/node/app/node_modules
+    ports: 
+      - 4001:3000
+    
   api:
     build:
       context: ./api
@@ -8,6 +21,7 @@ services:
       PORT: 4000
       MONGO_URL: "mongodb://root:password@mongo/app"
       DATABASE_URL: "postgres://root:password@db/app"
+      SECRET_KEY: RXCT34ZE5GFDSFD756
     volumes:
       - type: bind
         source: ./api/src
