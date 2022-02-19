@@ -6,7 +6,7 @@ const navs = [
 	},
 	{
 		name: 'Matchs',
-		to: '/admin/matchs'
+		to: '/admin/matches'
 	},
 	{
 		name: 'Sports',
