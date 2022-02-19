@@ -56,29 +56,45 @@ export default function UserProvider({ children }) {
     getUsers();
   }, [getUsers]);
 
-  const value = useMemo(() => {
-    return {
-      fields,
-      users,
-      currentUser,
-      isLoading,
-      isError,
-      error,
-      getBadge,
-      getUsers,
-      setCurrentUser,
-    };
-  }, [
-    fields,
-    users,
-    currentUser,
-    isLoading,
-    isError,
-    error,
-    getBadge,
-    getUsers,
-    setCurrentUser,
-  ]);
+  // const value = useMemo(() => {
+  //   return {
+  //     fields,
+  //     users,
+  //     currentUser,
+  //     isLoading,
+  //     isError,
+  //     error,
+  //     getBadge,
+  //     getUsers,
+  //     setCurrentUser,
+  //   };
+  // }, [
+  //   fields,
+  //   users,
+  //   currentUser,
+  //   isLoading,
+  //   isError,
+  //   error,
+  //   getBadge,
+  //   getUsers,
+  //   setCurrentUser,
+  // ]);
 
-  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+  return (
+    <UserContext.Provider
+      value={{
+        fields,
+        users,
+        currentUser,
+        isLoading,
+        isError,
+        error,
+        getBadge,
+        getUsers,
+        setCurrentUser,
+      }}
+    >
+      {children}
+    </UserContext.Provider>
+  );
 }

@@ -1,15 +1,6 @@
 import React, { useState, useContext } from "react";
-import {
-  CDataTable,
-  CCard,
-  CCardBody,
-  CContainer,
-  CRow,
-  CButton,
-  CBadge,
-} from "@coreui/react";
+import { CDataTable, CCard, CCardBody, CContainer, CRow } from "@coreui/react";
 import Modal from "../components/modal/Modal";
-import Switch from "../components/switch/Switch";
 import { UserContext } from "../contexts/UserContext";
 
 const UserPage = () => {
@@ -61,16 +52,6 @@ const UserPage = () => {
                   level: (item) => {
                     return <td className="py-2">{item.level.name}</td>;
                   },
-                  enable: (item) => {
-                    return <Switch item={item} />;
-                  },
-                  // status: (item) => {
-                  //     <td className="py-2">
-                  //     <CBadge color={getBadge(item.status)}>
-                  //       {item.status}
-                  //     </CBadge>
-                  //   </td>
-                  // }
                 }}
               />
             </CCardBody>
