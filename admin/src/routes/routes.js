@@ -17,7 +17,7 @@ const routes = [
   {
     path: "/admin/matchs",
     name: "matches",
-    provide: MatchProvider,
+    provider: MatchProvider,
     component: MatchPage,
   },
 ];

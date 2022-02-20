@@ -2,14 +2,21 @@ import React, { useState, useContext } from "react";
 import { CDataTable, CCard, CCardBody, CContainer, CRow } from "@coreui/react";
 import Modal from "../components/modal/Modal";
 import { UserContext } from "../contexts/UserContext";
+import { SecurityContext } from "../contexts/SecurityContext";
+import { Redirect } from "react-router-dom";
 
 const UserPage = () => {
   const [modal, setModal] = useState(false);
   const { fields, users, isLoading, getBadge } = useContext(UserContext);
+  const { token } = useContext(SecurityContext);
 
   const toggle = () => {
     setModal(!modal);
   };
+
+  if (!token) {
+    return <Redirect to="/login" />;
+  }
 
   return (
     <CContainer>
