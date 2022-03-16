@@ -13,6 +13,7 @@ const App = () => {
           <BrowserRouter>
             <Switch>
               <Route
+                exact
                 path="/login"
                 name="login"
                 render={(props) => <LoginPage {...props} />}
