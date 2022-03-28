@@ -16,6 +16,40 @@ export const Div = styled.div`
   align-items: ${(props) => props.alignItems};
   align-self: ${(props) => props.alignSelf};
 `
+export const Header = styled.div`
+  box-shadow: 0 0px 20px 0px rgb(0 0 0 / 10%);
+  padding-left: 32px;
+  padding-right: 32px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+`
+export const Menu = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-height: 64px;
+  width: 100%;
+`
+export const MenuWrap = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+`
+export const Logo = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+export const MenuItems = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`
+
 export const Text = styled.p`
   font-feature-settings: 'pnum' on, 'lnum' on;
   font-family: Mulish;
@@ -25,6 +59,7 @@ export const Text = styled.p`
   font-weight: 700;
   color: #333333;
   cursor: 'pointer';
+  margin: 0px;
 `
 export const Button = styled.button`
   display: inline-block;
