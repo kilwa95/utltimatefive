@@ -50,7 +50,12 @@ const NavBar = () => {
             >
               sign in
             </Button>
-            <Button variant="outlined">sign Up</Button>
+            <Button
+              onClick={() => history.push('/register')}
+              variant="outlined"
+            >
+              sign Up
+            </Button>
           </MenuItems>
         </MenuWrap>
       </Menu>
