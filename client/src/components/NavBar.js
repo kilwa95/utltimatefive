@@ -1,8 +1,10 @@
 import React from 'react'
 import { Header, Menu, MenuWrap, Logo, MenuItems } from '../style/styled'
 import { Link, Button } from '@mui/material'
+import { useHistory } from 'react-router-dom'
 
 const NavBar = () => {
+  let history = useHistory()
   return (
     <Header>
       <Menu>
@@ -41,7 +43,11 @@ const NavBar = () => {
             >
               about us
             </Link>
-            <Button style={{ marginRight: '16px' }} variant="contained">
+            <Button
+              onClick={() => history.push('/login')}
+              style={{ marginRight: '16px' }}
+              variant="contained"
+            >
               sign in
             </Button>
             <Button variant="outlined">sign Up</Button>

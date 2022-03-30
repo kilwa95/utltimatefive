@@ -61,7 +61,6 @@ const MatchPage = () => {
               itemsPerPage={5}
               columnFilter
               pagination
-              columnFilter
               tableFilter
               sorter
               hover
