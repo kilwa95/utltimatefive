@@ -67,30 +67,6 @@ export default function MatchProvider({ children }) {
     [details]
   );
 
-  // const value = useMemo(() => {
-  //   return {
-  //     matches,
-  //     isLoading,
-  //     isError,
-  //     error,
-  //     fields,
-  //     modal,
-  //     details,
-  //     toggle,
-  //     toggleDetails,
-  //   };
-  // }, [
-  //   matches,
-  //   isLoading,
-  //   isError,
-  //   error,
-  //   fields,
-  //   modal,
-  //   details,
-  //   toggle,
-  //   toggleDetails,
-  // ]);
-
   return (
     <MatchContext.Provider
       value={{

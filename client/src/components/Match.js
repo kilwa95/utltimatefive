@@ -7,22 +7,22 @@ import {
   Typography,
 } from '@mui/material'
 
-const Match = () => {
+const Match = ({ salle, level, organizer, ville }) => {
   return (
     <>
       <Card sx={{ minWidth: 500, maxWidth: 500, marginBottom: '32px' }}>
         <CardContent>
           <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-            Niveux
+            Niveux: {level}
           </Typography>
           <Typography variant="h5" component="div">
-            MatcheName
+            salle: {salle}
           </Typography>
           <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            Ville
+            Organizer: {organizer}
           </Typography>
           <Typography variant="body2">
-            well meaning and kindly.
+            ville: {ville}
             <br />
             {'"a benevolent smile"'}
           </Typography>

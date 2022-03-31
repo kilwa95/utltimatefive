@@ -5,6 +5,7 @@ import LoginPage from './views/LoginPage'
 import RegisterPage from './views/RegisterPage'
 import SecurityProvider from './contexts/SecurityContext'
 import UserProvider from './contexts/UserContext'
+import MatchProvider from './contexts/MatchContext'
 import './App.css'
 
 const App = () => {
@@ -27,12 +28,14 @@ const App = () => {
                   name="login"
                   render={(props) => <LoginPage {...props} />}
                 />
-                <Route
-                  exact
-                  path="/"
-                  name="Home"
-                  render={(props) => <HomePage {...props} />}
-                />
+                <MatchProvider>
+                  <Route
+                    exact
+                    path="/"
+                    name="Home"
+                    render={(props) => <HomePage {...props} />}
+                  />
+                </MatchProvider>
               </Switch>
             </BrowserRouter>
           </React.Suspense>
