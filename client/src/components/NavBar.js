@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Header, Menu, MenuWrap, Logo, MenuItems } from '../style/styled'
-import { Link, Button } from '@mui/material'
+import { Link, Button, Avatar } from '@mui/material'
+import { deepOrange } from '@mui/material/colors'
 import { useHistory } from 'react-router-dom'
+import { SecurityContext } from '../contexts/SecurityContext'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 
 const NavBar = () => {
-  let history = useHistory()
+  const history = useHistory()
+  const { token, logout } = useContext(SecurityContext)
+
   return (
     <Header>
       <Menu>
@@ -43,19 +48,32 @@ const NavBar = () => {
             >
               about us
             </Link>
-            <Button
-              onClick={() => history.push('/login')}
-              style={{ marginRight: '16px' }}
-              variant="contained"
-            >
-              sign in
-            </Button>
-            <Button
-              onClick={() => history.push('/register')}
-              variant="outlined"
-            >
-              sign Up
-            </Button>
+            {token ? (
+              <>
+                <ExitToAppIcon
+                  style={{ cursor: 'pointer', marginRight: '16px' }}
+                  fontSize="medium"
+                  onClick={logout}
+                />
+                <Avatar sx={{ bgcolor: deepOrange[500] }}>N</Avatar>
+              </>
+            ) : (
+              <>
+                <Button
+                  onClick={() => history.push('/login')}
+                  style={{ marginRight: '16px' }}
+                  variant="contained"
+                >
+                  sign in
+                </Button>
+                <Button
+                  onClick={() => history.push('/register')}
+                  variant="outlined"
+                >
+                  sign Up
+                </Button>
+              </>
+            )}
           </MenuItems>
         </MenuWrap>
       </Menu>
