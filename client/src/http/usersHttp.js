@@ -21,12 +21,16 @@ const usersHttp = {
     })
     return result
   },
-  updateUser: async function (uid) {
-    const result = await axios.put(`http://localhost:4000/users/${uid}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+  updateUser: async function (uid, values) {
+    const result = await axios.put(
+      `http://localhost:4000/users/${uid}`,
+      values,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
       },
-    })
+    )
     return result
   },
 }

@@ -6,11 +6,9 @@ import {
   useContext,
 } from 'react'
 import usersHttp from '../http/usersHttp'
-import { useHistory } from 'react-router-dom'
 
 export const UserContext = createContext()
 export default function UserProvider({ children }) {
-  const history = useHistory()
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
   const [error, setError] = useState(null)

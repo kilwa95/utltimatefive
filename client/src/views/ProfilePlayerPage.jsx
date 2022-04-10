@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { SecurityContext } from "../contexts/SecurityContext";
 import { UserContext } from "../contexts/UserContext";
 import { Redirect } from "react-router-dom";
@@ -13,7 +13,38 @@ import Button from "@mui/material/Button";
 
 const ProfilePlayerPage = () => {
   const { token, user } = useContext(SecurityContext);
-  const { userCurrent, isLoading, getUserInfo } = useContext(UserContext);
+  const { userCurrent, isLoading, getUserInfo, updateUser } = useContext(
+    UserContext
+  );
+
+  const [ values, setValues ] = useState({
+    firstName: false,
+    lastName: false,
+    email: false,
+    password: false,
+    birthday: false,
+    roles: [ "player" ]
+  });
+
+  const handleChange = (event) => {
+    setValues({
+      ...values,
+      [event.target.name]: event.target.value
+    });
+  };
+  const _onSubmit = (event) => {
+    event.preventDefault();
+    window.location.reload(true);
+    updateUser(user.id, {
+      firstName: values.firstName || userCurrent.firstName,
+      lastName: values.lastName || userCurrent.lastName,
+      email: values.email || userCurrent.email,
+      password: values.password || userCurrent.password,
+      birthday: values.birthday || userCurrent.birthday,
+      roles: values.roles
+    });
+    setValues({});
+  };
 
   useEffect(() => {
     getUserInfo();
@@ -42,6 +73,8 @@ const ProfilePlayerPage = () => {
             </Typography>
             <Box
               component="form"
+              onSubmit={_onSubmit}
+              noValidate
               sx={{
                 marginTop: "16px",
                 "& .MuiTextField-root": { m: 1, width: "25ch" }
@@ -49,35 +82,45 @@ const ProfilePlayerPage = () => {
             >
               <Box component="div">
                 <TextField
+                  onChange={handleChange}
                   id="outlined-basic"
                   label="firstName"
                   variant="outlined"
-                  defaultValue={userCurrent.firstName}
+                  name="firstName"
+                  defaultValue={userCurrent ? userCurrent.firstName : ""}
                 />
                 <TextField
+                  onChange={handleChange}
                   id="outlined-basic"
                   label="lastName"
                   variant="outlined"
-                  defaultValue={userCurrent.lastName}
+                  name="lastName"
+                  defaultValue={userCurrent ? userCurrent.lastName : ""}
                 />
                 <TextField
+                  onChange={handleChange}
                   id="outlined-basic"
                   label="email"
                   variant="outlined"
-                  defaultValue={userCurrent.email}
+                  name="email"
+                  defaultValue={userCurrent ? userCurrent.email : ""}
                 />
                 <TextField
+                  onChange={handleChange}
                   id="outlined-password-input"
                   label="Password"
                   type="password"
-                  defaultValue={userCurrent.password}
+                  name="password"
+                  defaultValue={userCurrent ? userCurrent.password : ""}
                 />
                 <TextField
+                  onChange={handleChange}
                   disabled
                   id="outlined-basic"
                   label="level"
                   variant="outlined"
-                  defaultValue={userCurrent.level.name}
+                  name="level"
+                  defaultValue={userCurrent ? userCurrent.level.name : ""}
                 />
               </Box>
               <Box sx={{ marginTop: "16px" }}>
