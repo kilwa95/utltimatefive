@@ -17,7 +17,7 @@ import {
 const Match = ({ salle, level, organizer, ville, isLoading }) => {
   return (
     <>
-      <Card sx={{ minWidth: 500, maxWidth: 500, marginBottom: '32px' }}>
+      <Card sx={{ maxWidth: 345, marginBottom: '32px', marginLeft: '16px' }}>
         <CardHeader
           avatar={
             isLoading ? (

@@ -6,6 +6,7 @@ import RegisterPage from './views/RegisterPage'
 import SecurityProvider from './contexts/SecurityContext'
 import UserProvider from './contexts/UserContext'
 import MatchProvider from './contexts/MatchContext'
+import ProfilePlayerPage from './views/ProfilePlayerPage'
 import './App.css'
 
 const App = () => {
@@ -21,6 +22,12 @@ const App = () => {
                   path="/register"
                   name="register"
                   render={(props) => <RegisterPage {...props} />}
+                />
+                <Route
+                  exact
+                  path="/profilePlayer"
+                  name="profilePlayer"
+                  render={(props) => <ProfilePlayerPage {...props} />}
                 />
                 <Route
                   exact

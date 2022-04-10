@@ -4,7 +4,8 @@ const swaggerDocument = require('./swagger.json')
 const {
   getListUsers,
   getUserById,
-  createUser,
+  createPlayer,
+  createOrganizer,
   updatePlayer,
   removeUser,
   disableUser,
@@ -71,16 +72,17 @@ router.post('/logout', logout)
 /**
  * API users
  */
-router.get('/users', authJwt, onlyAdmin, getListUsers)
-router.post('/users', createUser)
-router.get('/users/:uid', authJwt, isUserExist, getUserById)
+router.get('/users', authJwt, getListUsers)
+router.post('/players', createPlayer)
+router.post('/organizers', createOrganizer)
+router.get('/users/info', authJwt, isUserExist, getUserById)
 router.put('/users/:uid', authJwt, isUserExist, isSelfUser, updatePlayer)
 router.delete('/users/:uid', authJwt, isUserExist, isSelfUser, removeUser)
 router.patch('/users/:uid/disable', authJwt, isUserExist, disableUser)
 /**
  * API Match
  */
-router.get('/matchs', authJwt, getListMatchs)
+router.get('/matchs', getListMatchs)
 router.post('/matchs', authJwt, onlyOrganizer, createMatch)
 router.get('/matchs/:mid', authJwt, isMatchExist, getMatchById)
 router.put(
@@ -110,7 +112,7 @@ router.post(
  * API levels
  */
 router.get('/levels', authJwt, getListLevels)
-router.post('/levels', authJwt, onlyAdmin, createLevel)
+router.post('/levels', createLevel) //authJwt, onlyAdmin
 router.get('/levels/:lid', authJwt, isLevelExist, getLevelById)
 router.put('/levels/:lid', authJwt, isLevelExist, onlyAdmin, updateLevel)
 router.delete('/levels/:lid', authJwt, isLevelExist, onlyAdmin, deleteLevel)

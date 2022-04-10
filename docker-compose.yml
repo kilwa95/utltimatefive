@@ -43,6 +43,7 @@ services:
     depends_on:
       - mongo
       - db
+    restart: always
 
   mongo:
     image: mongo

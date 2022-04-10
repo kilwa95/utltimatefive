@@ -142,7 +142,8 @@ exports.onlyCaptiner = (req, res, next) => {
 }
 exports.isSelfUser = (req, res, next) => {
   try {
-    const uid = req.params.uid || req.body.uid || req.query.uid
+    const uid =
+      req.params.uid || req.body.uid || req.query.uid || req.decoded.id
     if (req.decoded && req.decoded.id == uid) {
       return next()
     }
@@ -207,7 +208,8 @@ exports.isSelfUserOrAdmin = (req, res, next) => {
 
 exports.isUserExist = async (req, res, next) => {
   try {
-    const uid = req.params.uid || req.body.uid || req.query.uid
+    const uid =
+      req.params.uid || req.body.uid || req.query.uid || req.decoded.id
     if (Helper.isEmpty([uid])) {
       res.status(Helper.HTTP.BAD_REQUEST).send('uid is required')
     }
