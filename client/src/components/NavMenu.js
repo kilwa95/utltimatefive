@@ -100,7 +100,7 @@ const NavMenu = () => {
               <Button
                 sx={{ marginLeft: '16px' }}
                 variant="contained"
-                onClick={() => history.push('/register')}
+                onClick={() => history.push('/registerOrganizer')}
                 color="error"
               >
                 espace organizer

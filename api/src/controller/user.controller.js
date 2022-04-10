@@ -74,17 +74,14 @@ exports.createPlayer = async (req, res) => {
   }
 }
 exports.createOrganizer = async (req, res) => {
-  const { firstName, lastName, email, password, birthday } = req.body
-  if (Helper.isEmpty([firstName, lastName, email, password, birthday])) {
+  const { firstName, lastName, email, password } = req.body
+  if (Helper.isEmpty([firstName, lastName, email, password])) {
     res
       .status(Helper.HTTP.BAD_REQUEST)
       .send('firstName, lastName, email, password, birthday is required')
   }
   if (!Helper.validateEmail(email)) {
     res.status(Helper.HTTP.BAD_REQUEST).send('email is invalid')
-  }
-  if (!Helper.validateDate(birthday)) {
-    res.status(Helper.HTTP.BAD_REQUEST).send('birthday is invalid')
   }
   if (!Helper.validatePassword(password)) {
     res.status(Helper.HTTP.BAD_REQUEST).send('password is invalid')
@@ -95,7 +92,6 @@ exports.createOrganizer = async (req, res) => {
       lastName: Helper.sqlescstr(lastName),
       email: Helper.sqlescstr(email),
       password: Helper.sqlescstr(password),
-      birthday: Helper.sqlescstr(birthday),
       levelId: Helper.level.silverA,
       roles: ['organizer'],
     })

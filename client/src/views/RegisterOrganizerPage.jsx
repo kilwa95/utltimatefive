@@ -15,17 +15,15 @@ import { useHistory } from "react-router-dom";
 
 const theme = createTheme();
 
-const RegisterPage = () => {
+const RegisterOrganizerPage = () => {
   const history = useHistory();
   const [ values, setValues ] = useState({
     firstName: "",
     lastName: "",
     email: "",
-    password: "",
-    birthday: "",
-    roles: [ "player" ]
+    password: ""
   });
-  const { signup, isError } = useContext(UserContext);
+  const { signupOrganizer, isError } = useContext(UserContext);
 
   const handleChange = (event) => {
     setValues({
@@ -35,7 +33,7 @@ const RegisterPage = () => {
   };
   const _onSubmit = (event) => {
     event.preventDefault();
-    signup(values);
+    signupOrganizer(values);
     if (!isError) {
       history.push("/login");
     }
@@ -56,7 +54,7 @@ const RegisterPage = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Esapce player
+            Esapce organizer
           </Typography>
           <Box component="form" noValidate onSubmit={_onSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
@@ -106,16 +104,6 @@ const RegisterPage = () => {
                   autoComplete="password"
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  onChange={handleChange}
-                  required
-                  fullWidth
-                  name="birthday"
-                  type="date"
-                  id="birthday"
-                />
-              </Grid>
             </Grid>
             <Button
               type="submit"
@@ -143,4 +131,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default RegisterOrganizerPage;

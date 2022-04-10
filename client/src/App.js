@@ -7,6 +7,7 @@ import SecurityProvider from './contexts/SecurityContext'
 import UserProvider from './contexts/UserContext'
 import MatchProvider from './contexts/MatchContext'
 import ProfilePlayerPage from './views/ProfilePlayerPage'
+import RegisterOrganizerPage from './views/RegisterOrganizerPage'
 import './App.css'
 
 const App = () => {
@@ -17,6 +18,12 @@ const App = () => {
           <React.Suspense>
             <BrowserRouter>
               <Switch>
+                <Route
+                  exact
+                  path="/registerOrganizer"
+                  name="registerOrganizer"
+                  render={(props) => <RegisterOrganizerPage {...props} />}
+                />
                 <Route
                   exact
                   path="/register"
