@@ -2,6 +2,7 @@ const { Model, DataTypes } = require('sequelize')
 const bcrypt = require('bcryptjs')
 const connection = require('../../config/sequelize')
 const Level = require('./Level')
+const Address = require('./Address')
 
 class User extends Model {}
 User.init(
@@ -40,6 +41,9 @@ const haschPassword = async (user) => {
 
 User.belongsTo(Level, { as: 'level' })
 Level.hasMany(User, { foreignKey: 'levelId', as: 'users' })
+
+User.belongsTo(Address, { as: 'address' })
+Address.hasOne(User, { foreignKey: 'addressId', as: 'user' })
 
 User.addHook('beforeCreate', haschPassword)
 User.addHook('beforeUpdate', haschPassword)

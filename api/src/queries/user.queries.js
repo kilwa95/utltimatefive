@@ -1,5 +1,6 @@
 const User = require('../models/sequelize/User')
 const Level = require('../models/sequelize/Level')
+const Address = require('../models/sequelize/Address')
 
 exports.saveUser = async (data) => {
   try {
@@ -29,6 +30,7 @@ exports.findAllUsers = async () => {
           as: 'level',
           attributes: ['name'],
         },
+        { model: Address, as: 'address' },
       ],
     })
   } catch (error) {
@@ -56,6 +58,7 @@ exports.findUserById = async (uid) => {
           as: 'level',
           attributes: ['name'],
         },
+        { model: Address, as: 'address' },
       ],
       where: {
         id: uid,

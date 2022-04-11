@@ -72,7 +72,7 @@ router.post('/logout', logout)
 /**
  * API users
  */
-router.get('/users', authJwt, getListUsers)
+router.get('/users', getListUsers) //authJwt
 router.post('/players', createPlayer)
 router.post('/organizers', createOrganizer)
 router.get('/users/info', authJwt, isUserExist, getUserById)

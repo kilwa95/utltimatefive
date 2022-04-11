@@ -23,6 +23,9 @@ const RegisterPage = () => {
     email: "",
     password: "",
     birthday: "",
+    road: "",
+    city: "",
+    postalcode: "",
     roles: [ "player" ]
   });
   const { signup, isError } = useContext(UserContext);
@@ -114,6 +117,36 @@ const RegisterPage = () => {
                   name="birthday"
                   type="date"
                   id="birthday"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  onChange={handleChange}
+                  required
+                  fullWidth
+                  name="road"
+                  label="road"
+                  id="road"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  onChange={handleChange}
+                  required
+                  fullWidth
+                  name="city"
+                  label="city"
+                  id="ciity"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  onChange={handleChange}
+                  required
+                  fullWidth
+                  name="postalcode"
+                  label="postalcode"
+                  id="postalcode"
                 />
               </Grid>
             </Grid>

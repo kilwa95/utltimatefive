@@ -47,7 +47,7 @@ const NavMenu = () => {
           <Button color="inherit">Matches</Button>
           <Button color="inherit">Teams</Button>
           <Button color="inherit"> about us</Button>
-          {token ? (
+          {token && user?.isPlayer ? (
             <>
               <div>
                 <IconButton

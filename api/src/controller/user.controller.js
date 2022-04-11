@@ -5,6 +5,10 @@ const {
   updateUser,
   deleteUser,
 } = require('../queries/user.queries')
+const {
+  saveAddress,
+  updateOrCreateAddress,
+} = require('../queries/address.queries')
 const Helper = require('../Helper')
 
 exports.getListUsers = async (req, res) => {
@@ -35,7 +39,16 @@ exports.getUserById = async (req, res) => {
 }
 
 exports.createPlayer = async (req, res) => {
-  const { firstName, lastName, email, password, birthday } = req.body
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+    birthday,
+    road,
+    postalcode,
+    city,
+  } = req.body
   if (Helper.isEmpty([firstName, lastName, email, password, birthday])) {
     res
       .status(Helper.HTTP.BAD_REQUEST)
@@ -50,6 +63,11 @@ exports.createPlayer = async (req, res) => {
   if (!Helper.validatePassword(password)) {
     res.status(Helper.HTTP.BAD_REQUEST).send('password is invalid')
   }
+  const address = await saveAddress({
+    road: Helper.sqlescstr(road),
+    postalcode: postalcode,
+    city: Helper.sqlescstr(city),
+  })
   try {
     const user = await saveUser({
       firstName: Helper.sqlescstr(firstName),
@@ -58,6 +76,7 @@ exports.createPlayer = async (req, res) => {
       password: Helper.sqlescstr(password),
       birthday: Helper.sqlescstr(birthday),
       levelId: Helper.level.silverA,
+      addressId: address.id,
       roles: ['player'],
     })
     if (user) {
@@ -109,7 +128,16 @@ exports.createOrganizer = async (req, res) => {
   }
 }
 exports.updatePlayer = async (req, res) => {
-  const { firstName, lastName, email, password, birthday } = req.body
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+    birthday,
+    road,
+    city,
+    postalcode,
+  } = req.body
 
   if (Helper.isEmpty([req.params.uid])) {
     res.status(Helper.HTTP.BAD_REQUEST).send('uid is required')
@@ -125,12 +153,19 @@ exports.updatePlayer = async (req, res) => {
   }
   try {
     const uid = parseInt(req.params.uid)
+    const address = await updateOrCreateAddress({
+      road: Helper.sqlescstr(road),
+      postalcode: postalcode,
+      city: Helper.sqlescstr(city),
+    })
+    console.log('address', address)
     const user = await updateUser(uid, {
       firstName: Helper.sqlescstr(firstName),
       lastName: Helper.sqlescstr(lastName),
       email: Helper.sqlescstr(email),
       password: Helper.sqlescstr(password),
       birthday: Helper.sqlescstr(birthday),
+      addressId: address.id,
     })
     if (user) {
       res.status(Helper.HTTP.OK).json({

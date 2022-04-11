@@ -23,6 +23,9 @@ const ProfilePlayerPage = () => {
     email: false,
     password: false,
     birthday: false,
+    road: false,
+    city: false,
+    postalcode: false,
     roles: [ "player" ]
   });
 
@@ -41,7 +44,10 @@ const ProfilePlayerPage = () => {
       email: values.email || userCurrent.email,
       password: values.password || userCurrent.password,
       birthday: values.birthday || userCurrent.birthday,
-      roles: values.roles
+      road: values.road || userCurrent.address?.road,
+      city: values.city || userCurrent.address?.city,
+      postalcode: values.postalcode || userCurrent.address?.postalcode,
+      roles: values.roles,
     });
     setValues({});
   };
@@ -120,7 +126,31 @@ const ProfilePlayerPage = () => {
                   label="level"
                   variant="outlined"
                   name="level"
-                  defaultValue={userCurrent ? userCurrent.level.name : ""}
+                  defaultValue={userCurrent ? userCurrent.level?.name : ""}
+                />
+                <TextField
+                  onChange={handleChange}
+                  id="outlined-basic"
+                  label="road"
+                  variant="outlined"
+                  name="road"
+                  defaultValue={userCurrent ? userCurrent.address?.road : ""}
+                />
+                <TextField
+                  onChange={handleChange}
+                  id="outlined-basic"
+                  label="city"
+                  variant="outlined"
+                  name="city"
+                  defaultValue={userCurrent ? userCurrent.address?.city : ""}
+                />
+                <TextField
+                  onChange={handleChange}
+                  id="outlined-basic"
+                  label="postalcode"
+                  variant="outlined"
+                  name="postalcode"
+                  defaultValue={userCurrent ? userCurrent.address?.postalcode : ""}
                 />
               </Box>
               <Box sx={{ marginTop: "16px" }}>
