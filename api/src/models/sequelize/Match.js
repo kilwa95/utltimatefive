@@ -8,6 +8,7 @@ Match.init(
   {
     salle: { type: DataTypes.STRING, allowNull: false },
     ville: { type: DataTypes.STRING, allowNull: false },
+    image: { type: DataTypes.STRING, allowNull: true },
     status: {
       type: DataTypes.STRING,
       allowNull: false,

@@ -42,7 +42,7 @@ exports.getMatchById = async (req, res) => {
 }
 
 exports.createMatch = async (req, res) => {
-  const { ville, salle, levelId } = req.body
+  const { ville, salle, levelId, image } = req.body
   console.log(req.body)
 
   if (Helper.isEmpty([salle, levelId])) {
@@ -53,6 +53,7 @@ exports.createMatch = async (req, res) => {
     const match = await saveMatch({
       salle: Helper.sqlescstr(salle),
       ville: Helper.sqlescstr(ville),
+      image: Helper.sqlescstr(image),
       levelId: parseInt(levelId),
       organizerId: parseInt(organizerId),
     })

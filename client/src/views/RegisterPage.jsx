@@ -17,6 +17,7 @@ const theme = createTheme();
 
 const RegisterPage = () => {
   const history = useHistory();
+  const [ image, setImage ] = useState(null);
   const [ values, setValues ] = useState({
     firstName: "",
     lastName: "",
@@ -29,6 +30,7 @@ const RegisterPage = () => {
     roles: [ "player" ]
   });
   const { signup, isError } = useContext(UserContext);
+  console.log("debugger", { image: image, values: values });
 
   const handleChange = (event) => {
     setValues({
@@ -36,9 +38,10 @@ const RegisterPage = () => {
       [event.target.name]: event.target.value
     });
   };
+
   const _onSubmit = (event) => {
     event.preventDefault();
-    signup(values);
+    signup({ ...values, image: image });
     if (!isError) {
       history.push("/login");
     }
@@ -147,6 +150,16 @@ const RegisterPage = () => {
                   name="postalcode"
                   label="postalcode"
                   id="postalcode"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  onChange={(e) =>
+                    setImage(URL.createObjectURL(e.target.files[0]))}
+                  required
+                  fullWidth
+                  id="file"
+                  type="file"
                 />
               </Grid>
             </Grid>

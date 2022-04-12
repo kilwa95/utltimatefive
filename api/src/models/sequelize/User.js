@@ -23,6 +23,7 @@ User.init(
       defaultValue: ['user'],
     },
     birthday: { type: DataTypes.DATEONLY, allowNull: true },
+    image: { type: DataTypes.STRING, allowNull: true },
     status: {
       type: DataTypes.STRING,
       allowNull: false,

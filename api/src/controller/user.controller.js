@@ -39,6 +39,7 @@ exports.getUserById = async (req, res) => {
 }
 
 exports.createPlayer = async (req, res) => {
+  console.log(req.file)
   const {
     firstName,
     lastName,
@@ -48,6 +49,7 @@ exports.createPlayer = async (req, res) => {
     road,
     postalcode,
     city,
+    image,
   } = req.body
   if (Helper.isEmpty([firstName, lastName, email, password, birthday])) {
     res
@@ -75,6 +77,7 @@ exports.createPlayer = async (req, res) => {
       email: Helper.sqlescstr(email),
       password: Helper.sqlescstr(password),
       birthday: Helper.sqlescstr(birthday),
+      image: Helper.sqlescstr(image),
       levelId: Helper.level.silverA,
       addressId: address.id,
       roles: ['player'],

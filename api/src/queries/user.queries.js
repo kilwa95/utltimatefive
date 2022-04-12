@@ -23,6 +23,7 @@ exports.findAllUsers = async () => {
         'roles',
         'birthday',
         'status',
+        'image',
       ],
       include: [
         {
@@ -51,6 +52,7 @@ exports.findUserById = async (uid) => {
         'roles',
         'birthday',
         'status',
+        'image',
       ],
       include: [
         {

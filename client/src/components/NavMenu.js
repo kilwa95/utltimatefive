@@ -47,7 +47,7 @@ const NavMenu = () => {
           <Button color="inherit">Matches</Button>
           <Button color="inherit">Teams</Button>
           <Button color="inherit"> about us</Button>
-          {token && user?.isPlayer ? (
+          {token ? (
             <>
               <div>
                 <IconButton
@@ -78,6 +78,26 @@ const NavMenu = () => {
                   >
                     {/* <MenuItem onClick={handleClose}>{user.email}</MenuItem> */}
                     <MenuItem onClick={handlePlayer}>My account</MenuItem>
+                    <MenuItem onClick={logout}>logout</MenuItem>
+                  </Menu>
+                ) : user?.isOrganizer ? (
+                  <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                  >
+                    {/* <MenuItem onClick={handleClose}>{user.email}</MenuItem> */}
+                    <MenuItem>add new match</MenuItem>
                     <MenuItem onClick={logout}>logout</MenuItem>
                   </Menu>
                 ) : (
