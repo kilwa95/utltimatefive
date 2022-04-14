@@ -65,7 +65,7 @@ router.use(express.json())
 // Swagger UI
 router.use('/api', swaggerUi.serve)
 router.get('/api', swaggerUi.setup(swaggerDocument))
-/**
+/**s
  * API Auth
  */
 router.post('/login', login)

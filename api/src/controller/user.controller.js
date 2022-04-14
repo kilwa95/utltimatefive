@@ -118,7 +118,7 @@ exports.createOrganizer = async (req, res) => {
       roles: ['organizer'],
     })
     if (user) {
-      res.status(Helper.HTTP.OK).json({
+      res.status(Helper.HTTP.CREATED).json({
         message: `User ${user.id} created`,
         data: user,
       })
