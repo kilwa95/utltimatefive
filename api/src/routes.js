@@ -74,9 +74,9 @@ router.post('/logout', logout)
  * API users
  */
 router.post('/players', createPlayer)
+router.put('/players/:uid', authJwt, isUserExist, isSelfUser, updatePlayer)
 router.post('/organizers', createOrganizer)
 router.get('/users/info', authJwt, isUserExist, getUserById)
-router.put('/users/:uid', authJwt, isUserExist, isSelfUser, updatePlayer)
 router.delete('/users/:uid', authJwt, isUserExist, removeUser) //isSelfUser
 router.patch('/users/:uid/disable', authJwt, isUserExist, disableUser)
 /**

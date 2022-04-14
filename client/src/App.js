@@ -8,6 +8,7 @@ import UserProvider from './contexts/UserContext'
 import MatchProvider from './contexts/MatchContext'
 import ProfilePlayerPage from './views/ProfilePlayerPage'
 import RegisterOrganizerPage from './views/RegisterOrganizerPage'
+import ProfileOrganizerPage from './views/ProfileOrganizerPage'
 import './App.css'
 
 const App = () => {
@@ -35,6 +36,12 @@ const App = () => {
                   path="/profilePlayer"
                   name="profilePlayer"
                   render={(props) => <ProfilePlayerPage {...props} />}
+                />
+                <Route
+                  exact
+                  path="/profileOrganizer"
+                  name="ProfileOrganizer"
+                  render={(props) => <ProfileOrganizerPage {...props} />}
                 />
                 <Route
                   exact

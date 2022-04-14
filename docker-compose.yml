@@ -68,8 +68,39 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data:rw
 
+  mariadb:
+    image: mariadb:10
+    command: --max-allowed-packet=64MB
+    restart: unless-stopped
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+    volumes:
+      -  maria-db:/var/lib/mysql
+    env_file:
+      - ./.mysql.env
+  app:
+    image: matomo:3
+    restart: unless-stopped
+    volumes:
+      - matomo:/var/www/html
+    ports:
+      - 8080:80
+    environment:
+      VIRTUAL_HOST: ${MATOMO_URL}
+    env_file:
+      - ./.matomo.env
+    labels:
+      traefik.enable: true
+      traefik.docker.network: traefik_web
+      traefik.http.services.matomo.loadbalancer.server.port: 80
+      traefik.http.routers.matomo.rule: Host(`${MATOMO_URL}`)
+      traefik.http.routers.matomo.entrypoints: websecure
+
+
 volumes: 
   mongo-data: {}
   db-data: {}
+  maria-db: {}
+  matomo: {}
 
   

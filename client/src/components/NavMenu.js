@@ -28,6 +28,10 @@ const NavMenu = () => {
     setAnchorEl(null)
     history.push('/profilePlayer')
   }
+  const handleOrganizer = () => {
+    setAnchorEl(null)
+    history.push('/profileOrganizer')
+  }
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -96,7 +100,8 @@ const NavMenu = () => {
                     open={Boolean(anchorEl)}
                     onClose={handleClose}
                   >
-                    {/* <MenuItem onClick={handleClose}>{user.email}</MenuItem> */}
+                    <MenuItem onClick={handleClose}>{user?.email}</MenuItem>
+                    <MenuItem onClick={handleOrganizer}>My account</MenuItem>
                     <MenuItem>add new match</MenuItem>
                     <MenuItem onClick={logout}>logout</MenuItem>
                   </Menu>
