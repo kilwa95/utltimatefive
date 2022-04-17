@@ -1,4 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
+import levelHttp from "../http/levelHttp";
+import matchHttp from "../http/matchHttp";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { OrganizerContext } from "../contexts/OrganizerContext";
@@ -17,7 +19,9 @@ import FormControl from "@mui/material/FormControl";
 const theme = createTheme();
 
 const CreateMatchPage = () => {
-  const { levels, loading, saveMatch } = useContext(OrganizerContext);
+  const [ levels, setLevels ] = useState([]);
+  const [ loading, setLoading ] = useState(false);
+  const [ error, setError ] = useState(null);
   const [ image, setImage ] = useState(null);
   const [ values, setValues ] = useState({
     ville: "",
@@ -31,6 +35,29 @@ const CreateMatchPage = () => {
     saveMatch({ ...values, image: image });
   };
 
+  const getLevels = async () => {
+    setLoading(true);
+    try {
+      const levels = await levelHttp.getListLevels();
+      setLevels(levels);
+    } catch (error) {
+      setError(error);
+      setLoading(false);
+    }
+  };
+
+  const saveMatch = async (data) => {
+    setLoading(true);
+    try {
+      const match = await matchHttp.saveMatche(data);
+      setLoading(false);
+      return match;
+    } catch (error) {
+      setError(error);
+      setLoading(false);
+    }
+  };
+
   const handleChange = (event) => {
     console.log(event.target.value);
     setValues({
@@ -38,6 +65,10 @@ const CreateMatchPage = () => {
       [event.target.name]: event.target.value
     });
   };
+
+  useEffect(() => {
+    getLevels();
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>

@@ -37,7 +37,7 @@ export default function OrganizerProvider({ children }) {
   }, [])
 
   return (
-    <OrganizerContext.Provider value={{ levels, loading, saveMatch, error }}>
+    <OrganizerContext.Provider value={{ levels, saveMatch }}>
       {children}
     </OrganizerContext.Provider>
   )
