@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useState,
-  useCallback,
-  useEffect,
-  useContext,
-} from 'react'
+import { createContext, useState } from 'react'
 import usersHttp from '../http/usersHttp'
 
 export const UserContext = createContext()
@@ -14,7 +8,7 @@ export default function UserProvider({ children }) {
   const [error, setError] = useState(null)
   const [userCurrent, setUser] = useState(null)
 
-  const signup = useCallback(async (values) => {
+  const signup = async (values) => {
     setIsError(false)
     setIsLoading(true)
     try {
@@ -24,8 +18,9 @@ export default function UserProvider({ children }) {
       setError(error)
     }
     setIsLoading(false)
-  })
-  const signupOrganizer = useCallback(async (values) => {
+  }
+
+  const signupOrganizer = async (values) => {
     setIsError(false)
     setIsLoading(true)
     try {
@@ -35,9 +30,9 @@ export default function UserProvider({ children }) {
       setError(error)
     }
     setIsLoading(false)
-  })
+  }
 
-  const getUserInfo = useCallback(async (uid) => {
+  const getUserInfo = async (uid) => {
     setIsError(false)
     setIsLoading(true)
     try {
@@ -48,9 +43,9 @@ export default function UserProvider({ children }) {
       setError(error)
     }
     setIsLoading(false)
-  }, [])
+  }
 
-  const updateUser = useCallback(async (uid, values) => {
+  const updateUser = async (uid, values) => {
     setIsError(false)
     setIsLoading(true)
     try {
@@ -60,7 +55,7 @@ export default function UserProvider({ children }) {
       setError(error)
     }
     setIsLoading(false)
-  })
+  }
 
   return (
     <UserContext.Provider

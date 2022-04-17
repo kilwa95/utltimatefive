@@ -30,7 +30,6 @@ const RegisterPage = () => {
     roles: [ "player" ]
   });
   const { signup, isError } = useContext(UserContext);
-  console.log("debugger", { image: image, values: values });
 
   const handleChange = (event) => {
     setValues({

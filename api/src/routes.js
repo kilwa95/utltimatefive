@@ -111,7 +111,7 @@ router.post(
 /**
  * API levels
  */
-router.get('/levels', authJwt, getListLevels)
+router.get('/levels', getListLevels)
 router.post('/levels', createLevel) //authJwt, onlyAdmin
 router.get('/levels/:lid', authJwt, isLevelExist, getLevelById)
 router.put('/levels/:lid', authJwt, isLevelExist, onlyAdmin, updateLevel)

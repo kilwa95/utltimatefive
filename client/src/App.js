@@ -6,6 +6,7 @@ import RegisterPage from './views/RegisterPage'
 import SecurityProvider from './contexts/SecurityContext'
 import UserProvider from './contexts/UserContext'
 import MatchProvider from './contexts/MatchContext'
+import OrganizerProvider from './contexts/OrganizerContext'
 import ProfilePlayerPage from './views/ProfilePlayerPage'
 import RegisterOrganizerPage from './views/RegisterOrganizerPage'
 import ProfileOrganizerPage from './views/ProfileOrganizerPage'
@@ -20,18 +21,26 @@ const App = () => {
           <React.Suspense>
             <BrowserRouter>
               <Switch>
-                <Route
-                  exact
-                  path="/registerOrganizer"
-                  name="registerOrganizer"
-                  render={(props) => <RegisterOrganizerPage {...props} />}
-                />
-                <Route
-                  exact
-                  path="/newmatch"
-                  name="newmatch"
-                  render={(props) => <CreateMatchPage {...props} />}
-                />
+                <OrganizerProvider>
+                  <Route
+                    exact
+                    path="/registerOrganizer"
+                    name="registerOrganizer"
+                    render={(props) => <RegisterOrganizerPage {...props} />}
+                  />
+                  <Route
+                    exact
+                    path="/profileOrganizer"
+                    name="ProfileOrganizer"
+                    render={(props) => <ProfileOrganizerPage {...props} />}
+                  />
+                  <Route
+                    exact
+                    path="/newmatch"
+                    name="newmatch"
+                    render={(props) => <CreateMatchPage {...props} />}
+                  />
+                </OrganizerProvider>
                 <Route
                   exact
                   path="/register"
@@ -43,12 +52,6 @@ const App = () => {
                   path="/profilePlayer"
                   name="profilePlayer"
                   render={(props) => <ProfilePlayerPage {...props} />}
-                />
-                <Route
-                  exact
-                  path="/profileOrganizer"
-                  name="ProfileOrganizer"
-                  render={(props) => <ProfileOrganizerPage {...props} />}
                 />
                 <Route
                   exact

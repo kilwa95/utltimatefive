@@ -7,7 +7,6 @@ export default function SecurityProvider({ children }) {
     const token = localStorage.getItem('token') || null
     return token
   }
-
   const getUser = () => {
     const user = localStorage.getItem('user') || null
     return JSON.parse(user)

@@ -1,13 +1,10 @@
 import React from 'react'
 import { red } from '@mui/material/colors'
-import RoomIcon from '@material-ui/icons/Room'
 
 import {
-  Button,
   Card,
   CardContent,
   CardMedia,
-  CardActions,
   Typography,
   CardHeader,
   Avatar,

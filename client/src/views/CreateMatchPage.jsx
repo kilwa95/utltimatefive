@@ -1,69 +1,128 @@
 import React, { useState, useContext, useEffect } from "react";
-import { SecurityContext } from "../contexts/SecurityContext";
-import { UserContext } from "../contexts/UserContext";
-import { Redirect } from "react-router-dom";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import { OrganizerContext } from "../contexts/OrganizerContext";
 import Container from "@mui/material/Container";
-import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
 import NavMenu from "../components/NavMenu";
-import CircularProgress from "@mui/material/CircularProgress";
+import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+
+const theme = createTheme();
 
 const CreateMatchPage = () => {
+  const { levels, loading, saveMatch } = useContext(OrganizerContext);
+  const [ image, setImage ] = useState(null);
+  const [ values, setValues ] = useState({
+    ville: "",
+    salle: "",
+    image: "",
+    levelId: ""
+  });
+
+  const _onSubmit = (event) => {
+    event.preventDefault();
+    saveMatch({ ...values, image: image });
+  };
+
+  const handleChange = (event) => {
+    console.log(event.target.value);
+    setValues({
+      ...values,
+      [event.target.name]: event.target.value
+    });
+  };
+
   return (
-    <React.Fragment>
+    <ThemeProvider theme={theme}>
       <NavMenu />
-      <Container component="main" sx={{ marginTop: "80px" }}>
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-          >
-            <Typography>Ville</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>
-              <TextField label="ville" variant="outlined" name="ville" />
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
-          >
-            <Typography>Salle</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>
-              <TextField label="salle" variant="outlined" name="salle" />
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
-          >
-            <Typography>image</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>
-              <TextField label="salle" variant="outlined" name="salle" />
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center"
+          }}
+        >
+          <Typography component="h1" variant="h5">
+            add new match
+          </Typography>
+          <Box component="form" noValidate onSubmit={_onSubmit} sx={{ mt: 3 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  onChange={handleChange}
+                  autoComplete="given-name"
+                  name="ville"
+                  required
+                  fullWidth
+                  id="ville"
+                  label="ville"
+                  autoFocus
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  onChange={handleChange}
+                  required
+                  fullWidth
+                  id="salle"
+                  label="salle"
+                  name="salle"
+                  autoComplete="family-name"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  onChange={(e) =>
+                    setImage(URL.createObjectURL(e.target.files[0]))}
+                  fullWidth
+                  name="file"
+                  type="file"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">level</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={values.level}
+                    label="Age"
+                    name="levelId"
+                    onChange={handleChange}
+                  >
+                    {levels.map((level) => {
+                      return (
+                        <MenuItem key={level.id} value={level.id}>
+                          {level.name}
+                        </MenuItem>
+                      );
+                    })}
+                  </Select>
+                </FormControl>
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              add
+            </Button>
+          </Box>
+        </Box>
       </Container>
-    </React.Fragment>
+    </ThemeProvider>
   );
 };
 

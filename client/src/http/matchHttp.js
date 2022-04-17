@@ -10,8 +10,7 @@ const matchesHttp = {
     return result.data
   },
   saveMatche: async function (body) {
-    const result = await axios.get(`http://localhost:4000/matchs`, {
-      body,
+    const result = await axios.post(`http://localhost:4000/matchs`, body, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
