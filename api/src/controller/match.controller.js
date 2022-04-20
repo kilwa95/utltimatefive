@@ -6,12 +6,28 @@ const {
   updateMatch,
   deleteMatch,
   joinMatch,
+  findAllMatchesByUserId,
 } = require('../queries/match.queries')
 const Helper = require('../Helper')
 
 exports.getListMatchs = async (req, res) => {
   try {
     const matches = await findAllMatches()
+    res.status(Helper.HTTP.OK).json({
+      data: matches,
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(Helper.HTTP.SERVER_ERROR).json({
+      message: error.message,
+    })
+  }
+}
+
+exports.getListMatchsByUserId = async (req, res) => {
+  try {
+    const userId = parseInt(req.params.uid)
+    const matches = await findAllMatchesByUserId(userId)
     res.status(Helper.HTTP.OK).json({
       data: matches,
     })

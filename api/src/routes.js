@@ -26,6 +26,7 @@ const {
 const {
   getListMatchs,
   getMatchById,
+  getListMatchsByUserId,
   createMatch,
   updateMatch,
   deleteMatch,
@@ -83,6 +84,7 @@ router.patch('/users/:uid/disable', authJwt, isUserExist, disableUser)
  * API Match
  */
 router.get('/matchs', getListMatchs)
+router.get('/matchs/:uid/organizer', authJwt, getListMatchsByUserId)
 router.post('/matchs', authJwt, onlyOrganizer, createMatch)
 router.get('/matchs/:mid', authJwt, isMatchExist, getMatchById)
 router.put(

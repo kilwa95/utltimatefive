@@ -3,6 +3,7 @@ import { HashRouter, Route, Switch, BrowserRouter } from 'react-router-dom'
 import HomePage from './views/HomePage'
 import LoginPage from './views/LoginPage'
 import RegisterPage from './views/RegisterPage'
+import MyMatchPage from './views/MyMatchPage'
 import SecurityProvider from './contexts/SecurityContext'
 import UserProvider from './contexts/UserContext'
 import MatchProvider from './contexts/MatchContext'
@@ -10,6 +11,7 @@ import ProfilePlayerPage from './views/ProfilePlayerPage'
 import RegisterOrganizerPage from './views/RegisterOrganizerPage'
 import ProfileOrganizerPage from './views/ProfileOrganizerPage'
 import CreateMatchPage from './views/CreateMatchPage'
+import MatchesPage from './views/MatchesPage'
 import './App.css'
 
 const App = () => {
@@ -20,6 +22,12 @@ const App = () => {
           <React.Suspense>
             <BrowserRouter>
               <Switch>
+                <Route
+                  exact
+                  path="/mymatches"
+                  name="mymatches"
+                  render={(props) => <MyMatchPage {...props} />}
+                />
                 <Route
                   exact
                   path="/profileOrganizer"
@@ -56,12 +64,18 @@ const App = () => {
                   name="login"
                   render={(props) => <LoginPage {...props} />}
                 />
+                <Route
+                  exact
+                  path="/"
+                  name="Home"
+                  render={(props) => <HomePage {...props} />}
+                />
                 <MatchProvider>
                   <Route
                     exact
-                    path="/"
-                    name="Home"
-                    render={(props) => <HomePage {...props} />}
+                    path="/matchs"
+                    name="matchs"
+                    render={(props) => <MatchesPage {...props} />}
                   />
                 </MatchProvider>
               </Switch>

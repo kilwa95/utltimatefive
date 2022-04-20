@@ -32,6 +32,21 @@
   color: #61dafb;
 }
 
+.jumbotron {
+  position: relative;
+  z-index: -2;
+  /* height: 62.5vh; */
+  padding: 0px !important;
+}
+
+.video-background {
+  position: relative;
+  overflow: hidden;
+  z-index: -1;
+  width: 100%;
+  height: auto;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

@@ -36,6 +36,10 @@ const NavMenu = () => {
     setAnchorEl(null)
     history.push('/newmatch')
   }
+  const handleMatchs = () => {
+    setAnchorEl(null)
+    history.push('/mymatches')
+  }
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -49,10 +53,17 @@ const NavMenu = () => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography
+            onClick={() => history.push('/')}
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1, cursor: 'pointer' }}
+          >
             UltimateFive
           </Typography>
-          <Button color="inherit">Matches</Button>
+          <Button onClick={() => history.push('/matchs')} color="inherit">
+            Matches
+          </Button>
           <Button color="inherit">Teams</Button>
           <Button color="inherit"> about us</Button>
           {token ? (
@@ -106,7 +117,8 @@ const NavMenu = () => {
                   >
                     <MenuItem onClick={handleClose}>{user?.email}</MenuItem>
                     <MenuItem onClick={handleOrganizer}>My account</MenuItem>
-                    <MenuItem onClick={handleAddMatch}>add new match</MenuItem>
+                    <MenuItem onClick={handleAddMatch}>Add new match</MenuItem>
+                    <MenuItem onClick={handleMatchs}>My matches</MenuItem>
                     <MenuItem onClick={logout}>logout</MenuItem>
                   </Menu>
                 ) : (

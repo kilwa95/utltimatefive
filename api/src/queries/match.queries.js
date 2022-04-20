@@ -14,7 +14,7 @@ exports.saveMatch = async (data) => {
 exports.findAllMatches = async () => {
   try {
     return await Match.findAll({
-      attributes: ['id', 'salle', 'status', 'ville'],
+      attributes: ['id', 'salle', 'status', 'ville', 'image'],
       include: [
         {
           model: User,
