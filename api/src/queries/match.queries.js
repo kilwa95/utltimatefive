@@ -14,7 +14,17 @@ exports.saveMatch = async (data) => {
 exports.findAllMatches = async () => {
   try {
     return await Match.findAll({
-      attributes: ['id', 'salle', 'status', 'ville', 'image'],
+      attributes: [
+        'id',
+        'salle',
+        'status',
+        'ville',
+        'address',
+        'image',
+        'slots',
+        'square',
+        'price',
+      ],
       include: [
         {
           model: User,
@@ -40,6 +50,34 @@ exports.findAllMatches = async () => {
 exports.findAllMatchesByUserId = async (uid) => {
   try {
     return await Match.findAll({
+      attributes: [
+        'id',
+        'salle',
+        'status',
+        'ville',
+        'address',
+        'image',
+        'slots',
+        'square',
+        'price',
+      ],
+      include: [
+        {
+          model: User,
+          as: 'organizer',
+          attributes: ['id', 'firstName', 'lastName', 'email'],
+        },
+        {
+          model: Level,
+          as: 'level',
+          attributes: ['name'],
+        },
+        {
+          model: User,
+          as: 'players',
+          attributes: ['id', 'firstName', 'lastName', 'email'],
+        },
+      ],
       where: {
         organizerId: uid,
       },

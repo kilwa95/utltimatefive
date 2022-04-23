@@ -58,8 +58,16 @@ exports.getMatchById = async (req, res) => {
 }
 
 exports.createMatch = async (req, res) => {
-  const { ville, salle, levelId, image } = req.body
-  console.log(req.body)
+  const {
+    ville,
+    address,
+    slots,
+    square,
+    price,
+    salle,
+    levelId,
+    image,
+  } = req.body
 
   if (Helper.isEmpty([salle, levelId])) {
     res.status(Helper.HTTP.BAD_REQUEST).send('salle,levelId is required')
@@ -69,6 +77,10 @@ exports.createMatch = async (req, res) => {
     const match = await saveMatch({
       salle: Helper.sqlescstr(salle),
       ville: Helper.sqlescstr(ville),
+      address: Helper.sqlescstr(address),
+      slots: Helper.sqlescstr(slots),
+      square: Helper.sqlescstr(square),
+      price: Helper.sqlescstr(price),
       image: Helper.sqlescstr(image),
       levelId: parseInt(levelId),
       organizerId: parseInt(organizerId),

@@ -8,7 +8,12 @@ Match.init(
   {
     salle: { type: DataTypes.STRING, allowNull: false },
     ville: { type: DataTypes.STRING, allowNull: false },
+    address: { type: DataTypes.STRING, allowNull: false },
     image: { type: DataTypes.STRING, allowNull: true },
+    slots: { type: DataTypes.DATEONLY, allowNull: true },
+    square: { type: DataTypes.INTEGER, allowNull: true },
+    price: { type: DataTypes.INTEGER, allowNull: true },
+    description: { type: DataTypes.TEXT, allowNull: true },
     status: {
       type: DataTypes.STRING,
       allowNull: false,

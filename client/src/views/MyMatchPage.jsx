@@ -53,11 +53,15 @@ const MyMatchPage = () => {
             <TableHead>
               <TableRow>
                 <TableCell>salle</TableCell>
-                <TableCell align="right">ville</TableCell>
-                <TableCell align="right">level</TableCell>
-                <TableCell align="right">status</TableCell>
-                <TableCell align="right">edit</TableCell>
-                <TableCell align="right">delete</TableCell>
+                <TableCell align="center">ville</TableCell>
+                <TableCell align="center">address</TableCell>
+                <TableCell align="center">créneau</TableCell>
+                <TableCell align="center">places disponible</TableCell>
+                <TableCell align="center">prix</TableCell>
+                <TableCell align="center">level</TableCell>
+                <TableCell align="center">status</TableCell>
+                <TableCell align="center">edit</TableCell>
+                <TableCell align="center">delete</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -69,8 +73,12 @@ const MyMatchPage = () => {
                   <TableCell component="th" scope="row">
                     {match.salle}
                   </TableCell>
-                  <TableCell align="right">{match.ville}</TableCell>
-                  <TableCell align="right">
+                  <TableCell align="center">{match.ville}</TableCell>
+                  <TableCell align="center">{match.address}</TableCell>
+                  <TableCell align="center">{match.slots}</TableCell>
+                  <TableCell align="center">{match.square}</TableCell>
+                  <TableCell align="center">{match.price}</TableCell>
+                  <TableCell align="center">
                     {match.levelId === 1 ? (
                       "beginner"
                     ) : match.levelId === 2 ? (

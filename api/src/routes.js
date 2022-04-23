@@ -74,6 +74,7 @@ router.post('/logout', logout)
 /**
  * API users
  */
+router.get('/users', getListUsers)
 router.post('/players', createPlayer)
 router.put('/players/:uid', authJwt, isUserExist, isSelfUser, updatePlayer)
 router.post('/organizers', createOrganizer)

@@ -9,9 +9,10 @@ import {
   CardHeader,
   Avatar,
   Skeleton,
+  Box,
 } from '@mui/material'
 
-const Match = ({ salle, level, organizer, ville, isLoading }) => {
+const Match = ({ match, isLoading }) => {
   return (
     <>
       <Card sx={{ maxWidth: 345, marginBottom: '32px', marginLeft: '16px' }}>
@@ -26,7 +27,7 @@ const Match = ({ salle, level, organizer, ville, isLoading }) => {
               />
             ) : (
               <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                {organizer[0]}
+                {match.organizer[0]}
               </Avatar>
             )
           }
@@ -39,14 +40,14 @@ const Match = ({ salle, level, organizer, ville, isLoading }) => {
                 style={{ marginBottom: 6 }}
               />
             ) : (
-              salle
+              match.salle
             )
           }
           subheader={
             isLoading ? (
               <Skeleton animation="wave" height={10} width="40%" />
             ) : (
-              ville
+              match.ville
             )
           }
         />
@@ -68,9 +69,17 @@ const Match = ({ salle, level, organizer, ville, isLoading }) => {
           <Skeleton animation="wave" height={20} width="40%" />
         ) : (
           <CardContent>
-            <Typography variant="body" color="text.secondary">
-              level: {level}
-            </Typography>
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              <Typography variant="body" color="text.secondary">
+                <b>niveux:</b> {match.level?.name}
+              </Typography>
+              <Typography variant="body" color="text.secondary">
+                <b>prix:</b> {match.price} €
+              </Typography>
+              <Typography variant="body" color="text.secondary">
+                <b>places disponible:</b> {match.square}
+              </Typography>
+            </Box>
           </CardContent>
         )}
       </Card>

@@ -25,8 +25,12 @@ const CreateMatchPage = () => {
   const [ image, setImage ] = useState(null);
   const [ values, setValues ] = useState({
     ville: "",
+    address: "",
     salle: "",
     image: "",
+    slots: "",
+    square: "",
+    price: "",
     levelId: ""
   });
 
@@ -88,7 +92,7 @@ const CreateMatchPage = () => {
           </Typography>
           <Box component="form" noValidate onSubmit={_onSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
+              <Grid item xs={6}>
                 <TextField
                   onChange={handleChange}
                   autoComplete="given-name"
@@ -100,6 +104,18 @@ const CreateMatchPage = () => {
                   autoFocus
                 />
               </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  onChange={handleChange}
+                  autoComplete="given-name"
+                  name="address"
+                  required
+                  fullWidth
+                  id="address"
+                  label="address"
+                  autoFocus
+                />
+              </Grid>
               <Grid item xs={12}>
                 <TextField
                   onChange={handleChange}
@@ -108,6 +124,42 @@ const CreateMatchPage = () => {
                   id="salle"
                   label="salle"
                   name="salle"
+                  autoComplete="family-name"
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  onChange={handleChange}
+                  required
+                  fullWidth
+                  id="slots"
+                  type="date"
+                  label="créneaux"
+                  name="slots"
+                  autoComplete="family-name"
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  onChange={handleChange}
+                  required
+                  fullWidth
+                  type="number"
+                  id="square"
+                  label="places disponible"
+                  name="square"
+                  autoComplete="family-name"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  onChange={handleChange}
+                  required
+                  fullWidth
+                  type="number"
+                  id="price"
+                  label="prix"
+                  name="price"
                   autoComplete="family-name"
                 />
               </Grid>

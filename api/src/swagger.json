@@ -237,6 +237,114 @@
                 "x-codegen-request-body-name": "body"
             }
         },
+        "/organizers": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Create a new organizer",
+                "description": "Create a new organizer",
+                "operationId": "createOrganizer",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "firstName": {
+                                        "type": "string"
+                                    },
+                                    "lastName": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "birthday": {
+                                        "type": "string",
+                                        "format": "date"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Organizer created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "organizer": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "firstName": {
+                                                    "type": "string"
+                                                },
+                                                "lastName": {
+                                                    "type": "string"
+                                                },
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "password": {
+                                                    "type": "string"
+                                                },
+                                                "birthday": {
+                                                    "type": "string",
+                                                    "format": "date"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "email or password is invalid",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "email already exists",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/users/{uid}": {
             "put": {
                 "tags": [
@@ -670,8 +778,24 @@
                                                     "id": {
                                                         "type": "string"
                                                     },
-                                                    "nameMatch": {
+                                                    "salle": {
                                                         "type": "string"
+                                                    },
+                                                    "ville": {
+                                                        "type": "string"
+                                                    },
+                                                    "image": {
+                                                        "type": "string"
+                                                    },
+                                                    "slots": {
+                                                        "type": "string",
+                                                        "format": "date-time"
+                                                    },
+                                                    "square": {
+                                                        "type": "integer"
+                                                    },
+                                                    "price": {
+                                                        "type": "integer"
                                                     },
                                                     "status": {
                                                         "type": "string"
@@ -726,11 +850,24 @@
                             "schema": {
                                 "type": "object",
                                 "properties": {
+                                    "salle": {
+                                        "type": "string"
+                                    },
                                     "ville": {
                                         "type": "string"
                                     },
-                                    "salle": {
+                                    "address": {
                                         "type": "string"
+                                    },
+                                    "slots": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    },
+                                    "square": {
+                                        "type": "integer"
+                                    },
+                                    "price": {
+                                        "type": "integer"
                                     },
                                     "image": {
                                         "type": "string"
@@ -979,6 +1116,114 @@
                                     "properties": {
                                         "message": {
                                             "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Match not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/matchs/{mid}/organizer": {
+            "get": {
+                "tags": [
+                    "Matchs"
+                ],
+                "summary": "Retrieve Organizer by mid",
+                "operationId": "getOrganizerByMatchId",
+                "parameters": [
+                    {
+                        "name": "mid",
+                        "in": "path",
+                        "description": "Match id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string"
+                                                    },
+                                                    "salle": {
+                                                        "type": "string"
+                                                    },
+                                                    "ville": {
+                                                        "type": "string"
+                                                    },
+                                                    "image": {
+                                                        "type": "string"
+                                                    },
+                                                    "slots": {
+                                                        "type": "string",
+                                                        "format": "date-time"
+                                                    },
+                                                    "square": {
+                                                        "type": "integer"
+                                                    },
+                                                    "price": {
+                                                        "type": "integer"
+                                                    },
+                                                    "status": {
+                                                        "type": "string"
+                                                    },
+                                                    "organizer": {
+                                                        "type": "string"
+                                                    },
+                                                    "level": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                 }
