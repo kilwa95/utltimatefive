@@ -12,6 +12,18 @@ services:
         target: /home/node/app/node_modules
     ports: 
       - 4001:3000
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    volumes:
+      - type: bind
+        source: ./client
+        target: /home/node/app
+      - type: volume
+        target: /home/node/app/node_modules
+    ports: 
+      - 4002:3000
     
   api:
     build:
@@ -31,6 +43,7 @@ services:
     depends_on:
       - mongo
       - db
+    restart: always
 
   mongo:
     image: mongo
@@ -55,8 +68,35 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data:rw
 
+  mariadb:
+    image: mariadb
+    command: --max-allowed-packet=64MB
+    restart: always
+    volumes:
+      - mariadb:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=taylor
+    env_file:
+      - ./db.env
+    
+  app:
+    image: matomo
+    restart: always
+    volumes:
+      - matomo:/var/www/html
+    environment:
+      - MATOMO_DATABASE_HOST=db
+    env_file:
+      - ./db.env
+    ports:
+      - 8080:80
+
+
 volumes: 
   mongo-data: {}
   db-data: {}
+  mariadb: 
+  matomo: 
+
 
   

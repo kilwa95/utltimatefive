@@ -1,17 +1,18 @@
 import React, { useContext } from "react";
 import LoginForm from "../components/form/loginForm";
-import { AuthContext } from "../contexts/AuthContext";
+import { SecurityContext } from "../contexts/SecurityContext";
+import { Redirect } from "react-router-dom";
 
 const LoginPage = () => {
-  const { token, isLoading, isError, error, user } = useContext(AuthContext);
+  const { token, login } = useContext(SecurityContext);
 
   const submit = async (values) => {
-    // await login(values);
+    await login(values);
   };
 
-  // if (token) {
-  //   return <Redirect to="/" />;
-  // }
+  if (token) {
+    return <Redirect to="/" />;
+  }
 
   return <LoginForm onSubmit={submit} />;
 };

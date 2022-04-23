@@ -1,24 +1,22 @@
 import React, { useState, useContext } from "react";
-import {
-  CDataTable,
-  CCard,
-  CCardBody,
-  CContainer,
-  CRow,
-  CButton,
-  CBadge,
-} from "@coreui/react";
+import { CDataTable, CCard, CCardBody, CContainer, CRow } from "@coreui/react";
 import Modal from "../components/modal/Modal";
-import Switch from "../components/switch/Switch";
 import { UserContext } from "../contexts/UserContext";
+import { SecurityContext } from "../contexts/SecurityContext";
+import { Redirect } from "react-router-dom";
 
 const UserPage = () => {
   const [modal, setModal] = useState(false);
   const { fields, users, isLoading, getBadge } = useContext(UserContext);
+  const { token } = useContext(SecurityContext);
 
   const toggle = () => {
     setModal(!modal);
   };
+
+  if (!token) {
+    return <Redirect to="/login" />;
+  }
 
   return (
     <CContainer>
@@ -61,16 +59,6 @@ const UserPage = () => {
                   level: (item) => {
                     return <td className="py-2">{item.level.name}</td>;
                   },
-                  enable: (item) => {
-                    return <Switch item={item} />;
-                  },
-                  // status: (item) => {
-                  //     <td className="py-2">
-                  //     <CBadge color={getBadge(item.status)}>
-                  //       {item.status}
-                  //     </CBadge>
-                  //   </td>
-                  // }
                 }}
               />
             </CCardBody>

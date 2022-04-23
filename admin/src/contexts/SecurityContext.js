@@ -1,15 +1,15 @@
-import { createContext, useState, useCallback, useMemo } from "react";
-
+import { createContext, useState, useCallback } from "react";
 import usersHttp from "../lib/http/usersHttp";
-export const AuthContext = createContext();
+export const SecurityContext = createContext();
 
-export default function AuthProvider({ children }) {
+export default function SecurityProvider({ children }) {
   const getToken = () => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token") || null;
     return token;
   };
+
   const getUser = () => {
-    const user = localStorage.getItem("user");
+    const user = localStorage.getItem("user") || null;
     return JSON.parse(user);
   };
   const [token, setToken] = useState(getToken);
@@ -44,23 +44,11 @@ export default function AuthProvider({ children }) {
     localStorage.removeItem("user");
   }, [token, user]);
 
-  // const value = useMemo(() => {
-  //   return {
-  //     token,
-  //     isLoading,
-  //     isError,
-  //     error,
-  //     user,
-  //     login,
-  //     logout,
-  //   };
-  // }, [token, isLoading, isError, error, user, login, logout]);
-
   return (
-    <AuthContext.Provider
+    <SecurityContext.Provider
       value={{ token, isLoading, isError, error, user, login, logout }}
     >
       {children}
-    </AuthContext.Provider>
+    </SecurityContext.Provider>
   );
 }

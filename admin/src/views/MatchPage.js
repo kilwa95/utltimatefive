@@ -10,6 +10,8 @@ import {
 } from "@coreui/react";
 import Modal from "../components/modal/Modal";
 import { MatchContext } from "../contexts/MatchContext";
+import { SecurityContext } from "../contexts/SecurityContext";
+import { Redirect } from "react-router-dom";
 
 const MatchPage = () => {
   const {
@@ -21,6 +23,12 @@ const MatchPage = () => {
     toggle,
     toggleDetails,
   } = useContext(MatchContext);
+  const { token } = useContext(SecurityContext);
+
+  if (!token) {
+    return <Redirect to="/login" />;
+  }
+
   return (
     <CContainer>
       {/* add new user*/}
@@ -53,7 +61,6 @@ const MatchPage = () => {
               itemsPerPage={5}
               columnFilter
               pagination
-              columnFilter
               tableFilter
               sorter
               hover
