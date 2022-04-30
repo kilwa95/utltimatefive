@@ -12,6 +12,7 @@ import RegisterOrganizerPage from './views/RegisterOrganizerPage'
 import ProfileOrganizerPage from './views/ProfileOrganizerPage'
 import CreateMatchPage from './views/CreateMatchPage'
 import MatchesPage from './views/MatchesPage'
+import MatchDetailPage from './views/MatchDetailPage'
 import './App.css'
 
 const App = () => {
@@ -27,6 +28,12 @@ const App = () => {
                   path="/mymatches"
                   name="mymatches"
                   render={(props) => <MyMatchPage {...props} />}
+                />
+                <Route
+                  exact
+                  path="/match/:id"
+                  name="matchetail"
+                  render={(props) => <MatchDetailPage {...props} />}
                 />
                 <Route
                   exact

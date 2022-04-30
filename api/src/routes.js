@@ -87,7 +87,7 @@ router.patch('/users/:uid/disable', authJwt, isUserExist, disableUser)
 router.get('/matchs', getListMatchs)
 router.get('/matchs/:uid/organizer', authJwt, getListMatchsByUserId)
 router.post('/matchs', authJwt, onlyOrganizer, createMatch)
-router.get('/matchs/:mid', authJwt, isMatchExist, getMatchById)
+router.get('/matchs/:mid', isMatchExist, getMatchById)
 router.put(
   '/matchs/:mid',
   authJwt,
