@@ -104,15 +104,19 @@ exports.createMatch = async (req, res) => {
 }
 
 exports.updateMatch = async (req, res) => {
-  const { name, levelId } = req.body
+  const { address, salle, price, ville, square, slots } = req.body
   if (Helper.isEmpty([req.params.mid])) {
     res.status(Helper.HTTP.BAD_REQUEST).send('matchId is required')
   }
   try {
     const mid = parseInt(req.params.mid)
     const match = await updateMatch(parseInt(mid), {
-      name: Helper.sqlescstr(name),
-      levelId: parseInt(levelId),
+      salle: Helper.sqlescstr(salle),
+      address: Helper.sqlescstr(address),
+      ville: Helper.sqlescstr(ville),
+      price: parseInt(price),
+      square: parseInt(square),
+      slots: Helper.sqlescstr(slots),
     })
     if (match) {
       res.status(Helper.HTTP.OK).json({

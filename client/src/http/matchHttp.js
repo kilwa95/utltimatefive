@@ -25,6 +25,18 @@ const matchesHttp = {
     })
     return result.data
   },
+  updateMatch: async function (mid, body) {
+    const result = await axios.put(
+      `http://localhost:4000/matchs/${mid}`,
+      body,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      },
+    )
+    return result.data
+  },
   getListMatchsByUserId: async function (uid) {
     const result = await axios.get(
       `http://localhost:4000/matchs/${uid}/organizer`,

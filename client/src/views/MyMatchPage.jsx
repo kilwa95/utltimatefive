@@ -30,7 +30,6 @@ const MyMatchPage = () => {
     }
   }
 
-
   const getMatches = async (uid) => {
     setIsError(false);
     setIsLoading(true);
@@ -45,12 +44,12 @@ const MyMatchPage = () => {
   };
 
   const columns = [
-    { field: "salle", headerName: "salle", width: 130 },
-    { field: "price", headerName: "prix", width: 130 },
-    { field: "square", headerName: "place disponible", width: 130 },
-    { field: "slots", headerName: "créneaux horaires", width: 130 },
-    { field: "ville", headerName: "ville", width: 130 },
-    { field: "address", headerName: "address", width: 130 },
+    { field: "salle", headerName: "salle", width: 130,editable: true },
+    { field: "price", headerName: "prix", width: 130,editable: true },
+    { field: "square", headerName: "place disponible", width: 130 ,editable: true},
+    { field: "slots", headerName: "créneaux horaires", width: 130,editable: true },
+    { field: "ville", headerName: "ville", width: 130,editable: true },
+    { field: "address", headerName: "address", width: 130,editable: true },
     {
       field: "level",
       headerName: "niveux",
@@ -82,8 +81,6 @@ const MyMatchPage = () => {
     }
   ];
 
- 
-
   useEffect(() => {
     const user = localStorage.getItem("user");
     const uid = JSON.parse(user).id;
@@ -96,12 +93,14 @@ const MyMatchPage = () => {
   if (!user && !user.isPlayer) {
     return <Redirect to="/" />;
   }
+  
   return (
     <React.Fragment>
       <NavMenu />
       <Container sx={{ marginTop: "80px" }}>
         <div style={{ height: 400, width: "100%" }}>
           <DataGrid
+            experimentalFeatures={{ newEditingApi: true }}
             rows={matchs}
             columns={columns}
             loading={isLoading}
@@ -115,6 +114,18 @@ const MyMatchPage = () => {
             editMode="cell"
             pageSize={5}
             rowsPerPageOptions={[ 5 ]}
+            processRowUpdate={ async (updatedRow) => {
+              console.log(updatedRow);
+              await matchHttp.updateMatch(updatedRow.id, updatedRow);
+              setMatchs(
+                matchs.map((row) => (row.id === updatedRow.id ? updatedRow : row))
+              );
+            }}
+            onProcessRowUpdateError={(error) => {
+              console.log(error);
+            }}
+           
+           
           />
         </div>
       </Container>
