@@ -24,7 +24,6 @@ const MatchDetailPage = (props) => {
   const joinMatch = async (mid) => {
     const match = await matchesHttp.joinMatch(mid);
     setIsPlayerJoined(true);
-;
   };
 
   useEffect(() => {

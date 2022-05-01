@@ -160,7 +160,8 @@ exports.isSelfOrganizer = async (req, res, next) => {
     const uid = req.decoded.id
     const matches = await findAllMatchesByUserId(uid)
     const matchesJson = matches.map((match) => match.toJSON())
-    const organizerIds = matchesJson.map((match) => match.organizerId)
+    const organizerIds = matchesJson.map((match) => match.id)
+
     if (req.decoded && organizerIds.includes(uid)) {
       return next()
     }

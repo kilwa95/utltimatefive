@@ -1,16 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
 import NavMenu from "../components/NavMenu";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
 import matchHttp from "../http/matchHttp";
 import { SecurityContext } from "../contexts/SecurityContext";
 import { Redirect } from "react-router-dom";
+import { DataGrid } from "@mui/x-data-grid";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+import EditIcon from "@material-ui/icons/Edit";
+import { blue, red } from "@material-ui/core/colors";
 
 const MyMatchPage = () => {
   const [ matchs, setMatchs ] = useState([]);
@@ -18,6 +15,21 @@ const MyMatchPage = () => {
   const [ error, setError ] = useState(null);
   const [ isError, setIsError ] = useState(false);
   const { token, user } = useContext(SecurityContext);
+
+
+  const deleteMatche = async (id) => {
+    try {
+      setIsLoading(true);
+      await matchHttp.deleteMatch(id);
+      setIsLoading(false);
+      setMatchs(matchs.filter((match) => match.id !== id));
+    } catch (error) {
+      setIsLoading(false);
+      setIsError(true);
+      setError(error.message);
+    }
+  }
+
 
   const getMatches = async (uid) => {
     setIsError(false);
@@ -31,6 +43,46 @@ const MyMatchPage = () => {
     }
     setIsLoading(false);
   };
+
+  const columns = [
+    { field: "salle", headerName: "salle", width: 130 },
+    { field: "price", headerName: "prix", width: 130 },
+    { field: "square", headerName: "place disponible", width: 130 },
+    { field: "slots", headerName: "créneaux horaires", width: 130 },
+    { field: "ville", headerName: "ville", width: 130 },
+    { field: "address", headerName: "address", width: 130 },
+    {
+      field: "level",
+      headerName: "niveux",
+      disableClickEventBubbling: true,
+      width: 130,
+      valueGetter: (params) => `${params.row.level?.name || ""}`
+    },
+    {
+      field: "delete",
+      headerName: "supprimer",
+      sortable: false,
+
+      width: 130,
+      renderCell: (params) => {
+        return (
+          <DeleteOutlinedIcon onClick={() =>deleteMatche(params.row.id)} style={{ color: red[500], cursor: "pointer" }} />
+        );
+      }
+    },
+    {
+      field: "edit",
+      headerName: "Update",
+      sortable: false,
+
+      width: 130,
+      renderCell: (params) => {
+        return <EditIcon style={{ color: blue[500], cursor: "pointer" }} />;
+      }
+    }
+  ];
+
+ 
 
   useEffect(() => {
     const user = localStorage.getItem("user");
@@ -48,51 +100,23 @@ const MyMatchPage = () => {
     <React.Fragment>
       <NavMenu />
       <Container sx={{ marginTop: "80px" }}>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>salle</TableCell>
-                <TableCell align="center">ville</TableCell>
-                <TableCell align="center">address</TableCell>
-                <TableCell align="center">créneau</TableCell>
-                <TableCell align="center">places disponible</TableCell>
-                <TableCell align="center">prix</TableCell>
-                <TableCell align="center">level</TableCell>
-                <TableCell align="center">status</TableCell>
-                <TableCell align="center">edit</TableCell>
-                <TableCell align="center">delete</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {matchs.map((match) => (
-                <TableRow
-                  key={match.id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    {match.salle}
-                  </TableCell>
-                  <TableCell align="center">{match.ville}</TableCell>
-                  <TableCell align="center">{match.address}</TableCell>
-                  <TableCell align="center">{match.slots}</TableCell>
-                  <TableCell align="center">{match.square}</TableCell>
-                  <TableCell align="center">{match.price}</TableCell>
-                  <TableCell align="center">
-                    {match.levelId === 1 ? (
-                      "beginner"
-                    ) : match.levelId === 2 ? (
-                      "intermediate"
-                    ) : (
-                      "advanced"
-                    )}
-                  </TableCell>
-                  <TableCell align="right">{match.status}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>{" "}
+        <div style={{ height: 400, width: "100%" }}>
+          <DataGrid
+            rows={matchs}
+            columns={columns}
+            loading={isLoading}
+            error={error}
+            aria-label="simple table"
+            aria-labelledby="tableTitle"
+            autoHeight
+            autoPageSize
+            checkboxSelection
+            density="comfortable"
+            editMode="cell"
+            pageSize={5}
+            rowsPerPageOptions={[ 5 ]}
+          />
+        </div>
       </Container>
     </React.Fragment>
   );

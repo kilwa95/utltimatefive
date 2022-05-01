@@ -17,6 +17,14 @@ const matchesHttp = {
     })
     return result.data
   },
+  deleteMatch: async function (mid) {
+    const result = await axios.delete(`http://localhost:4000/matchs/${mid}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+    return result.data
+  },
   getListMatchsByUserId: async function (uid) {
     const result = await axios.get(
       `http://localhost:4000/matchs/${uid}/organizer`,
