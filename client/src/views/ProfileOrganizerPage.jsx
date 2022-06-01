@@ -37,7 +37,7 @@ const ProfileOrganizerPage = () => {
   };
   const _onSubmit = (event) => {
     event.preventDefault();
-    window.location.reload(true);
+    // window.location.reload(true);
     updateUser(user.id, {
       firstName: values.firstName || userCurrent.firstName,
       lastName: values.lastName || userCurrent.lastName,

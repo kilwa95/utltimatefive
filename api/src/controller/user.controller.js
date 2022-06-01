@@ -151,9 +151,9 @@ exports.updatePlayer = async (req, res) => {
   if (!Helper.validateDate(birthday)) {
     res.status(Helper.HTTP.BAD_REQUEST).send('birthday is invalid')
   }
-  if (!Helper.validatePassword(password)) {
-    res.status(Helper.HTTP.BAD_REQUEST).send('password is invalid')
-  }
+  // if (!Helper.validatePassword(password)) {
+  //   res.status(Helper.HTTP.BAD_REQUEST).send('password is invalid')
+  // }
   try {
     const uid = parseInt(req.params.uid)
     const address = await updateOrCreateAddress({

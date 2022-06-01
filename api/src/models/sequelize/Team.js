@@ -7,6 +7,7 @@ class Team extends Model {}
 Team.init(
     {
         name:{ type: DataTypes.STRING,allowNull:false},
+        
     },
     {
         sequelize: connection,

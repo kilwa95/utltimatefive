@@ -77,6 +77,7 @@ router.post('/logout', logout)
 router.get('/users', getListUsers)
 router.post('/players', createPlayer)
 router.put('/players/:uid', authJwt, isUserExist, isSelfUser, updatePlayer)
+router.put('/users/:uid', authJwt, isUserExist, isSelfUser, updatePlayer)
 router.post('/organizers', createOrganizer)
 router.get('/users/info', authJwt, isUserExist, getUserById)
 router.delete('/users/:uid', authJwt, isUserExist, removeUser) //isSelfUser
@@ -88,29 +89,15 @@ router.get('/matchs', getListMatchs)
 router.get('/matchs/:uid/organizer', authJwt, getListMatchsByUserId)
 router.post('/matchs', authJwt, onlyOrganizer, createMatch)
 router.get('/matchs/:mid', isMatchExist, getMatchById)
-router.put(
-  '/matchs/:mid',
-  authJwt,
-  onlyOrganizer,
-  isMatchExist,
-  isSelfOrganizer,
-  updateMatch,
-)
+router.put('/matchs/:mid', authJwt, onlyOrganizer, isMatchExist, updateMatch)
 router.delete(
   '/matchs/:mid',
   authJwt,
   onlyOrganizer,
-  isMatchExist,
   isSelfOrganizer,
   deleteMatch,
 )
-router.post(
-  '/matchs/:mid/join',
-  authJwt,
-  onlyPlayer,
-  isMatchExist,
-  joinMatchPlayers,
-)
+router.post('/matchs/:mid/join', authJwt, onlyPlayer, joinMatchPlayers)
 /**
  * API levels
  */
@@ -125,36 +112,10 @@ router.delete('/levels/:lid', authJwt, isLevelExist, onlyAdmin, deleteLevel)
 router.get('/teams', authJwt, getListTeams)
 router.post('/teams', authJwt, onlyCaptiner, createTeam)
 router.get('/teams/:tid', authJwt, onlyCaptiner, isTeamExist, getTeamById)
-router.put(
-  '/teams/:tid',
-  authJwt,
-  onlyCaptiner,
-  isTeamExist,
-  isSelfCaptiner,
-  updateTeam,
-)
-router.delete(
-  '/teams/:tid',
-  authJwt,
-  onlyCaptiner,
-  isTeamExist,
-  isSelfCaptiner,
-  deleteTeam,
-)
-router.post(
-  '/teams/:tid/join',
-  authJwt,
-  onlyPlayer,
-  isTeamExist,
-  joinTeamMember,
-)
-router.delete(
-  '/teams/:tid/left',
-  authJwt,
-  onlyPlayer,
-  isTeamExist,
-  leaveTeamMember,
-)
+router.put('/teams/:tid', authJwt, isSelfCaptiner, updateTeam)
+router.delete('/teams/:tid', authJwt, isSelfCaptiner, deleteTeam)
+router.post('/teams/:tid/join', authJwt, onlyPlayer, joinTeamMember)
+router.delete('/teams/:tid/left', authJwt, onlyPlayer, leaveTeamMember)
 
 /**
  * API sports
