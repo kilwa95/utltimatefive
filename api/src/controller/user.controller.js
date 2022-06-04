@@ -95,6 +95,62 @@ exports.createPlayer = async (req, res) => {
     res.status(Helper.HTTP.SERVER_ERROR).send(error)
   }
 }
+exports.createAdmin = async (req, res) => {
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+    birthday,
+    road,
+    postalcode,
+    city,
+    image,
+  } = req.body
+  if (Helper.isEmpty([firstName, lastName, email, password, birthday])) {
+    res
+      .status(Helper.HTTP.BAD_REQUEST)
+      .send('firstName, lastName, email, password, birthday is required')
+  }
+  if (!Helper.validateEmail(email)) {
+    res.status(Helper.HTTP.BAD_REQUEST).send('email is invalid')
+  }
+  if (!Helper.validateDate(birthday)) {
+    res.status(Helper.HTTP.BAD_REQUEST).send('birthday is invalid')
+  }
+  if (!Helper.validatePassword(password)) {
+    res.status(Helper.HTTP.BAD_REQUEST).send('password is invalid')
+  }
+  const address = await saveAddress({
+    road: Helper.sqlescstr(road),
+    postalcode: postalcode,
+    city: Helper.sqlescstr(city),
+  })
+  try {
+    const user = await saveUser({
+      firstName: Helper.sqlescstr(firstName),
+      lastName: Helper.sqlescstr(lastName),
+      email: Helper.sqlescstr(email),
+      password: Helper.sqlescstr(password),
+      birthday: Helper.sqlescstr(birthday),
+      image: Helper.sqlescstr(image),
+      levelId: Helper.level.silverA,
+      addressId: address.id,
+      roles: ['admin'],
+    })
+    if (user) {
+      res.status(Helper.HTTP.OK).json({
+        message: `User ${user.id} created`,
+        data: user,
+      })
+    } else {
+      res.status(Helper.HTTP.SERVER_ERROR).send('User not created')
+    }
+  } catch (error) {
+    console.error(error)
+    res.status(Helper.HTTP.SERVER_ERROR).send(error)
+  }
+}
 exports.createOrganizer = async (req, res) => {
   const { firstName, lastName, email, password } = req.body
   if (Helper.isEmpty([firstName, lastName, email, password])) {

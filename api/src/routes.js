@@ -6,6 +6,7 @@ const {
   getUserById,
   createPlayer,
   createOrganizer,
+  createAdmin,
   updatePlayer,
   removeUser,
   disableUser,
@@ -76,6 +77,7 @@ router.post('/logout', logout)
  */
 router.get('/users', getListUsers)
 router.post('/players', createPlayer)
+router.post('/admins', createAdmin)
 router.put('/players/:uid', authJwt, isUserExist, isSelfUser, updatePlayer)
 router.put('/users/:uid', authJwt, isUserExist, isSelfUser, updatePlayer)
 router.post('/organizers', createOrganizer)
@@ -83,7 +85,7 @@ router.get('/users/info', authJwt, isUserExist, getUserById)
 router.delete('/users/:uid', authJwt, isUserExist, removeUser) //isSelfUser
 router.patch('/users/:uid/disable', authJwt, isUserExist, disableUser)
 /**
- * API Match
+ * API Matchs
  */
 router.get('/matchs', getListMatchs)
 router.get('/matchs/:uid/organizer', authJwt, getListMatchsByUserId)
