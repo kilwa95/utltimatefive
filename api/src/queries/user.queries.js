@@ -7,7 +7,7 @@ exports.saveUser = async (data) => {
     const user = new User(data)
     return await user.save()
   } catch (error) {
-    console.error(error)
+    console.error(error.message)
   }
 }
 

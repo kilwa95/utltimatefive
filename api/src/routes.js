@@ -104,6 +104,7 @@ router.post('/matchs/:mid/join', authJwt, onlyPlayer, joinMatchPlayers)
  * API levels
  */
 router.get('/levels', getListLevels)
+router.post('/admin/levels', authJwt, onlyAdmin, createLevel) //authJwt, onlyAdmin
 router.post('/levels', createLevel) //authJwt, onlyAdmin
 router.get('/levels/:lid', authJwt, isLevelExist, getLevelById)
 router.put('/levels/:lid', authJwt, isLevelExist, onlyAdmin, updateLevel)

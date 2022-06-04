@@ -10,7 +10,12 @@ const teamsHttp = {
     return result.data;
   },
   createTeam: async function (body) {
-    const result = await axios.post(`http://localhost:4000/teams`, body);
+    const result = await axios.post(`http://localhost:4000/admin/teams`, body, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
     return result;
   },
 };

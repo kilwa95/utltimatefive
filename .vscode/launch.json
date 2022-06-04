@@ -5,10 +5,15 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Docker: Attach to Node",
             "type": "node",
             "request": "attach",
-            "name": "Docker: Attach to Node",
-            "remoteRoot": "/usr/src/app"
+            "remoteRoot": "/app/src/",
+            "port": 9229,
+            "address": "localhost",
+            "localRoot": "${workspaceFolder}/api/src/",
+            "protocol": "inspector",
+            "restart": true
         },
         {
             "name": "Attach",

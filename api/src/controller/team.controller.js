@@ -44,9 +44,11 @@ exports.createTeam = async (req, res) => {
       levelId: parseInt(levelId),
     })
     if (team) {
+      const data = await findTeamById(team.id)
+      const dataJSON = data.toJSON()
       res.status(Helper.HTTP.OK).json({
         message: 'Create team success',
-        data: team,
+        data: dataJSON,
       })
     } else {
       res

@@ -43,14 +43,14 @@ exports.findTeamById = async (tid) => {
       attributes: ['id', 'name'],
       include: [
         {
-          model: User,
-          as: 'captine',
-          attributes: ['id', 'firstName', 'lastName', 'email'],
-        },
-        {
           model: Level,
           as: 'level',
           attributes: ['name'],
+        },
+        {
+          model: User,
+          as: 'membres',
+          attributes: ['id', 'firstName', 'lastName', 'email'],
         },
       ],
       where: {
