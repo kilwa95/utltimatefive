@@ -89,10 +89,10 @@ const CreateMatchPage = () => {
 
   const handleTeamsChange = (event) => {
     const { target: { value } } = event;
-    setTeamsSelect([ ...teamsSelect, value ]);
+    setTeamsSelect([ ...teamsSelect, value.name ]);
     setValues({
       ...values,
-      [event.target.name]: event.target.value
+      [event.target.name]: [ ...values.teams, value.id ]
     });
   };
 
@@ -243,7 +243,7 @@ const CreateMatchPage = () => {
                   >
                     {teams.map((team) => {
                       return (
-                        <MenuItem key={team.id} value={team.id}>
+                        <MenuItem key={team.id} value={team}>
                           {team.name}
                         </MenuItem>
                       );

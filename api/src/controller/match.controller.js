@@ -76,7 +76,6 @@ exports.createMatch = async (req, res) => {
   }
   try {
     const organizerId = parseInt(req.decoded.id)
-    let teamsUpdateOK
     const match = await saveMatch({
       salle: Helper.sqlescstr(salle),
       ville: Helper.sqlescstr(ville),
@@ -89,16 +88,9 @@ exports.createMatch = async (req, res) => {
       organizerId: parseInt(organizerId),
     })
     const matchJSON = match.toJSON()
-    const matchId = matchJSON.id
-    const teams = await findAllTeams()
-    const teamsJSON = teams.map((team) => team.toJSON())
-    if (teamsJSON.length < 2) {
-      teamsUpdateOK = await updateManyTeams(teams, { matchId: matchId })
-    } else {
-      return res.status(Helper.HTTP.BAD_REQUEST).json({
-        message: 'each match must have 2 teams',
-      })
-    }
+    const teamsUpdateOK = await updateManyTeams(teams, {
+      matchId: matchJSON.id,
+    })
 
     if (match && teamsUpdateOK) {
       return res.status(Helper.HTTP.CREATED).json({
