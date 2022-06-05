@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useContext } from "react";
 import {
   CDataTable,
   CCard,
@@ -10,6 +10,8 @@ import {
 import Modal from "../components/modal/Modal";
 import CreateTeamForm from "../components/form/CreateTeamForm";
 import teamsHttp from "../lib/http/teamsHttp";
+import { SecurityContext } from "../contexts/SecurityContext";
+import { Redirect } from "react-router-dom";
 
 const fields = [
   { key: "id" },
@@ -28,6 +30,7 @@ const TeamPage = () => {
   const [details, setDetails] = useState([]);
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState(false);
+  const { token } = useContext(SecurityContext);
 
   const toggle = useCallback(() => {
     setModal(!modal);
@@ -60,6 +63,10 @@ const TeamPage = () => {
     };
     getListTeams();
   }, []);
+
+  if (!token) {
+    return <Redirect to="/login" />;
+  }
 
   return (
     <CContainer>
