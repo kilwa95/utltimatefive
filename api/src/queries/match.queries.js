@@ -1,6 +1,7 @@
 const Match = require('../models/sequelize/Match')
 const User = require('../models/sequelize/User')
 const Level = require('../models/sequelize/Level')
+const Team = require('../models/sequelize/Team')
 const Player_match = require('../models/sequelize/Player_match')
 
 exports.saveMatch = async (data) => {
@@ -25,6 +26,7 @@ exports.findAllMatches = async () => {
         'square',
         'price',
       ],
+      order: [['id', 'DESC']],
       include: [
         {
           model: User,
@@ -40,6 +42,10 @@ exports.findAllMatches = async () => {
           model: User,
           as: 'players',
           attributes: ['id', 'firstName', 'lastName', 'email'],
+        },
+        {
+          model: Team,
+          as: 'teams',
         },
       ],
     })

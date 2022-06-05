@@ -1,7 +1,10 @@
 const Team = require('../models/sequelize/Team')
 const User = require('../models/sequelize/User')
 const Level = require('../models/sequelize/Level')
+const Match = require('../models/sequelize/Match')
 const Player_team = require('../models/sequelize/Player_team')
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 
 exports.findAllTeams = async () => {
   try {
@@ -17,6 +20,10 @@ exports.findAllTeams = async () => {
           model: User,
           as: 'membres',
           attributes: ['id', 'firstName', 'lastName', 'email'],
+        },
+        {
+          model: Match,
+          as: 'match',
         },
       ],
     })
@@ -88,6 +95,21 @@ exports.updateTeamQuery = async (tid, data) => {
     return await Team.update(data, {
       where: {
         id: tid,
+      },
+      returning: true,
+      plain: true,
+    })
+  } catch (error) {
+    console.error(error)
+  }
+}
+exports.updateManyTeams = async (ids, data) => {
+  try {
+    return await Team.update(data, {
+      where: {
+        id: {
+          [Op.in]: ids,
+        },
       },
       returning: true,
       plain: true,

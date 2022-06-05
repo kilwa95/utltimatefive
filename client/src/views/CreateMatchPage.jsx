@@ -15,14 +15,20 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
+import teamsHttp from "../http/teamsHttp";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import Chip from "@mui/material/Chip";
 
 const theme = createTheme();
 
 const CreateMatchPage = () => {
   const [ levels, setLevels ] = useState([]);
+  const [ teams, setTeams ] = useState([]);
   const [ loading, setLoading ] = useState(false);
   const [ error, setError ] = useState(null);
   const [ image, setImage ] = useState(null);
+  const [ teamsSelect, setTeamsSelect ] = useState([]);
+
   const [ values, setValues ] = useState({
     ville: "",
     address: "",
@@ -31,7 +37,8 @@ const CreateMatchPage = () => {
     slots: "",
     square: "",
     price: "",
-    levelId: ""
+    levelId: "",
+    teams: []
   });
 
   const _onSubmit = (event) => {
@@ -44,6 +51,16 @@ const CreateMatchPage = () => {
     try {
       const levels = await levelHttp.getListLevels();
       setLevels(levels);
+    } catch (error) {
+      setError(error);
+      setLoading(false);
+    }
+  };
+  const getTeams = async () => {
+    setLoading(true);
+    try {
+      const teams = await teamsHttp.getListTeams();
+      setTeams(teams);
     } catch (error) {
       setError(error);
       setLoading(false);
@@ -70,8 +87,18 @@ const CreateMatchPage = () => {
     });
   };
 
+  const handleTeamsChange = (event) => {
+    const { target: { value } } = event;
+    setTeamsSelect([ ...teamsSelect, value ]);
+    setValues({
+      ...values,
+      [event.target.name]: event.target.value
+    });
+  };
+
   useEffect(() => {
     getLevels();
+    getTeams();
   }, []);
 
   return (
@@ -187,6 +214,37 @@ const CreateMatchPage = () => {
                       return (
                         <MenuItem key={level.id} value={level.id}>
                           {level.name}
+                        </MenuItem>
+                      );
+                    })}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">teams</InputLabel>
+                  <Select
+                    disabled={teamsSelect.length === 2 ? true : false}
+                    onChange={handleTeamsChange}
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={teamsSelect}
+                    name="teams"
+                    input={
+                      <OutlinedInput id="select-multiple-chip" label="Chip" />
+                    }
+                    renderValue={(selected) => (
+                      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                        {selected.map((value) => (
+                          <Chip key={value} label={value} />
+                        ))}
+                      </Box>
+                    )}
+                  >
+                    {teams.map((team) => {
+                      return (
+                        <MenuItem key={team.id} value={team.id}>
+                          {team.name}
                         </MenuItem>
                       );
                     })}

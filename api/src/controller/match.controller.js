@@ -8,6 +8,7 @@ const {
   joinMatch,
   findAllMatchesByUserId,
 } = require('../queries/match.queries')
+const { updateManyTeams, findAllTeams } = require('../queries/team.queries')
 const Helper = require('../Helper')
 
 exports.getListMatchs = async (req, res) => {
@@ -67,37 +68,51 @@ exports.createMatch = async (req, res) => {
     salle,
     levelId,
     image,
+    teams,
   } = req.body
 
   if (Helper.isEmpty([salle, levelId])) {
-    res.status(Helper.HTTP.BAD_REQUEST).send('salle,levelId is required')
+    res.status(Helper.HTTP.BAD_REQUEST).send('salle,levelId,teams is required')
   }
   try {
     const organizerId = parseInt(req.decoded.id)
+    let teamsUpdateOK
     const match = await saveMatch({
       salle: Helper.sqlescstr(salle),
       ville: Helper.sqlescstr(ville),
       address: Helper.sqlescstr(address),
       slots: Helper.sqlescstr(slots),
-      square: Helper.sqlescstr(square),
-      price: Helper.sqlescstr(price),
+      square: parseInt(square),
+      price: parseInt(price),
       image: Helper.sqlescstr(image),
       levelId: parseInt(levelId),
       organizerId: parseInt(organizerId),
     })
-    if (match) {
-      res.status(Helper.HTTP.CREATED).json({
+    const matchJSON = match.toJSON()
+    const matchId = matchJSON.id
+    const teams = await findAllTeams()
+    const teamsJSON = teams.map((team) => team.toJSON())
+    if (teamsJSON.length < 2) {
+      teamsUpdateOK = await updateManyTeams(teams, { matchId: matchId })
+    } else {
+      return res.status(Helper.HTTP.BAD_REQUEST).json({
+        message: 'each match must have 2 teams',
+      })
+    }
+
+    if (match && teamsUpdateOK) {
+      return res.status(Helper.HTTP.CREATED).json({
         message: 'Match created',
         data: match,
       })
     } else {
-      res.status(Helper.HTTP.BAD_REQUEST).json({
+      return res.status(Helper.HTTP.BAD_REQUEST).json({
         message: 'Match not created',
       })
     }
   } catch (error) {
     console.error(error.message)
-    res.status(500).json({
+    return res.status(500).json({
       message: error.message,
     })
   }

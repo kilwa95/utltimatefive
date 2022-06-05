@@ -84,6 +84,7 @@ router.post('/organizers', createOrganizer)
 router.get('/users/info', authJwt, isUserExist, getUserById)
 router.delete('/users/:uid', authJwt, isUserExist, removeUser) //isSelfUser
 router.patch('/users/:uid/disable', authJwt, isUserExist, disableUser)
+
 /**
  * API Matchs
  */
