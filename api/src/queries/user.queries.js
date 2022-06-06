@@ -109,3 +109,23 @@ exports.deleteUser = async (uid) => {
     console.error(error)
   }
 }
+
+exports.updatePlayerStatus = async (uid, status) => {
+  try {
+    const ressource = await User.update(
+      {
+        status: status,
+      },
+      {
+        where: {
+          id: uid,
+        },
+        returning: true,
+        plain: true,
+      },
+    )
+    return ressource[1]
+  } catch (error) {
+    console.error(error)
+  }
+}

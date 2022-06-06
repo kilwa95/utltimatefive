@@ -8,6 +8,11 @@ class Team extends Model {}
 Team.init(
   {
     name: { type: DataTypes.STRING, allowNull: false },
+    numberPlace: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 10,
+    },
   },
   {
     sequelize: connection,

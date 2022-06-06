@@ -4,6 +4,7 @@ const {
   saveUser,
   updateUser,
   deleteUser,
+  updatePlayerStatus,
 } = require('../queries/user.queries')
 const {
   saveAddress,
@@ -268,5 +269,17 @@ exports.disableUser = async (req, res) => {
   } catch (error) {
     console.error(error)
     res.status(Helper.HTTP.SERVER_ERROR).send(error)
+  }
+}
+exports.validatePlayer = async (req, res) => {
+  try {
+    const uid = parseInt(req.params.uid)
+    const user = await updatePlayerStatus(uid, Helper.status.validated)
+    res.status(Helper.HTTP.OK).json({
+      message: `Player ${user.id} validated`,
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(Helper.HTTP.SERVER_ERROR).send('Inertval server error')
   }
 }

@@ -41,6 +41,10 @@ const NavMenu = ({ searchQuery, setSearchQuery }) => {
     setAnchorEl(null)
     history.push('/mymatches')
   }
+  const handleTeams = () => {
+    setAnchorEl(null)
+    history.push('/teams')
+  }
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -69,7 +73,9 @@ const NavMenu = ({ searchQuery, setSearchQuery }) => {
           <Button onClick={() => history.push('/matchs')} color="inherit">
             Matches
           </Button>
-          <Button color="inherit">Teams</Button>
+          <Button onClick={handleTeams} color="inherit">
+            Teams
+          </Button>
           <Button color="inherit"> about us</Button>
           {token ? (
             <>

@@ -128,17 +128,31 @@ exports.joinTeamMember = async (req, res) => {
   try {
     const tid = parseInt(req.params.tid)
     const uid = parseInt(req.decoded.id)
-    const team = await joinTeam({
-      TeamId: tid,
-      UserId: uid,
+    const teamFound = await findTeamById(tid)
+    const teamFoundJSON = teamFound.toJSON()
+    const teams = await findAllTeams()
+    const teamsJSON = teams.map((team) => team.toJSON())
+
+    teamsJSON.forEach((team) => {
+      const membres = team.membres.map((member) => member.id)
+      if (membres.includes(uid)) {
+        res.status(Helper.HTTP.BAD_REQUEST).json({
+          message: 'player already in team',
+        })
+      }
     })
-    if (team) {
+
+    if (teamFoundJSON.membres.length != 10) {
+      const team = await joinTeam({
+        TeamId: tid,
+        UserId: uid,
+      })
       res.status(Helper.HTTP.OK).json({
         message: 'Join team success',
         data: team,
       })
     } else {
-      res.status(Helper.HTTP.BAD_REQUEST).json({ message: 'Join team failed' })
+      res.status(Helper.HTTP.BAD_REQUEST).json({ message: 'Team is full' })
     }
   } catch (error) {
     console.error(error)

@@ -116,6 +116,18 @@ exports.onlyPlayer = (req, res, next) => {
     return res.status(Helper.HTTP.SERVER_ERROR).json({ error })
   }
 }
+exports.onlyPlayerOrOrganizer = (req, res, next) => {
+  try {
+    if (req.decoded && (req.decoded.isPlayer || req.decoded.isOrganizer)) {
+      return next()
+    }
+    return res
+      .status(Helper.HTTP.UNAUTHORIZED)
+      .json({ error: 'only Player or Organizer can access this route' })
+  } catch (error) {
+    return res.status(Helper.HTTP.SERVER_ERROR).json({ error })
+  }
+}
 exports.onlyOrganizer = (req, res, next) => {
   try {
     if (req.decoded && req.decoded.isOrganizer) {

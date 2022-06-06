@@ -71,6 +71,7 @@ const CreateMatchPage = () => {
     setLoading(true);
     try {
       const match = await matchHttp.saveMatche(data);
+      location.reload();
       setLoading(false);
       return match;
     } catch (error) {

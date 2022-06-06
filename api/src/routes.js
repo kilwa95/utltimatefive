@@ -10,6 +10,7 @@ const {
   updatePlayer,
   removeUser,
   disableUser,
+  validatePlayer,
 } = require('./controller/user.controller')
 const {
   login,
@@ -23,6 +24,7 @@ const {
   isSelfOrganizer,
   isSelfCaptiner,
   isUserExist,
+  onlyPlayerOrOrganizer,
 } = require('./controller/security.controller')
 const {
   getListMatchs,
@@ -84,6 +86,7 @@ router.post('/organizers', createOrganizer)
 router.get('/users/info', authJwt, isUserExist, getUserById)
 router.delete('/users/:uid', authJwt, isUserExist, removeUser) //isSelfUser
 router.patch('/users/:uid/disable', authJwt, isUserExist, disableUser)
+router.patch('/users/:uid/validated', authJwt, onlyOrganizer, validatePlayer)
 
 /**
  * API Matchs
@@ -118,7 +121,7 @@ router.post('/admin/teams', authJwt, onlyAdmin, createTeam)
 router.get('/teams/:tid', authJwt, onlyCaptiner, isTeamExist, getTeamById)
 router.put('/teams/:tid', authJwt, isSelfCaptiner, updateTeam)
 router.delete('/teams/:tid', authJwt, isSelfCaptiner, deleteTeam)
-router.post('/teams/:tid/join', authJwt, onlyPlayer, joinTeamMember)
+router.post('/teams/:tid/join', authJwt, onlyPlayerOrOrganizer, joinTeamMember)
 router.delete('/teams/:tid/left', authJwt, onlyPlayer, leaveTeamMember)
 
 /**

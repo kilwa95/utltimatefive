@@ -13,6 +13,7 @@ import ProfileOrganizerPage from './views/ProfileOrganizerPage'
 import CreateMatchPage from './views/CreateMatchPage'
 import MatchesPage from './views/MatchesPage'
 import MatchDetailPage from './views/MatchDetailPage'
+import TeamsPage from './views/TeamsPage'
 import './App.css'
 
 const App = () => {
@@ -23,6 +24,12 @@ const App = () => {
           <React.Suspense>
             <BrowserRouter>
               <Switch>
+                <Route
+                  exact
+                  path="/teams"
+                  name="Teams"
+                  render={(props) => <TeamsPage {...props} />}
+                />
                 <Route
                   exact
                   path="/mymatches"
