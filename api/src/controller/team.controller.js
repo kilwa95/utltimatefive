@@ -133,23 +133,25 @@ exports.joinTeamMember = async (req, res) => {
     const teams = await findAllTeams()
     const teamsJSON = teams.map((team) => team.toJSON())
 
-    teamsJSON.forEach((team) => {
-      const membres = team.membres.map((member) => member.id)
-      if (membres.includes(uid)) {
-        res.status(Helper.HTTP.BAD_REQUEST).json({
-          message: 'player already in team',
-        })
-      }
-    })
+    // teamsJSON.forEach((team) => {
+    //   const membres = team.membres.map((member) => member.id)
+    //   if (membres.includes(uid)) {
+    //     res.status(Helper.HTTP.BAD_REQUEST).json({
+    //       message: 'player already in team',
+    //     })
+    //   }
+    // })
 
     if (teamFoundJSON.membres.length != 10) {
       const team = await joinTeam({
         TeamId: tid,
         UserId: uid,
       })
+      const data = await findTeamById(tid)
+      const dataJSON = data.toJSON()
       res.status(Helper.HTTP.OK).json({
         message: 'Join team success',
-        data: team,
+        data: dataJSON,
       })
     } else {
       res.status(Helper.HTTP.BAD_REQUEST).json({ message: 'Team is full' })
