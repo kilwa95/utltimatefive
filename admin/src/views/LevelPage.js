@@ -13,7 +13,7 @@ import {
   CCollapse,
 } from "@coreui/react";
 
-const fields = [{ key: "id" }, { key: "name" }];
+const fields = [{ key: "name" }];
 
 const LevelPage = () => {
   const [levels, setLevels] = useState([]);
@@ -68,11 +68,6 @@ const LevelPage = () => {
               fields={fields}
               items={levels ? levels : []}
               itemsPerPage={5}
-              columnFilter
-              pagination
-              tableFilter
-              sorter
-              hover
             />
           </CCardBody>
         </CCard>

@@ -41,11 +41,31 @@ exports.findAllMatches = async () => {
         {
           model: User,
           as: 'players',
-          attributes: ['id', 'firstName', 'lastName', 'email'],
+          attributes: ['id', 'firstName', 'lastName', 'email', 'status'],
+          include: [
+            {
+              model: Team,
+              as: 'equibes',
+              attributes: ['name'],
+            },
+          ],
         },
         {
           model: Team,
           as: 'teams',
+          attributes: ['id', 'name', 'numberPlace'],
+          include: [
+            {
+              model: Level,
+              as: 'level',
+              attributes: ['name'],
+            },
+            {
+              model: User,
+              as: 'membres',
+              attributes: ['id', 'firstName', 'lastName', 'email'],
+            },
+          ],
         },
       ],
     })
@@ -81,7 +101,14 @@ exports.findAllMatchesByUserId = async (uid) => {
         {
           model: User,
           as: 'players',
-          attributes: ['id', 'firstName', 'lastName', 'email'],
+          attributes: ['id', 'firstName', 'lastName', 'email', 'status'],
+          include: [
+            {
+              model: Team,
+              as: 'equibes',
+              attributes: ['name'],
+            },
+          ],
         },
       ],
       where: {

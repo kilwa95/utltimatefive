@@ -135,7 +135,6 @@ exports.createAdmin = async (req, res) => {
       password: Helper.sqlescstr(password),
       birthday: Helper.sqlescstr(birthday),
       image: Helper.sqlescstr(image),
-      levelId: Helper.level.silverA,
       addressId: address.id,
       roles: ['admin'],
     })

@@ -41,7 +41,7 @@ const haschPassword = async (user) => {
 }
 
 User.belongsTo(Level, { as: 'level' })
-Level.hasMany(User, { foreignKey: 'levelId', as: 'users' })
+Level.hasMany(User, { foreignKey: 'levelId', as: 'users', allowNull: true })
 
 User.belongsTo(Address, { as: 'address' })
 Address.hasOne(User, { foreignKey: 'addressId', as: 'user' })

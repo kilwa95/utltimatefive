@@ -103,7 +103,12 @@ router.delete(
   isSelfOrganizer,
   deleteMatch,
 )
-router.post('/matchs/:mid/join', authJwt, onlyPlayer, joinMatchPlayers)
+router.post(
+  '/matchs/:mid/join',
+  authJwt,
+  onlyPlayerOrOrganizer,
+  joinMatchPlayers,
+)
 /**
  * API levels
  */

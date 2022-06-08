@@ -38,6 +38,36 @@ exports.findAllUsers = async () => {
     console.error(error)
   }
 }
+exports.findAllUsersWaiting = async () => {
+  try {
+    return await User.findAll({
+      attributes: [
+        'id',
+        'firstName',
+        'lastName',
+        'email',
+        'enable',
+        'roles',
+        'birthday',
+        'status',
+        'image',
+      ],
+      where: {
+        status: 'waiting',
+      },
+      include: [
+        {
+          model: Level,
+          as: 'level',
+          attributes: ['name'],
+        },
+        { model: Address, as: 'address' },
+      ],
+    })
+  } catch (error) {
+    console.error(error)
+  }
+}
 
 exports.findUserById = async (uid) => {
   try {
