@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react'
 import { red } from '@mui/material/colors'
 import teamsHttp from '../http/teamsHttp'
 import { SecurityContext } from '../contexts/SecurityContext'
+import { useHistory } from 'react-router-dom'
 
 import {
   Card,
@@ -18,8 +19,12 @@ import {
 const Team = ({ team, isLoading }) => {
   const [membres, setMembres] = useState([])
   const { user } = useContext(SecurityContext)
+  const history = useHistory()
 
   const joinTeam = async (teamId) => {
+    if (!user) {
+      history.push('/login')
+    }
     const { data } = await teamsHttp.joinTeam(teamId)
     setMembres(data.membres)
   }
@@ -87,7 +92,7 @@ const Team = ({ team, isLoading }) => {
               ) : (
                 <Button
                   disabled={
-                    membres.map((m) => m.id).includes(user.id) ? true : false
+                    membres.map((m) => m.id).includes(user?.id) ? true : false
                   }
                   onClick={() => joinTeam(team.id)}
                   variant="contained"

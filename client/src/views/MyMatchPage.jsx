@@ -8,6 +8,8 @@ import { DataGrid } from "@mui/x-data-grid";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import EditIcon from "@material-ui/icons/Edit";
 import { blue, red } from "@material-ui/core/colors";
+import { useHistory } from "react-router-dom";
+import { Button } from "@mui/material";
 
 const MyMatchPage = () => {
   const [ matchs, setMatchs ] = useState([]);
@@ -15,7 +17,7 @@ const MyMatchPage = () => {
   const [ error, setError ] = useState(null);
   const [ isError, setIsError ] = useState(false);
   const { token, user } = useContext(SecurityContext);
-
+  const history = useHistory();
 
   const deleteMatche = async (id) => {
     try {
@@ -28,7 +30,7 @@ const MyMatchPage = () => {
       setIsError(true);
       setError(error.message);
     }
-  }
+  };
 
   const getMatches = async (uid) => {
     setIsError(false);
@@ -44,39 +46,63 @@ const MyMatchPage = () => {
   };
 
   const columns = [
-    { field: "salle", headerName: "salle", width: 130,editable: true },
-    { field: "price", headerName: "prix", width: 130,editable: true },
-    { field: "square", headerName: "place disponible", width: 130 ,editable: true},
-    { field: "slots", headerName: "créneaux horaires", width: 130,editable: true },
-    { field: "ville", headerName: "ville", width: 130,editable: true },
-    { field: "address", headerName: "address", width: 130,editable: true },
+    { field: "salle", headerName: "salle", width: 100, editable: true },
+    { field: "price", headerName: "prix", width: 100, editable: true },
+    {
+      field: "square",
+      headerName: "place disponible",
+      width: 50,
+      editable: true
+    },
+    {
+      field: "slots",
+      headerName: "créneaux horaires",
+      width: 100,
+      editable: true
+    },
+    { field: "ville", headerName: "ville", width: 100, editable: true },
+    { field: "address", headerName: "address", width: 300, editable: true },
     {
       field: "level",
       headerName: "niveux",
       disableClickEventBubbling: true,
-      width: 130,
-      valueGetter: (params) => `${params.row.level?.name || ""}`
+      width: 100,
+      valueGetter: (params) => `${params.row.level.name || ""}`
     },
     {
       field: "delete",
       headerName: "supprimer",
       sortable: false,
 
-      width: 130,
       renderCell: (params) => {
         return (
-          <DeleteOutlinedIcon onClick={() =>deleteMatche(params.row.id)} style={{ color: red[500], cursor: "pointer" }} />
+          <DeleteOutlinedIcon
+            onClick={() => deleteMatche(params.row.id)}
+            style={{ color: red[500], cursor: "pointer" }}
+          />
         );
       }
     },
     {
-      field: "edit",
-      headerName: "Update",
+      field: "valide",
+      headerName: "valider players",
       sortable: false,
-
-      width: 130,
+      width: 300,
       renderCell: (params) => {
-        return <EditIcon style={{ color: blue[500], cursor: "pointer" }} />;
+        return (
+          <Button
+            onClick={() => {
+              localStorage.setItem(
+                "players",
+                JSON.stringify(params.row.players)
+              );
+              localStorage.setItem("teams", JSON.stringify(params.row.teams));
+              history.push("/validationplayer");
+            }}
+          >
+            valider
+          </Button>
+        );
       }
     }
   ];
@@ -93,7 +119,7 @@ const MyMatchPage = () => {
   if (!user && !user.isPlayer) {
     return <Redirect to="/" />;
   }
-  
+
   return (
     <React.Fragment>
       <NavMenu />
@@ -114,18 +140,17 @@ const MyMatchPage = () => {
             editMode="cell"
             pageSize={5}
             rowsPerPageOptions={[ 5 ]}
-            processRowUpdate={ async (updatedRow) => {
-              console.log(updatedRow);
+            processRowUpdate={async (updatedRow) => {
               await matchHttp.updateMatch(updatedRow.id, updatedRow);
               setMatchs(
-                matchs.map((row) => (row.id === updatedRow.id ? updatedRow : row))
+                matchs.map(
+                  (row) => (row.id === updatedRow.id ? updatedRow : row)
+                )
               );
             }}
             onProcessRowUpdateError={(error) => {
               console.log(error);
             }}
-           
-           
           />
         </div>
       </Container>

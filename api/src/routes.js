@@ -121,7 +121,7 @@ router.delete('/levels/:lid', authJwt, isLevelExist, onlyAdmin, deleteLevel)
 /**
  * API teams
  */
-router.get('/teams', authJwt, getListTeams)
+router.get('/teams', getListTeams)
 router.post('/admin/teams', authJwt, onlyAdmin, createTeam)
 router.get('/teams/:tid', authJwt, onlyCaptiner, isTeamExist, getTeamById)
 router.put('/teams/:tid', authJwt, isSelfCaptiner, updateTeam)

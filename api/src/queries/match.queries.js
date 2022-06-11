@@ -110,6 +110,23 @@ exports.findAllMatchesByUserId = async (uid) => {
             },
           ],
         },
+        {
+          model: Team,
+          as: 'teams',
+          attributes: ['id', 'name', 'numberPlace'],
+          include: [
+            {
+              model: Level,
+              as: 'level',
+              attributes: ['name'],
+            },
+            {
+              model: User,
+              as: 'membres',
+              attributes: ['id', 'firstName', 'lastName', 'email'],
+            },
+          ],
+        },
       ],
       where: {
         organizerId: uid,

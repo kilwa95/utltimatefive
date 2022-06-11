@@ -40,7 +40,6 @@ exports.getUserById = async (req, res) => {
 }
 
 exports.createPlayer = async (req, res) => {
-  console.log(req.file)
   const {
     firstName,
     lastName,

@@ -14,6 +14,7 @@ import CreateMatchPage from './views/CreateMatchPage'
 import MatchesPage from './views/MatchesPage'
 import MatchDetailPage from './views/MatchDetailPage'
 import TeamsPage from './views/TeamsPage'
+import ValidationPlayerPage from './views/ValidationPlayerPage'
 import './App.css'
 
 const App = () => {
@@ -35,6 +36,12 @@ const App = () => {
                   path="/mymatches"
                   name="mymatches"
                   render={(props) => <MyMatchPage {...props} />}
+                />
+                <Route
+                  exact
+                  path="/validationplayer"
+                  name="validationPlayer"
+                  render={(props) => <ValidationPlayerPage {...props} />}
                 />
                 <Route
                   exact
