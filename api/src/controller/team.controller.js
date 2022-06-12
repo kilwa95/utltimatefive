@@ -7,6 +7,7 @@ const {
   joinTeam,
   leaveTeam,
 } = require('../queries/team.queries')
+const { findUserById } = require('../queries/user.queries')
 const Helper = require('../Helper')
 
 exports.getListTeams = async (req, res) => {
@@ -128,6 +129,7 @@ exports.joinTeamMember = async (req, res) => {
   try {
     const tid = parseInt(req.params.tid)
     const uid = parseInt(req.decoded.id)
+    const user_id = req.body.uid ? parseInt(req.body.uid) : undefined
     const teamFound = await findTeamById(tid)
     const teamFoundJSON = teamFound.toJSON()
     const teams = await findAllTeams()
@@ -145,13 +147,15 @@ exports.joinTeamMember = async (req, res) => {
     if (teamFoundJSON.membres.length != 10) {
       const team = await joinTeam({
         TeamId: tid,
-        UserId: uid,
+        UserId: user_id ? user_id : uid,
       })
+      const user = await findUserById(user_id ? user_id : uid)
       const data = await findTeamById(tid)
       const dataJSON = data.toJSON()
+      const userJSON = user.toJSON()
       res.status(Helper.HTTP.OK).json({
         message: 'Join team success',
-        data: dataJSON,
+        data: { dataJSON, userJSON },
       })
     } else {
       res.status(Helper.HTTP.BAD_REQUEST).json({ message: 'Team is full' })

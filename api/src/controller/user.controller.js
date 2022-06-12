@@ -275,6 +275,7 @@ exports.validatePlayer = async (req, res) => {
     const user = await updatePlayerStatus(uid, Helper.status.validated)
     res.status(Helper.HTTP.OK).json({
       message: `Player ${user.id} validated`,
+      data: user,
     })
   } catch (error) {
     console.error(error)

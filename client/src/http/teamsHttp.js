@@ -9,10 +9,10 @@ const teamsHttp = {
     })
     return result.data
   },
-  joinTeam: async function (tid) {
+  joinTeam: async function (tid, uid) {
     const result = await axios.post(
       `http://localhost:4000/teams/${tid}/join`,
-      null,
+      { uid },
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
