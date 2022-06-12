@@ -47,8 +47,37 @@ exports.getMatchById = async (req, res) => {
   try {
     const mid = parseInt(req.params.mid)
     const match = await findMatchById(mid)
+    const matchJSON = match.toJSON()
+
+    const data = {
+      id: matchJSON.id,
+      name: matchJSON.name,
+      address: matchJSON.address,
+      ville: matchJSON.ville,
+      salle: matchJSON.salle,
+      slots: matchJSON.slots,
+      square: matchJSON.square,
+      price: matchJSON.price,
+      image: matchJSON.image,
+      level: matchJSON.level,
+      organizer: matchJSON.organizer,
+      players: matchJSON.players,
+      status: matchJSON.status,
+      teams: matchJSON.teams.map((team) => {
+        return {
+          id: team.id,
+          name: team.name,
+          level: team.level,
+          numberPlace: team.numberPlace,
+          membres: team.membres.filter(
+            (membre) => membre.status === 'validated',
+          ),
+        }
+      }),
+    }
+
     res.status(Helper.HTTP.OK).json({
-      data: match,
+      data: data,
     })
   } catch (error) {
     console.error(error)

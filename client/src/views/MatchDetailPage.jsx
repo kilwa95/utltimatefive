@@ -10,6 +10,7 @@ import { Redirect } from "react-router-dom";
 const MatchDetailPage = (props) => {
   let location = useLocation();
   const [ match, setMatch ] = React.useState({});
+  const [ teams, setTeams ] = React.useState([]);
   const [ organizer, setOrganizer ] = React.useState({});
   const [ isLoading, setIsLoading ] = React.useState(false);
   const [ isPlayerJoined, setIsPlayerJoined ] = React.useState(false);
@@ -18,6 +19,7 @@ const MatchDetailPage = (props) => {
   const getMatch = async (mid) => {
     const match = await matchesHttp.getMatchByMatchId(mid);
     setMatch(match.data);
+    setTeams(match.data.teams);
     setOrganizer(match.data.organizer);
   };
 
@@ -44,7 +46,43 @@ const MatchDetailPage = (props) => {
     <React.Fragment>
       <NavMenu />
       <Container sx={{ marginTop: "80px" }}>
-        <Box style={{ display: "flex", width: "100%", height: "320px" }}>
+    
+        <Box sx={{ marginTop: "80px" ,display: "flex",width: "100%", justifyContent: "center",alignItems: "center"}}>
+          <Box style={{display: "flex",flexDirection: "column", alignItems: "center"}}>
+            <img width="200" height="200" src="https://yt3.ggpht.com/0M4ca-lJ8DKvAh7R9RUKHPp97QgagJs5z0jF6jl8stqrYrvYSKshxVyvKCzZSU6wkx0AkmeZ=s900-c-k-c0x00ffffff-no-rj" />
+            <div>{teams[0]?.name}</div>
+          </Box>
+          <Box style={{display: "flex", alignItems: "center",marginLeft:"40px",marginRight: "40px"}} >
+              <Typography style={{fontSize: "30px"}}>VS</Typography>
+          </Box>
+          <Box style={{display: "flex",flexDirection: "column", alignItems: "center"}}>
+            <img width="200" height="200" src="https://yt3.ggpht.com/0M4ca-lJ8DKvAh7R9RUKHPp97QgagJs5z0jF6jl8stqrYrvYSKshxVyvKCzZSU6wkx0AkmeZ=s900-c-k-c0x00ffffff-no-rj" />
+            <div>{teams[1]?.name}</div>
+          </Box>
+        </Box>
+
+        <Box sx={{ marginTop: "40px" ,display: "flex",width: "100%", justifyContent: "center",alignItems: "center"}}>
+          <Box style={{display: "flex",flexDirection: "column"}}>
+            {teams[0]?.membres.map((member) => (
+              
+              <Box style={{display: "flex",marginTop: '16px'}}>
+                <Avatar style={{backgroundColor: deepOrange[500],marginRight: "10px"}}>{member.firstName[0]}</Avatar>
+                <Typography style={{fontSize: "20px"}}>{member.firstName + " " + member.lastName}</Typography>
+              </Box>
+            ))}
+          </Box>
+          <Box style={{display: "flex",flexDirection: "column",marginLeft: "130px"}}>
+            {teams[1]?.membres?.map((member) => (
+              <Box style={{display: "flex",marginTop: '16px'}}>
+                <Avatar style={{backgroundColor: deepOrange[500],marginRight: "10px"}}>{member.firstName[0]}</Avatar>
+                <Typography style={{fontSize: "20px"}}>{member.firstName + " " + member.lastName}</Typography>
+              </Box>
+            ))}
+          </Box>
+        </Box>
+
+
+        <Box style={{ display: "flex", width: "100%", height: "320px", marginTop: "80px"  }}>
           <Box style={{ marginRight: "40px", width: "700px" }}>
             <img
               height="320"
@@ -127,7 +165,8 @@ const MatchDetailPage = (props) => {
             </Box>
           </Box>
         </Box>
-        <Box sx={{ marginTop: "80px" }}>
+
+         <Box sx={{ marginTop: "80px" }}>
           <Typography variant="h4">Description</Typography>
           <hr />
           <Typography variant="h5">salle: {match.salle}</Typography>
@@ -138,8 +177,7 @@ const MatchDetailPage = (props) => {
           <hr />
           <Typography variant="h5">place disponible: {match.square}</Typography>
           <hr />
-          <Typography variant="h4">players</Typography>
-        </Box>
+        </Box> 
       </Container>
     </React.Fragment>
   );

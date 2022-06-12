@@ -187,7 +187,7 @@ exports.findMatchById = async (matchId) => {
             {
               model: User,
               as: 'membres',
-              attributes: ['id', 'firstName', 'lastName', 'email'],
+              attributes: ['id', 'firstName', 'lastName', 'email', 'status'],
             },
           ],
         },
