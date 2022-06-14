@@ -100,7 +100,7 @@ router.delete(
   '/matchs/:mid',
   authJwt,
   onlyOrganizer,
-  isSelfOrganizer,
+  // isSelfOrganizer,
   deleteMatch,
 )
 router.post(

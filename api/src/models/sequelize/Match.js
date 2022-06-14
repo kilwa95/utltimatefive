@@ -27,10 +27,18 @@ Match.init(
 )
 
 Match.belongsTo(User, { as: 'organizer' })
-User.hasMany(Match, { foreignKey: 'organizerId', as: 'matchs' })
+User.hasMany(Match, {
+  foreignKey: 'organizerId',
+  as: 'matchs',
+  onDelete: 'cascade',
+})
 
 Match.belongsTo(Level, { as: 'level' })
-Level.hasMany(Match, { foreignKey: 'levelId', as: 'matchs' })
+Level.hasMany(Match, {
+  foreignKey: 'levelId',
+  as: 'matchs',
+  onDelete: 'cascade',
+})
 
 Match.sync({
   alter: true,

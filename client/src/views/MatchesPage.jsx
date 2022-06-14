@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Div } from "../style/styled";
 import { Container } from "@mui/material";
-import Match from "../components/Match";
+import MatchCard from "../components/MatchCard";
 import { MatchContext } from "../contexts/MatchContext";
 import NavMenu from "../components/NavMenu";
 
@@ -28,7 +28,7 @@ const MatchesPage = () => {
       <Container>
         <Div direction="row" wrap="wrap" top="80px" width="100%">
           {filteredMatchs.map((match) => (
-            <Match key={match.id} isLoading={isLoading} match={match} />
+            <MatchCard key={match.id} isLoading={isLoading} match={match} />
           ))}
         </Div>
       </Container>
