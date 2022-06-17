@@ -3,6 +3,7 @@ const User = require('../models/sequelize/User')
 const Level = require('../models/sequelize/Level')
 const Match = require('../models/sequelize/Match')
 const Player_team = require('../models/sequelize/Player_team')
+const Match_team = require('../models/sequelize/Match_team')
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 
@@ -20,10 +21,6 @@ exports.findAllTeams = async () => {
           model: User,
           as: 'membres',
           attributes: ['id', 'firstName', 'lastName', 'email'],
-        },
-        {
-          model: Match,
-          as: 'match',
         },
       ],
     })
@@ -135,6 +132,15 @@ exports.joinTeam = async (data) => {
   try {
     const player_team = new Player_team(data)
     return await player_team.save()
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+exports.saveMatchTeam = async (data) => {
+  try {
+    const match_team = new Match_team(data)
+    return await match_team.save()
   } catch (error) {
     console.error(error)
   }

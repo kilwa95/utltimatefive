@@ -3,6 +3,7 @@ const User = require('../models/sequelize/User')
 const Level = require('../models/sequelize/Level')
 const Team = require('../models/sequelize/Team')
 const Player_match = require('../models/sequelize/Player_match')
+const Match_team = require('../models/sequelize/Match_team')
 
 exports.saveMatch = async (data) => {
   try {
@@ -53,7 +54,7 @@ exports.findAllMatches = async () => {
         {
           model: Team,
           as: 'teams',
-          attributes: ['id', 'name', 'numberPlace'],
+          through: { attributes: [] },
           include: [
             {
               model: Level,

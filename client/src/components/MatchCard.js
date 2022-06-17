@@ -21,39 +21,6 @@ import {
 const MatchCard = ({ isLoading, match }) => {
   return (
     <>
-      <Div direction="row" top="80px" width="100%" alignItems="center">
-        <div
-          style={{
-            fontWeight: '500',
-            fontSize: '18px',
-            color: '#172C41',
-            width: '100%',
-          }}
-        >
-          touts les matches
-        </div>
-        <Div direction="row" width="100%" alignItems="center">
-          <div style={{ marginRight: '10px' }}>Filter :</div>
-          <Select
-            style={{ width: '100px', marginRight: '10px' }}
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="Age"
-          />
-          <Select
-            style={{ width: '100px', marginRight: '10px' }}
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="Age"
-          />
-          <Select
-            style={{ width: '100px' }}
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="Age"
-          />
-        </Div>
-      </Div>
       <Div direction="column" top="40px" width="1080px">
         <Card
           sx={{

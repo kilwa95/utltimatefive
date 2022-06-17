@@ -8,15 +8,17 @@ const {
   joinMatch,
   findAllMatchesByUserId,
 } = require('../queries/match.queries')
-const { updateManyTeams, findAllTeams } = require('../queries/team.queries')
+const {
+  updateManyTeams,
+  findAllTeams,
+  saveMatchTeam,
+} = require('../queries/team.queries')
 const Helper = require('../Helper')
 
 exports.getListMatchs = async (req, res) => {
   try {
     const matches = await findAllMatches()
-    res.status(Helper.HTTP.OK).json({
-      data: matches,
-    })
+    res.status(Helper.HTTP.OK).json({ data: matches })
   } catch (error) {
     console.error(error)
     res.status(Helper.HTTP.SERVER_ERROR).json({
@@ -117,11 +119,16 @@ exports.createMatch = async (req, res) => {
       organizerId: parseInt(organizerId),
     })
     const matchJSON = match.toJSON()
-    const teamsUpdateOK = await updateManyTeams(teams, {
-      matchId: matchJSON.id,
-    })
+    const matchId = matchJSON.id
+    for (let i = 0; i < teams.length; i++) {
+      const teamID = teams[i]
+      await saveMatchTeam({
+        TeamId: teamID,
+        MatchId: matchId,
+      })
+    }
 
-    if (match && teamsUpdateOK) {
+    if (match) {
       return res.status(Helper.HTTP.CREATED).json({
         message: 'Match created',
         data: match,

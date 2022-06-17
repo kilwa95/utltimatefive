@@ -26,9 +26,6 @@ User.hasMany(Team, { foreignKey: 'adminId', as: 'teams', onDelete: 'cascade' })
 Team.belongsTo(Level, { as: 'level' })
 Level.hasMany(Team, { foreignKey: 'levelId', as: 'teams', onDelete: 'cascade' })
 
-Team.belongsTo(Match, { as: 'match' })
-Match.hasMany(Team, { foreignKey: 'matchId', as: 'teams', onDelete: 'cascade' })
-
 Team.sync({
   alter: true,
 })
