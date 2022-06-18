@@ -216,7 +216,6 @@ exports.updatePlayer = async (req, res) => {
       postalcode: postalcode,
       city: Helper.sqlescstr(city),
     })
-    console.log('address', address)
     const user = await updateUser(uid, {
       firstName: Helper.sqlescstr(firstName),
       lastName: Helper.sqlescstr(lastName),
@@ -225,10 +224,11 @@ exports.updatePlayer = async (req, res) => {
       birthday: Helper.sqlescstr(birthday),
       addressId: address.id,
     })
+    const newUser = await findUserById(uid)
     if (user) {
       res.status(Helper.HTTP.OK).json({
         message: `User ${uid} updated`,
-        data: user,
+        user: newUser,
       })
     } else {
       res.status(Helper.HTTP.BAD_REQUEST).send('User not Update')

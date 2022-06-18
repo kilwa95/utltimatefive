@@ -47,14 +47,13 @@ export default function UserProvider({ children }) {
 
   const updateUser = async (uid, values) => {
     setIsError(false)
-    setIsLoading(true)
     try {
-      await usersHttp.updateUser(uid, values)
+      const response = await usersHttp.updateUser(uid, values)
+      return response
     } catch (error) {
       setIsError(true)
       setError(error)
     }
-    setIsLoading(false)
   }
 
   return (
