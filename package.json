@@ -1,5 +1,8 @@
 {
   "devDependencies": {
     "jest": "^28.1.0"
+  },
+  "dependencies": {
+    "react-toastify": "^9.0.4"
   }
 }

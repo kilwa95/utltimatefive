@@ -18,8 +18,8 @@ import FormControl from "@mui/material/FormControl";
 import teamsHttp from "../http/teamsHttp";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Chip from "@mui/material/Chip";
-
-const theme = createTheme();
+import Toast from "../components/toast";
+import { orange } from "@mui/material/colors";
 
 const CreateMatchPage = () => {
   const [ levels, setLevels ] = useState([]);
@@ -28,7 +28,9 @@ const CreateMatchPage = () => {
   const [ error, setError ] = useState(null);
   const [ image, setImage ] = useState(null);
   const [ teamsSelect, setTeamsSelect ] = useState([]);
-
+  const [ open, setOpen ] = useState(false);
+  const [ color, setColor ] = useState("");
+  const [ message, setMessage ] = useState("");
   const [ values, setValues ] = useState({
     ville: "",
     address: "",
@@ -39,6 +41,12 @@ const CreateMatchPage = () => {
     price: "",
     levelId: "",
     teams: []
+  });
+
+  const theme = createTheme({
+    status: {
+      danger: orange[500]
+    }
   });
 
   const _onSubmit = (event) => {
@@ -70,11 +78,28 @@ const CreateMatchPage = () => {
   const saveMatch = async (data) => {
     setLoading(true);
     try {
-      const match = await matchHttp.saveMatche(data);
-      // location.reload();
-      setLoading(false);
-      return match;
+      const response = await matchHttp.saveMatche(data);
+      if (response.status === 201) {
+        setValues({
+          ville: "",
+          address: "",
+          salle: "",
+          image: "",
+          slots: "",
+          square: "",
+          price: "",
+          levelId: "",
+          teams: []
+        });
+        setLoading(false);
+        setMessage("Match created successfully");
+        setColor("success");
+        setOpen(true);
+      }
     } catch (error) {
+      setMessage("Match creation failed");
+      setColor("error");
+      setOpen(true);
       setError(error);
       setLoading(false);
     }
@@ -263,6 +288,7 @@ const CreateMatchPage = () => {
           </Box>
         </Box>
       </Container>
+      <Toast message={message} color={color} open={open} setOpen={setOpen} />
     </ThemeProvider>
   );
 };

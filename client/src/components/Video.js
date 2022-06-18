@@ -2,13 +2,13 @@ import React from 'react'
 
 const Video = () => {
   return (
-    <div class="jumbotron">
+    <div className="jumbotron">
       <video
-        class="video-background"
+        className="video-background"
         preload="true"
-        muted="true"
-        autoplay="true"
-        loop="true"
+        muted={true}
+        autoPlay={true}
+        loop={true}
       >
         <source
           src="https://content.fivezone.fr/website/homepage-background.mp4"

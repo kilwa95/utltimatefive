@@ -1,24 +1,10 @@
 import React from 'react'
 import { Div } from '../style/styled'
-import { Container } from '@mui/material'
-import Match from '../components/Match'
-import { deepOrange } from '@mui/material/colors'
-
-import { MatchContext } from '../contexts/MatchContext'
-import NavMenu from '../components/NavMenu'
-import {
-  Select,
-  Card,
-  CardContent,
-  CardMedia,
-  Typography,
-  CardHeader,
-  Avatar,
-  Skeleton,
-  Box,
-} from '@mui/material'
+import { Card, CardContent, Typography, Avatar, Box } from '@mui/material'
+import { useHistory } from 'react-router-dom'
 
 const MatchCard = ({ isLoading, match }) => {
+  const history = useHistory()
   return (
     <>
       <Div direction="column" top="40px" width="1080px">
@@ -59,7 +45,7 @@ const MatchCard = ({ isLoading, match }) => {
                     color: '#959FA8',
                   }}
                 >
-                  {match.teams[0].name}
+                  {match.teams[0]?.name}
                 </Typography>
               </Box>
               <Box
@@ -94,7 +80,7 @@ const MatchCard = ({ isLoading, match }) => {
                     color: '#959FA8',
                   }}
                 >
-                  {match.teams[1].name}
+                  {match.teams[1]?.name}
                 </Typography>
               </Box>
             </Box>
@@ -149,6 +135,7 @@ const MatchCard = ({ isLoading, match }) => {
               style={{ display: 'flex', alignItems: 'center', width: '30%' }}
             >
               <Box
+                onClick={() => history.push(`/match/${match.id}`, match.id)}
                 style={{
                   marginRight: '20px',
                   fontFamily: 'Roboto',

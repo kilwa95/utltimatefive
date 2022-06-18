@@ -16,6 +16,8 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile.dev
+    environment:
+      - WDS_SOCKET_PORT=4002
     volumes:
       - type: bind
         source: ./client
