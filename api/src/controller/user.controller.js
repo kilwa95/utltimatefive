@@ -11,6 +11,7 @@ const {
   updateOrCreateAddress,
 } = require('../queries/address.queries')
 const Helper = require('../Helper')
+const { sendEmail } = require('../services/email')
 
 exports.getListUsers = async (req, res) => {
   try {
@@ -83,6 +84,13 @@ exports.createPlayer = async (req, res) => {
       roles: ['player'],
     })
     if (user) {
+      await sendEmail({
+        subject: '[UltimateFive] Welcome to UltimateFive',
+        text: 'Merci de votre inscription dans UltimateFive',
+        to: email,
+        from: process.env.EMAIL,
+      })
+
       res.status(Helper.HTTP.OK).json({
         message: `User ${user.id} created`,
         data: user,
@@ -173,6 +181,13 @@ exports.createOrganizer = async (req, res) => {
       roles: ['organizer'],
     })
     if (user) {
+      await sendEmail({
+        subject: '[UltimateFive] Welcome to UltimateFive',
+        text: 'Merci de votre inscription dans UltimateFive',
+        to: email,
+        from: process.env.EMAIL,
+      })
+
       res.status(Helper.HTTP.CREATED).json({
         message: `User ${user.id} created`,
         data: user,
