@@ -3,6 +3,7 @@ const { findAllMatchesByUserId } = require('../queries/match.queries')
 const { findAllTeamsByUserId } = require('../queries/team.queries')
 const Helper = require('../Helper')
 const Security = require('../services/security')
+const { sendEmail } = require('../services/email')
 
 exports.login = async (req, res) => {
   const { email, password } = req.body
@@ -47,6 +48,13 @@ exports.login = async (req, res) => {
     }
     const token = Security.generateToken(decoded)
     res.header('Authorization', `Bearer ${token}`)
+
+    await sendEmail({
+      subject: 'Test',
+      text: 'I am sending an email from nodemailer!',
+      to: 'lga.sig.khaled@gmail.com',
+      from: process.env.EMAIL,
+    })
 
     return res.status(Helper.HTTP.CREATED).json({
       message: 'Login successful',
