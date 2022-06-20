@@ -69,7 +69,7 @@ router.use(express.json())
 // Swagger UI
 router.use('/api', swaggerUi.serve)
 router.get('/api', swaggerUi.setup(swaggerDocument))
-/**s
+/**
  * API Auth
  */
 router.post('/login', login)
@@ -79,6 +79,7 @@ router.post('/logout', logout)
  */
 router.get('/users', getListUsers)
 router.post('/players', createPlayer)
+
 router.post('/admins', createAdmin)
 router.put('/players/:uid', authJwt, isUserExist, isSelfUser, updatePlayer)
 router.put('/users/:uid', authJwt, isUserExist, isSelfUser, updatePlayer)

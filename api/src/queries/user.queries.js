@@ -1,6 +1,8 @@
 const User = require('../models/sequelize/User')
 const Level = require('../models/sequelize/Level')
 const Address = require('../models/sequelize/Address')
+const Team = require('../models/sequelize/Team')
+const Match = require('../models/sequelize/Match')
 
 exports.saveUser = async (data) => {
   try {
@@ -14,17 +16,6 @@ exports.saveUser = async (data) => {
 exports.findAllUsers = async () => {
   try {
     return await User.findAll({
-      attributes: [
-        'id',
-        'firstName',
-        'lastName',
-        'email',
-        'enable',
-        'roles',
-        'birthday',
-        'status',
-        'image',
-      ],
       include: [
         {
           model: Level,
@@ -107,6 +98,13 @@ exports.findUserByEmail = async (email) => {
       where: {
         email: email,
       },
+      include: [
+        {
+          model: Team,
+          as: 'equibes',
+          through: { atttributes: [] },
+        },
+      ],
     })
   } catch (error) {
     console.error(error)

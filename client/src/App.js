@@ -39,7 +39,7 @@ const App = () => {
                 />
                 <Route
                   exact
-                  path="/validationplayer"
+                  path="/validationplayer/:mid"
                   name="validationPlayer"
                   render={(props) => <ValidationPlayerPage {...props} />}
                 />

@@ -5,6 +5,7 @@ const {
   updateUser,
   deleteUser,
   updatePlayerStatus,
+  findAllPlayersByMatchId,
 } = require('../queries/user.queries')
 const {
   saveAddress,
@@ -288,6 +289,12 @@ exports.validatePlayer = async (req, res) => {
   try {
     const uid = parseInt(req.params.uid)
     const user = await updatePlayerStatus(uid, Helper.status.validated)
+    await sendEmail({
+      subject: '[UltimateFive] Welcome to UltimateFive',
+      text: `Hello ${user.firstName},\n you can now participate in the matche`,
+      to: user.email,
+      from: process.env.EMAIL,
+    })
     res.status(Helper.HTTP.OK).json({
       message: `Player ${user.id} validated`,
       data: user,

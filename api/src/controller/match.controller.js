@@ -8,12 +8,14 @@ const {
   joinMatch,
   findAllMatchesByUserId,
 } = require('../queries/match.queries')
+const { findUserById } = require('../queries/user.queries')
 const {
   updateManyTeams,
   findAllTeams,
   saveMatchTeam,
 } = require('../queries/team.queries')
 const Helper = require('../Helper')
+const { sendEmail } = require('../services/email')
 
 exports.getListMatchs = async (req, res) => {
   try {
@@ -247,6 +249,14 @@ exports.joinMatchPlayers = async (req, res) => {
       UserId: parseInt(playerId),
     })
     if (match) {
+      const user = await findUserById(playerId)
+      await sendEmail({
+        subject: '[UltimateFive] Welcome to UltimateFive',
+        text:
+          'Merci de votre participation a cette match, vous serez notifié par email lorsque la match sera commencée',
+        to: user.email,
+        from: process.env.EMAIL,
+      })
       res.status(Helper.HTTP.CREATED).json({
         message: 'Match joined',
         data: match,

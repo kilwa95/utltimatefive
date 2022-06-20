@@ -1,6 +1,6 @@
+import React, { useEffect } from "react";
 import Container from "@mui/material/Container";
 import { DataGrid } from "@mui/x-data-grid";
-import React from "react";
 import NavMenu from "../components/NavMenu";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -13,13 +13,9 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
-const ValidationPlayerPage = () => {
-  const [ players, setPlayers ] = React.useState(
-    JSON.parse(localStorage.getItem("players"))
-  );
-  const [ teams, setTeams ] = React.useState(
-    JSON.parse(localStorage.getItem("teams"))
-  );
+const ValidationPlayerPage = (props) => {
+  const [ players, setPlayers ] = React.useState([]);
+  const [ teams, setTeams ] = React.useState([]);
   const [ value, setValue ] = React.useState({});
   const [ open, setOpen ] = React.useState(false);
   const [ uid, setUid ] = React.useState(0);
@@ -68,6 +64,11 @@ const ValidationPlayerPage = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    setPlayers(JSON.parse(localStorage.getItem("players")));
+    setTeams(JSON.parse(localStorage.getItem("teams")));
+  }, []);
 
   const columns = [
     { field: "id", headerName: "id", width: 50 },

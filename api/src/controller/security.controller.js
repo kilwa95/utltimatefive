@@ -44,6 +44,7 @@ exports.login = async (req, res) => {
       isAdmin: user.roles.includes('admin'),
       isOrganizer: user.roles.includes('organizer'),
       isCaptiner: user.roles.includes('captain'),
+      teams: user.equibes,
     }
     const token = Security.generateToken(decoded)
     res.header('Authorization', `Bearer ${token}`)

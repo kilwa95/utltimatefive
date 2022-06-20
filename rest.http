@@ -1,4 +1,3 @@
-###
 POST http://localhost:4000/admins
 Content-Type: application/json
 

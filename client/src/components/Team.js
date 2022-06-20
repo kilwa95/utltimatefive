@@ -92,7 +92,10 @@ const Team = ({ team, isLoading }) => {
               ) : (
                 <Button
                   disabled={
-                    membres.map((m) => m.id).includes(user?.id) ? true : false
+                    membres.map((m) => m.id).includes(user?.id) ||
+                    user?.teams.length > 0
+                      ? true
+                      : false
                   }
                   onClick={() => joinTeam(team.id)}
                   variant="contained"

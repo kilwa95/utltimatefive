@@ -97,7 +97,7 @@ const MyMatchPage = () => {
                 JSON.stringify(params.row.players)
               );
               localStorage.setItem("teams", JSON.stringify(params.row.teams));
-              history.push("/validationplayer");
+              history.push(`/validationplayer/${params.row.id}`);
             }}
           >
             valider
