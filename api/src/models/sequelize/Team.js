@@ -2,7 +2,7 @@ const { Model, DataTypes } = require('sequelize')
 const connection = require('../../config/sequelize')
 const User = require('./User')
 const Level = require('./Level')
-const Match = require('./Match')
+const Image = require('./Image')
 
 class Team extends Model {}
 Team.init(
@@ -25,6 +25,13 @@ User.hasMany(Team, { foreignKey: 'adminId', as: 'teams', onDelete: 'cascade' })
 
 Team.belongsTo(Level, { as: 'level' })
 Level.hasMany(Team, { foreignKey: 'levelId', as: 'teams', onDelete: 'cascade' })
+
+Team.belongsTo(Image, { as: 'image' })
+Image.hasOne(Team, {
+  foreignKey: 'imageId',
+  as: 'team',
+  onDelete: 'cascade',
+})
 
 Team.sync({
   alter: true,

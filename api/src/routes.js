@@ -63,6 +63,8 @@ const {
   isSportExist,
 } = require('./controller/sport.controller')
 
+const { upload, uploadFile } = require('./controller/upload.controller')
+
 const router = express.Router()
 router.use(express.json())
 
@@ -123,7 +125,14 @@ router.delete('/levels/:lid', authJwt, isLevelExist, onlyAdmin, deleteLevel)
  * API teams
  */
 router.get('/teams', getListTeams)
-router.post('/admin/teams', authJwt, onlyAdmin, createTeam)
+router.post(
+  '/admin/teams',
+  authJwt,
+  onlyAdmin,
+  // upload.single('file'),
+  // uploadFile,
+  createTeam,
+)
 router.get('/teams/:tid', authJwt, onlyCaptiner, isTeamExist, getTeamById)
 router.put('/teams/:tid', authJwt, isSelfCaptiner, updateTeam)
 router.delete('/teams/:tid', authJwt, isSelfCaptiner, deleteTeam)

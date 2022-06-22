@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { CForm, CInput, CInputGroup, CButton } from "@coreui/react";
 
 const CreateTeamForm = ({ onSubmit, error }) => {
+  const [file, setFile] = useState();
   const [values, setValues] = useState({
     name: "",
     levelId: null,
@@ -9,7 +10,7 @@ const CreateTeamForm = ({ onSubmit, error }) => {
 
   const _onSubmit = (event) => {
     event.preventDefault();
-    onSubmit(values);
+    onSubmit({ ...values, file });
   };
 
   const handleChange = (event) => {
@@ -17,6 +18,10 @@ const CreateTeamForm = ({ onSubmit, error }) => {
       ...values,
       [event.target.name]: event.target.value,
     });
+  };
+
+  const handleFile = (event) => {
+    setFile(event.target.files[0]);
   };
 
   return (
@@ -38,6 +43,10 @@ const CreateTeamForm = ({ onSubmit, error }) => {
           onChange={handleChange}
           name="levelId"
         />
+      </CInputGroup>
+
+      <CInputGroup className="mb-3">
+        <CInput type="file" onChange={handleFile} name="file" />
       </CInputGroup>
 
       <CInputGroup className="mb-3">

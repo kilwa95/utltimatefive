@@ -154,7 +154,8 @@ const MatchDetailPage = (props) => {
                 </Button>
               ) : (
                 <Button
-                  disabled
+                onClick={() => joinMatch(match.id)}
+
                   color="success"
                   sx={{ width: "100%" }}
                   variant="contained"

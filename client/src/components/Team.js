@@ -26,7 +26,7 @@ const Team = ({ team, isLoading }) => {
       history.push('/login')
     }
     const { data } = await teamsHttp.joinTeam(teamId)
-    setMembres(data.membres)
+    setMembres(data.dataJSON.membres)
   }
 
   useEffect(() => {
