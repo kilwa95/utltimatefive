@@ -10,8 +10,13 @@ import NavMenu from "../components/NavMenu";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Toast from "../components/toast";
+
 
 const ProfilePlayerPage = () => {
+  const [ open, setOpen ] = useState(false);
+  const [ color, setColor ] = useState("");
+  const [ message, setMessage ] = useState("");
   const { token, user } = useContext(SecurityContext);
   const { userCurrent, isLoading, getUserInfo, updateUser } = useContext(
     UserContext
@@ -35,10 +40,9 @@ const ProfilePlayerPage = () => {
       [event.target.name]: event.target.value
     });
   };
-  const _onSubmit = (event) => {
+  const _onSubmit =  async (event) => {
     event.preventDefault();
-    window.location.reload(true);
-    updateUser(user.id, {
+    const response = await updateUser(user.id, {
       firstName: values.firstName || userCurrent.firstName,
       lastName: values.lastName || userCurrent.lastName,
       email: values.email || userCurrent.email,
@@ -49,7 +53,15 @@ const ProfilePlayerPage = () => {
       postalcode: values.postalcode || userCurrent.address?.postalcode,
       roles: values.roles,
     });
-    setValues({});
+    if (response.status === 200) {
+      setMessage("Votre profil a été mis à jour");
+      setColor("success");
+      setOpen(true);
+    } else {
+      setMessage("Une erreur est survenue");
+      setColor("error");
+      setOpen(true);
+    }
   };
 
   useEffect(() => {
@@ -152,6 +164,15 @@ const ProfilePlayerPage = () => {
                   name="postalcode"
                   defaultValue={userCurrent ? userCurrent.address?.postalcode : ""}
                 />
+              
+                <TextField
+                  onChange={handleChange}
+                  id="outlined-basic"
+                  label="birthday"
+                  variant="outlined"
+                  name="birthday"
+                  defaultValue={userCurrent ? userCurrent.birthday : ""}
+                />
                 
               </Box>
               <Box sx={{ marginTop: "16px" }}>
@@ -162,6 +183,7 @@ const ProfilePlayerPage = () => {
             </Box>
           </Card>
         </Container>
+        <Toast message={message} color={color} open={open} setOpen={setOpen} />
       </React.Fragment>
     );
   }

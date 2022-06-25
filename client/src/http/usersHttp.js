@@ -33,6 +33,18 @@ const usersHttp = {
     )
     return result
   },
+  validerPlayer: async function (uid) {
+    const result = await axios.patch(
+      `http://localhost:4000/users/${uid}/validated`,
+      null,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      },
+    )
+    return result
+  },
 }
 
 export default usersHttp

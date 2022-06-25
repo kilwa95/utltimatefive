@@ -1,5 +1,6 @@
 import React from 'react'
 import { red } from '@mui/material/colors'
+import { useHistory } from 'react-router-dom'
 
 import {
   Card,
@@ -13,9 +14,19 @@ import {
 } from '@mui/material'
 
 const Match = ({ match, isLoading }) => {
+  const history = useHistory()
+
   return (
     <>
-      <Card sx={{ maxWidth: 345, marginBottom: '32px', marginLeft: '16px' }}>
+      <Card
+        onClick={() => history.push(`/match/${match.id}`, match.id)}
+        sx={{
+          maxWidth: 345,
+          marginBottom: '32px',
+          marginLeft: '16px',
+          cursor: 'pointer',
+        }}
+      >
         <CardHeader
           avatar={
             isLoading ? (

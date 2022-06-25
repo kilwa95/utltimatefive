@@ -4,12 +4,15 @@ const {
   saveUser,
   updateUser,
   deleteUser,
+  updatePlayerStatus,
+  findAllPlayersByMatchId,
 } = require('../queries/user.queries')
 const {
   saveAddress,
   updateOrCreateAddress,
 } = require('../queries/address.queries')
 const Helper = require('../Helper')
+const { sendEmail } = require('../services/email')
 
 exports.getListUsers = async (req, res) => {
   try {
@@ -39,7 +42,6 @@ exports.getUserById = async (req, res) => {
 }
 
 exports.createPlayer = async (req, res) => {
-  console.log(req.file)
   const {
     firstName,
     lastName,
@@ -83,6 +85,68 @@ exports.createPlayer = async (req, res) => {
       roles: ['player'],
     })
     if (user) {
+      await sendEmail({
+        subject: '[UltimateFive] Welcome to UltimateFive',
+        text: 'Merci de votre inscription dans UltimateFive',
+        to: email,
+        from: process.env.EMAIL,
+      })
+
+      res.status(Helper.HTTP.OK).json({
+        message: `User ${user.id} created`,
+        data: user,
+      })
+    } else {
+      res.status(Helper.HTTP.SERVER_ERROR).send('User not created')
+    }
+  } catch (error) {
+    console.error(error)
+    res.status(Helper.HTTP.SERVER_ERROR).send(error)
+  }
+}
+exports.createAdmin = async (req, res) => {
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+    birthday,
+    road,
+    postalcode,
+    city,
+    image,
+  } = req.body
+  if (Helper.isEmpty([firstName, lastName, email, password, birthday])) {
+    res
+      .status(Helper.HTTP.BAD_REQUEST)
+      .send('firstName, lastName, email, password, birthday is required')
+  }
+  if (!Helper.validateEmail(email)) {
+    res.status(Helper.HTTP.BAD_REQUEST).send('email is invalid')
+  }
+  if (!Helper.validateDate(birthday)) {
+    res.status(Helper.HTTP.BAD_REQUEST).send('birthday is invalid')
+  }
+  if (!Helper.validatePassword(password)) {
+    res.status(Helper.HTTP.BAD_REQUEST).send('password is invalid')
+  }
+  const address = await saveAddress({
+    road: Helper.sqlescstr(road),
+    postalcode: postalcode,
+    city: Helper.sqlescstr(city),
+  })
+  try {
+    const user = await saveUser({
+      firstName: Helper.sqlescstr(firstName),
+      lastName: Helper.sqlescstr(lastName),
+      email: Helper.sqlescstr(email),
+      password: Helper.sqlescstr(password),
+      birthday: Helper.sqlescstr(birthday),
+      image: Helper.sqlescstr(image),
+      addressId: address.id,
+      roles: ['admin'],
+    })
+    if (user) {
       res.status(Helper.HTTP.OK).json({
         message: `User ${user.id} created`,
         data: user,
@@ -118,6 +182,13 @@ exports.createOrganizer = async (req, res) => {
       roles: ['organizer'],
     })
     if (user) {
+      await sendEmail({
+        subject: '[UltimateFive] Welcome to UltimateFive',
+        text: 'Merci de votre inscription dans UltimateFive',
+        to: email,
+        from: process.env.EMAIL,
+      })
+
       res.status(Helper.HTTP.CREATED).json({
         message: `User ${user.id} created`,
         data: user,
@@ -151,9 +222,9 @@ exports.updatePlayer = async (req, res) => {
   if (!Helper.validateDate(birthday)) {
     res.status(Helper.HTTP.BAD_REQUEST).send('birthday is invalid')
   }
-  if (!Helper.validatePassword(password)) {
-    res.status(Helper.HTTP.BAD_REQUEST).send('password is invalid')
-  }
+  // if (!Helper.validatePassword(password)) {
+  //   res.status(Helper.HTTP.BAD_REQUEST).send('password is invalid')
+  // }
   try {
     const uid = parseInt(req.params.uid)
     const address = await updateOrCreateAddress({
@@ -161,7 +232,6 @@ exports.updatePlayer = async (req, res) => {
       postalcode: postalcode,
       city: Helper.sqlescstr(city),
     })
-    console.log('address', address)
     const user = await updateUser(uid, {
       firstName: Helper.sqlescstr(firstName),
       lastName: Helper.sqlescstr(lastName),
@@ -170,10 +240,11 @@ exports.updatePlayer = async (req, res) => {
       birthday: Helper.sqlescstr(birthday),
       addressId: address.id,
     })
+    const newUser = await findUserById(uid)
     if (user) {
       res.status(Helper.HTTP.OK).json({
         message: `User ${uid} updated`,
-        data: user,
+        user: newUser,
       })
     } else {
       res.status(Helper.HTTP.BAD_REQUEST).send('User not Update')
@@ -212,5 +283,24 @@ exports.disableUser = async (req, res) => {
   } catch (error) {
     console.error(error)
     res.status(Helper.HTTP.SERVER_ERROR).send(error)
+  }
+}
+exports.validatePlayer = async (req, res) => {
+  try {
+    const uid = parseInt(req.params.uid)
+    const user = await updatePlayerStatus(uid, Helper.status.validated)
+    await sendEmail({
+      subject: '[UltimateFive] Welcome to UltimateFive',
+      text: `Hello ${user.firstName},\n you can now participate in the matche`,
+      to: user.email,
+      from: process.env.EMAIL,
+    })
+    res.status(Helper.HTTP.OK).json({
+      message: `Player ${user.id} validated`,
+      data: user,
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(Helper.HTTP.SERVER_ERROR).send('Inertval server error')
   }
 }

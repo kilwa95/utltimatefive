@@ -7,15 +7,21 @@ const {
   deleteMatch,
   joinMatch,
   findAllMatchesByUserId,
+  removePlayerFromMatch,
 } = require('../queries/match.queries')
+const { findUserById } = require('../queries/user.queries')
+const {
+  updateManyTeams,
+  findAllTeams,
+  saveMatchTeam,
+} = require('../queries/team.queries')
 const Helper = require('../Helper')
+const { sendEmail } = require('../services/email')
 
 exports.getListMatchs = async (req, res) => {
   try {
     const matches = await findAllMatches()
-    res.status(Helper.HTTP.OK).json({
-      data: matches,
-    })
+    res.status(Helper.HTTP.OK).json({ data: matches })
   } catch (error) {
     console.error(error)
     res.status(Helper.HTTP.SERVER_ERROR).json({
@@ -46,8 +52,37 @@ exports.getMatchById = async (req, res) => {
   try {
     const mid = parseInt(req.params.mid)
     const match = await findMatchById(mid)
+    const matchJSON = match.toJSON()
+
+    const data = {
+      id: matchJSON.id,
+      name: matchJSON.name,
+      address: matchJSON.address,
+      ville: matchJSON.ville,
+      salle: matchJSON.salle,
+      slots: matchJSON.slots,
+      square: matchJSON.square,
+      price: matchJSON.price,
+      image: matchJSON.image,
+      level: matchJSON.level,
+      organizer: matchJSON.organizer,
+      players: matchJSON.players,
+      status: matchJSON.status,
+      teams: matchJSON.teams.map((team) => {
+        return {
+          id: team.id,
+          name: team.name,
+          level: team.level,
+          numberPlace: team.numberPlace,
+          membres: team.membres.filter(
+            (membre) => membre.status === 'validated',
+          ),
+        }
+      }),
+    }
+
     res.status(Helper.HTTP.OK).json({
-      data: match,
+      data: data,
     })
   } catch (error) {
     console.error(error)
@@ -67,10 +102,11 @@ exports.createMatch = async (req, res) => {
     salle,
     levelId,
     image,
+    teams,
   } = req.body
 
   if (Helper.isEmpty([salle, levelId])) {
-    res.status(Helper.HTTP.BAD_REQUEST).send('salle,levelId is required')
+    res.status(Helper.HTTP.BAD_REQUEST).send('salle,levelId,teams is required')
   }
   try {
     const organizerId = parseInt(req.decoded.id)
@@ -79,40 +115,55 @@ exports.createMatch = async (req, res) => {
       ville: Helper.sqlescstr(ville),
       address: Helper.sqlescstr(address),
       slots: Helper.sqlescstr(slots),
-      square: Helper.sqlescstr(square),
-      price: Helper.sqlescstr(price),
+      square: parseInt(square),
+      price: parseInt(price),
       image: Helper.sqlescstr(image),
       levelId: parseInt(levelId),
       organizerId: parseInt(organizerId),
     })
+    const matchJSON = match.toJSON()
+    const matchId = matchJSON.id
+    for (let i = 0; i < teams.length; i++) {
+      const teamID = teams[i]
+      await saveMatchTeam({
+        TeamId: teamID,
+        MatchId: matchId,
+      })
+    }
+
     if (match) {
-      res.status(Helper.HTTP.CREATED).json({
+      return res.status(Helper.HTTP.CREATED).json({
+        status: Helper.HTTP.CREATED,
         message: 'Match created',
         data: match,
       })
     } else {
-      res.status(Helper.HTTP.BAD_REQUEST).json({
+      return res.status(Helper.HTTP.BAD_REQUEST).json({
         message: 'Match not created',
       })
     }
   } catch (error) {
     console.error(error.message)
-    res.status(500).json({
+    return res.status(500).json({
       message: error.message,
     })
   }
 }
 
 exports.updateMatch = async (req, res) => {
-  const { name, levelId } = req.body
+  const { address, salle, price, ville, square, slots } = req.body
   if (Helper.isEmpty([req.params.mid])) {
     res.status(Helper.HTTP.BAD_REQUEST).send('matchId is required')
   }
   try {
     const mid = parseInt(req.params.mid)
     const match = await updateMatch(parseInt(mid), {
-      name: Helper.sqlescstr(name),
-      levelId: parseInt(levelId),
+      salle: Helper.sqlescstr(salle),
+      address: Helper.sqlescstr(address),
+      ville: Helper.sqlescstr(ville),
+      price: parseInt(price),
+      square: parseInt(square),
+      slots: Helper.sqlescstr(slots),
     })
     if (match) {
       res.status(Helper.HTTP.OK).json({
@@ -199,6 +250,14 @@ exports.joinMatchPlayers = async (req, res) => {
       UserId: parseInt(playerId),
     })
     if (match) {
+      const user = await findUserById(playerId)
+      await sendEmail({
+        subject: '[UltimateFive] Welcome to UltimateFive',
+        text:
+          'Merci de votre participation a cette match, vous serez notifié par email lorsque la match sera commencée',
+        to: user.email,
+        from: process.env.EMAIL,
+      })
       res.status(Helper.HTTP.CREATED).json({
         message: 'Match joined',
         data: match,
@@ -206,6 +265,32 @@ exports.joinMatchPlayers = async (req, res) => {
     } else {
       res.status(Helper.HTTP.BAD_REQUEST).json({
         message: 'Match not joined',
+      })
+    }
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({
+      message: error.message,
+    })
+  }
+}
+
+exports.deletePlayerFromMatch = async (req, res) => {
+  try {
+    const matchId = req.params.mid
+    const playerId = req.params.uid
+    const match = await removePlayerFromMatch({
+      matchId: parseInt(matchId),
+      userId: parseInt(playerId),
+    })
+    if (match) {
+      res.status(Helper.HTTP.OK).json({
+        message: 'Match deleted',
+        data: match,
+      })
+    } else {
+      res.status(Helper.HTTP.BAD_REQUEST).json({
+        message: 'Match not deleted',
       })
     }
   } catch (error) {

@@ -57,7 +57,7 @@ const UserPage = () => {
                 footer
                 scopedSlots={{
                   level: (item) => {
-                    return <td className="py-2">{item.level.name}</td>;
+                    return <td className="py-2">{item.level?.name}</td>;
                   },
                 }}
               />

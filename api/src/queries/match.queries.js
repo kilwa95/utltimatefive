@@ -1,7 +1,9 @@
 const Match = require('../models/sequelize/Match')
 const User = require('../models/sequelize/User')
 const Level = require('../models/sequelize/Level')
+const Team = require('../models/sequelize/Team')
 const Player_match = require('../models/sequelize/Player_match')
+const Match_team = require('../models/sequelize/Match_team')
 
 exports.saveMatch = async (data) => {
   try {
@@ -25,6 +27,7 @@ exports.findAllMatches = async () => {
         'square',
         'price',
       ],
+      order: [['id', 'DESC']],
       include: [
         {
           model: User,
@@ -39,7 +42,31 @@ exports.findAllMatches = async () => {
         {
           model: User,
           as: 'players',
-          attributes: ['id', 'firstName', 'lastName', 'email'],
+          attributes: ['id', 'firstName', 'lastName', 'email', 'status'],
+          include: [
+            {
+              model: Team,
+              as: 'equibes',
+              attributes: ['name'],
+            },
+          ],
+        },
+        {
+          model: Team,
+          as: 'teams',
+          through: { attributes: [] },
+          include: [
+            {
+              model: Level,
+              as: 'level',
+              attributes: ['name'],
+            },
+            {
+              model: User,
+              as: 'membres',
+              attributes: ['id', 'firstName', 'lastName', 'email'],
+            },
+          ],
         },
       ],
     })
@@ -75,7 +102,31 @@ exports.findAllMatchesByUserId = async (uid) => {
         {
           model: User,
           as: 'players',
-          attributes: ['id', 'firstName', 'lastName', 'email'],
+          attributes: ['id', 'firstName', 'lastName', 'email', 'status'],
+          include: [
+            {
+              model: Team,
+              as: 'equibes',
+              attributes: ['name'],
+            },
+          ],
+        },
+        {
+          model: Team,
+          as: 'teams',
+          attributes: ['id', 'name', 'numberPlace'],
+          include: [
+            {
+              model: Level,
+              as: 'level',
+              attributes: ['name'],
+            },
+            {
+              model: User,
+              as: 'membres',
+              attributes: ['id', 'firstName', 'lastName', 'email'],
+            },
+          ],
         },
       ],
       where: {
@@ -90,12 +141,56 @@ exports.findAllMatchesByUserId = async (uid) => {
 exports.findMatchById = async (matchId) => {
   try {
     return await Match.findByPk(matchId, {
-      attributes: ['id', 'name', 'status'],
+      attributes: [
+        'id',
+        'salle',
+        'status',
+        'ville',
+        'address',
+        'image',
+        'slots',
+        'square',
+        'price',
+      ],
       include: [
         {
           model: User,
           as: 'organizer',
           attributes: ['id', 'firstName', 'lastName', 'email'],
+        },
+        {
+          model: Level,
+          as: 'level',
+          attributes: ['name'],
+        },
+        {
+          model: User,
+          as: 'players',
+          attributes: ['id', 'firstName', 'lastName', 'email', 'status'],
+          include: [
+            {
+              model: Team,
+              as: 'equibes',
+              attributes: ['name'],
+            },
+          ],
+        },
+        {
+          model: Team,
+          as: 'teams',
+          attributes: ['id', 'name', 'numberPlace'],
+          include: [
+            {
+              model: Level,
+              as: 'level',
+              attributes: ['name'],
+            },
+            {
+              model: User,
+              as: 'membres',
+              attributes: ['id', 'firstName', 'lastName', 'email', 'status'],
+            },
+          ],
         },
       ],
     })
@@ -168,6 +263,19 @@ exports.joinMatch = async (data) => {
   try {
     const player_match = new Player_match(data)
     return await player_match.save()
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+exports.removePlayerFromMatch = async (data) => {
+  try {
+    return await Player_match.destroy({
+      where: {
+        MatchId: data.matchId,
+        UserId: data.userId,
+      },
+    })
   } catch (error) {
     console.error(error)
   }

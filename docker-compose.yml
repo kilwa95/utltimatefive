@@ -16,6 +16,8 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile.dev
+    environment:
+      - WDS_SOCKET_PORT=4002
     volumes:
       - type: bind
         source: ./client
@@ -30,6 +32,11 @@ services:
       context: ./api
       dockerfile: Dockerfile.dev
     environment:
+      EMAIL: "khaled.abdulhalim.pro@gmail.com"
+      REFRESH_TOKEN: "1//04gW8NKYuU7WlCgYIARAAGAQSNwF-L9Irb3_5uyOJund2eRivwGtmXtulIZ6odtXTBbhvxcbPazXvAn3Ytkk8HWKUKlUPf2vzS3k"
+      CLIENT_ID: "767730596196-9tgosgg878bogpl4a2p38oocmf4cl8mk.apps.googleusercontent.com"
+      CLIENT_SECRET: "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"
+      access_token: ya29.a0ARrdaM9pt0lavHH_S71y_n3yGzt671rRbIvpv3UEb4uFS34g5pdeMbRyWBYt-kObNgnolNfRlNFrLxt8fo3MBhB1WmPNAMq5u07iOxZIMBOGfMm9UDl36SX00sYBFXZtgKMNIReJZAwxfVCYtHpsJuJWr5v2
       PORT: 4000
       MONGO_URL: "mongodb://root:password@mongo/app"
       DATABASE_URL: "postgres://root:password@db/app"
@@ -40,6 +47,7 @@ services:
         target: /app/src
     ports:
       - 4000:4000
+      - 9229:9229 
     depends_on:
       - mongo
       - db
@@ -60,7 +68,7 @@ services:
   db:
     image: postgres:alpine
     ports:
-      - 5433:5432
+      - 5434:5432
     environment:
       POSTGRES_DB: app
       POSTGRES_USER: root
@@ -68,35 +76,12 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data:rw
 
-  mariadb:
-    image: mariadb
-    command: --max-allowed-packet=64MB
-    restart: always
-    volumes:
-      - mariadb:/var/lib/mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=taylor
-    env_file:
-      - ./db.env
-    
-  app:
-    image: matomo
-    restart: always
-    volumes:
-      - matomo:/var/www/html
-    environment:
-      - MATOMO_DATABASE_HOST=db
-    env_file:
-      - ./db.env
-    ports:
-      - 8080:80
 
 
 volumes: 
   mongo-data: {}
   db-data: {}
-  mariadb: 
-  matomo: 
+ 
 
 
   

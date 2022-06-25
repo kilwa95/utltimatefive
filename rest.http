@@ -1,0 +1,14 @@
+POST http://localhost:4000/admins
+Content-Type: application/json
+
+{
+  "firstName": "admin",
+  "lastName": "admin",
+  "email": "admin@gmail.com",
+  "password": "admin123",
+  "birthday": "2022-06-01",
+  "road": "35 quai de grenelle",
+  "postalcode": 75015,
+  "city": "Paris"
+}
+###

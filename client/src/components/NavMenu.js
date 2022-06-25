@@ -11,8 +11,9 @@ import { SecurityContext } from '../contexts/SecurityContext'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import MenuItem from '@mui/material/MenuItem'
 import Menu from '@mui/material/Menu'
+import SearchBar from './SearchBar'
 
-const NavMenu = () => {
+const NavMenu = ({ searchQuery, setSearchQuery }) => {
   const history = useHistory()
   const { token, logout, user } = useContext(SecurityContext)
   const [anchorEl, setAnchorEl] = React.useState(null)
@@ -40,6 +41,10 @@ const NavMenu = () => {
     setAnchorEl(null)
     history.push('/mymatches')
   }
+  const handleTeams = () => {
+    setAnchorEl(null)
+    history.push('/teams')
+  }
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -61,10 +66,16 @@ const NavMenu = () => {
           >
             UltimateFive
           </Typography>
+          <SearchBar
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          />
           <Button onClick={() => history.push('/matchs')} color="inherit">
             Matches
           </Button>
-          <Button color="inherit">Teams</Button>
+          <Button onClick={handleTeams} color="inherit">
+            Teams
+          </Button>
           <Button color="inherit"> about us</Button>
           {token ? (
             <>

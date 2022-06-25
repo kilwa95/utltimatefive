@@ -1,17 +1,35 @@
 const User = require('../models/sequelize/User')
 const Level = require('../models/sequelize/Level')
 const Address = require('../models/sequelize/Address')
+const Team = require('../models/sequelize/Team')
+const Match = require('../models/sequelize/Match')
 
 exports.saveUser = async (data) => {
   try {
     const user = new User(data)
     return await user.save()
   } catch (error) {
-    console.error(error)
+    console.error(error.message)
   }
 }
 
 exports.findAllUsers = async () => {
+  try {
+    return await User.findAll({
+      include: [
+        {
+          model: Level,
+          as: 'level',
+          attributes: ['name'],
+        },
+        { model: Address, as: 'address' },
+      ],
+    })
+  } catch (error) {
+    console.error(error)
+  }
+}
+exports.findAllUsersWaiting = async () => {
   try {
     return await User.findAll({
       attributes: [
@@ -25,6 +43,9 @@ exports.findAllUsers = async () => {
         'status',
         'image',
       ],
+      where: {
+        status: 'waiting',
+      },
       include: [
         {
           model: Level,
@@ -77,6 +98,13 @@ exports.findUserByEmail = async (email) => {
       where: {
         email: email,
       },
+      include: [
+        {
+          model: Team,
+          as: 'equibes',
+          through: { atttributes: [] },
+        },
+      ],
     })
   } catch (error) {
     console.error(error)
@@ -105,6 +133,26 @@ exports.deleteUser = async (uid) => {
         id: uid,
       },
     })
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+exports.updatePlayerStatus = async (uid, status) => {
+  try {
+    const ressource = await User.update(
+      {
+        status: status,
+      },
+      {
+        where: {
+          id: uid,
+        },
+        returning: true,
+        plain: true,
+      },
+    )
+    return ressource[1]
   } catch (error) {
     console.error(error)
   }

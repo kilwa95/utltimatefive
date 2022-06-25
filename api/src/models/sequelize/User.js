@@ -41,10 +41,14 @@ const haschPassword = async (user) => {
 }
 
 User.belongsTo(Level, { as: 'level' })
-Level.hasMany(User, { foreignKey: 'levelId', as: 'users' })
+Level.hasMany(User, { foreignKey: 'levelId', as: 'users', allowNull: true })
 
 User.belongsTo(Address, { as: 'address' })
-Address.hasOne(User, { foreignKey: 'addressId', as: 'user' })
+Address.hasOne(User, {
+  foreignKey: 'addressId',
+  as: 'user',
+  onDelete: 'cascade',
+})
 
 User.addHook('beforeCreate', haschPassword)
 User.addHook('beforeUpdate', haschPassword)
