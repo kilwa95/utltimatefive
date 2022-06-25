@@ -267,3 +267,16 @@ exports.joinMatch = async (data) => {
     console.error(error)
   }
 }
+
+exports.removePlayerFromMatch = async (data) => {
+  try {
+    return await Player_match.destroy({
+      where: {
+        MatchId: data.matchId,
+        UserId: data.userId,
+      },
+    })
+  } catch (error) {
+    console.error(error)
+  }
+}

@@ -6,6 +6,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { Button, Chip } from "@mui/material";
 import usersHttp from "../http/usersHttp";
+import matchesHttp from "../http/matchHttp";
 import teamsHttp from "../http/teamsHttp";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -19,6 +20,17 @@ const ValidationPlayerPage = (props) => {
   const [ value, setValue ] = React.useState({});
   const [ open, setOpen ] = React.useState(false);
   const [ uid, setUid ] = React.useState(0);
+
+  const removePlayer = async (player) => {
+    const uid = player.id;
+    const mid = props.match.params.mid;
+    const reponse = await matchesHttp.deletePlayerFromMatch(mid, uid);
+    if (reponse.status === 200) {
+      const newPlayers = players.filter((p) => p.id !== player.id);
+      setPlayers(newPlayers);
+      localStorage.setItem("players", JSON.stringify(newPlayers));
+    }
+  };
 
   const validerPlayer = async (player) => {
     const reponse = await usersHttp.validerPlayer(player.id);
@@ -105,7 +117,7 @@ const ValidationPlayerPage = (props) => {
           </div>
         );
       },
-      width: 200
+      width: 100
     },
     {
       field: "mettre en equibe",
@@ -156,6 +168,24 @@ const ValidationPlayerPage = (props) => {
               color="primary"
             >
               <span>Valider</span>
+            </Button>
+          </div>
+        );
+      }
+    },
+    {
+      field: "Supprimer",
+      width: 200,
+      headerName: "Supprimer",
+      renderCell: (params) => {
+        return (
+          <div style={{ width: "100%" }}>
+            <Button
+              onClick={() => removePlayer(params.row)}
+              variant="contained"
+              color="error"
+            >
+              <span>Supprimer</span>
             </Button>
           </div>
         );

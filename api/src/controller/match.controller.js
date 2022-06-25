@@ -7,6 +7,7 @@ const {
   deleteMatch,
   joinMatch,
   findAllMatchesByUserId,
+  removePlayerFromMatch,
 } = require('../queries/match.queries')
 const { findUserById } = require('../queries/user.queries')
 const {
@@ -264,6 +265,32 @@ exports.joinMatchPlayers = async (req, res) => {
     } else {
       res.status(Helper.HTTP.BAD_REQUEST).json({
         message: 'Match not joined',
+      })
+    }
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({
+      message: error.message,
+    })
+  }
+}
+
+exports.deletePlayerFromMatch = async (req, res) => {
+  try {
+    const matchId = req.params.mid
+    const playerId = req.params.uid
+    const match = await removePlayerFromMatch({
+      matchId: parseInt(matchId),
+      userId: parseInt(playerId),
+    })
+    if (match) {
+      res.status(Helper.HTTP.OK).json({
+        message: 'Match deleted',
+        data: match,
+      })
+    } else {
+      res.status(Helper.HTTP.BAD_REQUEST).json({
+        message: 'Match not deleted',
       })
     }
   } catch (error) {

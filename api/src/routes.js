@@ -35,6 +35,7 @@ const {
   deleteMatch,
   isMatchExist,
   joinMatchPlayers,
+  deletePlayerFromMatch,
 } = require('./controller/match.controller')
 const {
   getListLevels,
@@ -99,6 +100,7 @@ router.get('/matchs/:uid/organizer', authJwt, getListMatchsByUserId)
 router.post('/matchs', authJwt, onlyOrganizer, createMatch)
 router.get('/matchs/:mid', isMatchExist, getMatchById)
 router.put('/matchs/:mid', authJwt, onlyOrganizer, isMatchExist, updateMatch)
+router.delete('/matchs/:mid/players/:uid', authJwt, deletePlayerFromMatch)
 router.delete(
   '/matchs/:mid',
   authJwt,

@@ -68,6 +68,17 @@ const matchesHttp = {
     )
     return result.data
   },
+  deletePlayerFromMatch: async function (mid, uid) {
+    const result = await axios.delete(
+      `http://localhost:4000/matchs/${mid}/players/${uid}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      },
+    )
+    return result
+  },
 }
 
 export default matchesHttp
