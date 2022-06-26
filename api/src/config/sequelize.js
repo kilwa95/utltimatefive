@@ -1,7 +1,7 @@
-const Sequelize = require('sequelize');
+const Sequelize = require('sequelize')
 
-const connection = new Sequelize(process.env.DATABASE_URL, {});
+const connection = new Sequelize(process.env.DATABASE_URL, {})
 
-connection.authenticate().then((_) => console.log('pg connected'));
+connection.authenticate().then((_) => console.log('pg connected'))
 
-module.exports = connection;
+module.exports = connection

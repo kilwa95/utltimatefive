@@ -4,8 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon ./src/server.js",
-    "prod": "pm2-runtime ./src/server.js"
+    "start": "NODE_ENV=devlopement nodemon ./src/server.js",
+    "prod": "NODE_ENV=production pm2-runtime ./src/server.js"
   },
   "keywords": [],
   "author": "ESGI",
@@ -27,7 +27,8 @@
     "nodemailer": "^6.7.5",
     "nodemon": "^2.0.7",
     "oidc-token-hash": "^5.0.1",
-    "pg": "^8.6.0",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
     "sequelize": "^6.6.2",
     "swagger-ui-express": "^4.1.6"
   },

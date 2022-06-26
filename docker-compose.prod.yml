@@ -1,9 +1,10 @@
 version: "3.8"
 services:
+
   admin:
     build:
       context: ./admin
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.prod
     volumes:
       - type: bind
         source: ./admin
@@ -16,7 +17,7 @@ services:
   client:
     build:
       context: ./client
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.prod
     environment:
       - WDS_SOCKET_PORT=4002
     volumes:
@@ -31,7 +32,7 @@ services:
   api:
     build:
       context: ./api
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.prod
     environment:
       EMAIL: "khaled.abdulhalim.pro@gmail.com"
       REFRESH_TOKEN: "1//04gW8NKYuU7WlCgYIARAAGAQSNwF-L9Irb3_5uyOJund2eRivwGtmXtulIZ6odtXTBbhvxcbPazXvAn3Ytkk8HWKUKlUPf2vzS3k"
