@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon ./src/server.js"
+    "start": "nodemon ./src/server.js",
+    "prod": "pm2-runtime ./src/server.js"
   },
   "keywords": [],
   "author": "ESGI",
