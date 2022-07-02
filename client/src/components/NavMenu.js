@@ -21,7 +21,6 @@ const NavMenu = ({ searchQuery, setSearchQuery }) => {
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget)
   }
-
   const handleClose = () => {
     setAnchorEl(null)
   }
@@ -44,6 +43,10 @@ const NavMenu = ({ searchQuery, setSearchQuery }) => {
   const handleTeams = () => {
     setAnchorEl(null)
     history.push('/teams')
+  }
+  const handleMatchesPlayers = () => {
+    setAnchorEl(null)
+    history.push('/matches')
   }
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -108,6 +111,7 @@ const NavMenu = ({ searchQuery, setSearchQuery }) => {
                   >
                     <MenuItem onClick={handleClose}>{user?.email}</MenuItem>
                     <MenuItem onClick={handlePlayer}>My account</MenuItem>
+                    <MenuItem onClick={handleMatchesPlayers}>Matches</MenuItem>
                     <MenuItem onClick={logout}>logout</MenuItem>
                   </Menu>
                 ) : user?.isOrganizer ? (

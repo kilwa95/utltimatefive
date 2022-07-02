@@ -9,6 +9,14 @@ const matchesHttp = {
     })
     return result.data
   },
+  getListMatchesPlayer: async function () {
+    const result = await axios.get(`http://localhost:4000/matchs/player`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+    return result.data
+  },
   getMatchByMatchId: async function (mid) {
     const result = await axios.get(`http://localhost:4000/matchs/${mid}`, {
       headers: {
