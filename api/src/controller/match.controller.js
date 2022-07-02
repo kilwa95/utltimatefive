@@ -8,6 +8,7 @@ const {
   joinMatch,
   findAllMatchesByUserId,
   removePlayerFromMatch,
+  findAllMatchesByPlayerId,
 } = require('../queries/match.queries')
 const { findUserById } = require('../queries/user.queries')
 const {
@@ -135,7 +136,7 @@ exports.createMatch = async (req, res) => {
       return res.status(Helper.HTTP.CREATED).json({
         status: Helper.HTTP.CREATED,
         message: 'Match created',
-        data: match,
+        data: matchJSON,
       })
     } else {
       return res.status(Helper.HTTP.BAD_REQUEST).json({
@@ -293,6 +294,21 @@ exports.deletePlayerFromMatch = async (req, res) => {
         message: 'Match not deleted',
       })
     }
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({
+      message: error.message,
+    })
+  }
+}
+
+exports.getAllMatchesPlayer = async (req, res) => {
+  try {
+    const playerId = req.decoded.id
+    const matches = await findAllMatchesByPlayerId(playerId)
+    res.status(Helper.HTTP.OK).json({
+      matches: matches,
+    })
   } catch (error) {
     console.error(error)
     res.status(500).json({
