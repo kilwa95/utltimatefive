@@ -136,7 +136,7 @@ exports.createMatch = async (req, res) => {
       return res.status(Helper.HTTP.CREATED).json({
         status: Helper.HTTP.CREATED,
         message: 'Match created',
-        data: match,
+        data: matchJSON,
       })
     } else {
       return res.status(Helper.HTTP.BAD_REQUEST).json({

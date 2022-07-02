@@ -182,12 +182,12 @@ exports.createOrganizer = async (req, res) => {
       roles: ['organizer'],
     })
     if (user) {
-      await sendEmail({
-        subject: '[UltimateFive] Welcome to UltimateFive',
-        text: 'Merci de votre inscription dans UltimateFive',
-        to: email,
-        from: process.env.EMAIL,
-      })
+      // await sendEmail({
+      //   subject: '[UltimateFive] Welcome to UltimateFive',
+      //   text: 'Merci de votre inscription dans UltimateFive',
+      //   to: email,
+      //   from: process.env.EMAIL,
+      // })
 
       res.status(Helper.HTTP.CREATED).json({
         message: `User ${user.id} created`,
