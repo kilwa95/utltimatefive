@@ -190,7 +190,6 @@ exports.isSelfOrganizer = async (req, res, next) => {
 exports.isSelfCaptiner = async (req, res, next) => {
   try {
     const uid = req.decoded.id
-    console.log('uid', uid)
     const teams = await findAllTeamsByUserId(uid)
     const teamsJson = teams.map((team) => team.toJSON())
     const captinersIds = teamsJson.map((team) => team.captineId)

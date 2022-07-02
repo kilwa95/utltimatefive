@@ -35,6 +35,7 @@ afterAll(async () => {
   await request
     .delete(`/users/${organizerId}`)
     .set('Authorization', `${tokenOrganizer.res.rawHeaders[5]}`)
+
   await request
     .delete(`/matchs/${matchId}`)
     .set('Authorization', `${tokenOrganizer.res.rawHeaders[5]}`)
@@ -46,7 +47,6 @@ describe('Matches routes', () => {
     const response = await request.get('/matchs').send()
     expect(response.status).toBe(200)
     const data = response.body.data
-
     expect(data).toHaveLength(matches.length)
   }),
     it('should return a match', async () => {
