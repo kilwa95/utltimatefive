@@ -13,4 +13,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Build images
-      - run: docker-compose build --no-cache
+        run: docker-compose build --no-cache
