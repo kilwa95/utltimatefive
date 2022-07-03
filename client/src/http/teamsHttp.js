@@ -1,8 +1,13 @@
 import * as axios from 'axios'
 
+const baseURL =
+  process.env.NODE_ENV === 'production'
+    ? 'http://174.138.4.15:4000'
+    : 'http://localhost:4000'
+
 const teamsHttp = {
   getListTeams: async function () {
-    const result = await axios.get(`http://localhost:4000/teams`, {
+    const result = await axios.get(`${baseURL}/teams`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
@@ -11,7 +16,7 @@ const teamsHttp = {
   },
   joinTeam: async function (tid, uid) {
     const result = await axios.post(
-      `http://localhost:4000/teams/${tid}/join`,
+      `${baseURL}/teams/${tid}/join`,
       { uid },
       {
         headers: {

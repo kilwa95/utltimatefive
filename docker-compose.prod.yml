@@ -1,58 +1,47 @@
+
 version: "3.8"
 services:
   admin:
     build:
       context: ./admin
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile.dev
+    ports: 
+      - 4001:3000
     restart: unless-stopped
       
   client:
     build:
       context: ./client
-      dockerfile: Dockerfile.prod
-    restart: unless-stopped
-  
-  proxy:
-    build:
-      context: ./proxy
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile.dev
+    environment:
+      - WDS_SOCKET_PORT=4002
     ports: 
-      - 80:80
+      - 4002:3000
     restart: unless-stopped
-    depends_on: 
-      - client
-      - api
 
+    
   api:
     build:
       context: ./api
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile.dev
     environment:
       EMAIL: "khaled.abdulhalim.pro@gmail.com"
-      REFRESH_TOKEN: "1//04gW8NKYuU7WlCgYIARAAGAQSNwF-L9Irb3_5uyOJund2eRivwGtmXtulIZ6odtXTBbhvxcbPazXvAn3Ytkk8HWKUKlUPf2vzS3k"
-      CLIENT_ID: "767730596196-9tgosgg878bogpl4a2p38oocmf4cl8mk.apps.googleusercontent.com"
-      CLIENT_SECRET: "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"
-      access_token: ya29.a0ARrdaM9pt0lavHH_S71y_n3yGzt671rRbIvpv3UEb4uFS34g5pdeMbRyWBYt-kObNgnolNfRlNFrLxt8fo3MBhB1WmPNAMq5u07iOxZIMBOGfMm9UDl36SX00sYBFXZtgKMNIReJZAwxfVCYtHpsJuJWr5v2
-      PORT: 80
+      REFRESH_TOKEN: "1//04agyJcY7Hk-VCgYIARAAGAQSNwF-L9Irr4zWZeAq2SA3nTb8vL14HlSlGPy3CnjR8G1pRbNCTJTas1t49coRX0N8Hx56xnmkmMM"
+      CLIENT_ID: "767730596196-2iqulqj82oa904dm0174ul68v0b209kc.apps.googleusercontent.com"
+      CLIENT_SECRET: "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"
+      access_token: ya29.A0ARrdaM8nOQK293P_OJJA5uzrSOmKFY-Yek1yRtki5Wn2luykgD5D1cfEfkYVeonBYORqc--w9droV30mYboIDdbzbCHjRHkzdSMkUduK7__w3m-2rchlzIVI34fj8b89yZSl95XxOfJJyFHYUPdmNfhRqWJZYUNnWUtBVEFTQVRBU0ZRRl91NjFWbGtWN0hPWnBuMTkwNERWZW1sYkJTZw0163
+      PORT: 4000
       MONGO_URL: "mongodb://root:password@mongo/app"
       DATABASE_URL: "postgres://root:password@db/app"
       SECRET_KEY: RXCT34ZE5GFDSFD756
+    ports:
+      - 4000:4000
+      - 9229:9229 
     depends_on:
       - mongo
       - db
     restart: unless-stopped
 
-  db:
-    image: postgres:alpine
-    ports:
-      - 5434:5432
-    environment:
-      POSTGRES_DB: app
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: password
-    volumes:
-      - db-data:/var/lib/postgresql/data:rw
-    restart: unless-stopped
 
   mongo:
     image: mongo
@@ -66,10 +55,21 @@ services:
         source: mongo-data
         target: /data/db
 
-volumes:
+  db:
+    image: postgres:alpine
+    ports:
+      - 5434:5432
+    environment:
+      POSTGRES_DB: app
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+    volumes:
+      - db-data:/var/lib/postgresql/data:rw
+    restart: unless-stopped
+
+volumes: 
   mongo-data: {}
   db-data: {}
  
 
 
-  

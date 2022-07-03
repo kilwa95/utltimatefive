@@ -1,20 +1,24 @@
 import * as axios from 'axios'
+const baseURL =
+  process.env.NODE_ENV === 'production'
+    ? 'http://174.138.4.15:4000'
+    : 'http://localhost:4000'
 
 const usersHttp = {
   loginUser: async function (body) {
-    const result = await axios.post(`http://localhost:4000/login`, body)
+    const result = await axios.post(`${baseURL}/login`, body)
     return result
   },
   registerPlayer: async function (body) {
-    const result = await axios.post(`http://localhost:4000/players`, body)
+    const result = await axios.post(`${baseURL}/players`, body)
     return result
   },
   registerOrganizer: async function (body) {
-    const result = await axios.post(`http://localhost:4000/organizers`, body)
+    const result = await axios.post(`${baseURL}/organizers`, body)
     return result
   },
   getUserById: async function () {
-    const result = await axios.get(`http://localhost:4000/users/info`, {
+    const result = await axios.get(`${baseURL}/users/info`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
@@ -22,20 +26,16 @@ const usersHttp = {
     return result
   },
   updateUser: async function (uid, values) {
-    const result = await axios.put(
-      `http://localhost:4000/users/${uid}`,
-      values,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
+    const result = await axios.put(`${baseURL}/users/${uid}`, values, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
-    )
+    })
     return result
   },
   validerPlayer: async function (uid) {
     const result = await axios.patch(
-      `http://localhost:4000/users/${uid}/validated`,
+      `${baseURL}/users/${uid}/validated`,
       null,
       {
         headers: {

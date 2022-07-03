@@ -1,8 +1,13 @@
 import * as axios from 'axios'
 
+const baseURL =
+  process.env.NODE_ENV === 'production'
+    ? 'http://174.138.4.15:4000'
+    : 'http://localhost:4000'
+
 const matchesHttp = {
   getListMatches: async function () {
-    const result = await axios.get(`http://localhost:4000/matchs`, {
+    const result = await axios.get(`${baseURL}/matchs`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
@@ -10,7 +15,7 @@ const matchesHttp = {
     return result.data
   },
   getListMatchesPlayer: async function () {
-    const result = await axios.get(`http://localhost:4000/matchs/player`, {
+    const result = await axios.get(`${baseURL}/matchs/player`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
@@ -18,7 +23,7 @@ const matchesHttp = {
     return result.data
   },
   getMatchByMatchId: async function (mid) {
-    const result = await axios.get(`http://localhost:4000/matchs/${mid}`, {
+    const result = await axios.get(`${baseURL}/matchs/${mid}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
@@ -26,7 +31,7 @@ const matchesHttp = {
     return result.data
   },
   deleteMatch: async function (mid) {
-    const result = await axios.delete(`http://localhost:4000/matchs/${mid}`, {
+    const result = await axios.delete(`${baseURL}/matchs/${mid}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
@@ -34,30 +39,23 @@ const matchesHttp = {
     return result.data
   },
   updateMatch: async function (mid, body) {
-    const result = await axios.put(
-      `http://localhost:4000/matchs/${mid}`,
-      body,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
+    const result = await axios.put(`${baseURL}/matchs/${mid}`, body, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
-    )
+    })
     return result.data
   },
   getListMatchsByUserId: async function (uid) {
-    const result = await axios.get(
-      `http://localhost:4000/matchs/${uid}/organizer`,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
+    const result = await axios.get(`${baseURL}/matchs/${uid}/organizer`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
-    )
+    })
     return result.data
   },
   saveMatche: async function (body) {
-    const result = await axios.post(`http://localhost:4000/matchs`, body, {
+    const result = await axios.post(`${baseURL}/matchs`, body, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
@@ -66,7 +64,7 @@ const matchesHttp = {
   },
   joinMatch: async function (mid) {
     const result = await axios.post(
-      `http://localhost:4000/matchs/${mid}/join`,
+      `${baseURL}/matchs/${mid}/join`,
       {},
       {
         headers: {
@@ -78,7 +76,7 @@ const matchesHttp = {
   },
   deletePlayerFromMatch: async function (mid, uid) {
     const result = await axios.delete(
-      `http://localhost:4000/matchs/${mid}/players/${uid}`,
+      `${baseURL}/matchs/${mid}/players/${uid}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
