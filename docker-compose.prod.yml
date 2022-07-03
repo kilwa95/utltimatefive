@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile.prod
     ports: 
       - 4001:3000
-    environment:
+    args:
       - NODE_ENV=production
     restart: unless-stopped
       
@@ -15,7 +15,7 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile.prod
-    environment:
+    args:
       - WDS_SOCKET_PORT=4002
       - NODE_ENV=production
     ports: 
@@ -27,7 +27,7 @@ services:
     build:
       context: ./api
       dockerfile: Dockerfile.prod
-    environment:
+    args:
       EMAIL: "khaled.abdulhalim.pro@gmail.com"
       REFRESH_TOKEN: "1//04agyJcY7Hk-VCgYIARAAGAQSNwF-L9Irr4zWZeAq2SA3nTb8vL14HlSlGPy3CnjR8G1pRbNCTJTas1t49coRX0N8Hx56xnmkmMM"
       CLIENT_ID: "767730596196-2iqulqj82oa904dm0174ul68v0b209kc.apps.googleusercontent.com"
