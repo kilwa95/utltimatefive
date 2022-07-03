@@ -28,7 +28,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          script: pwd
+          script: ls
       - name: update version
         run: git pull
       - name: update containers
