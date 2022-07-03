@@ -12,10 +12,11 @@ services:
         target: /home/node/app
       - type: volume
         target: /home/node/app/node_modules
+    environment:
+      NODE_ENV: development
     ports: 
       - 4001:3000
     restart: unless-stopped
-
       
   client:
     build:
@@ -23,6 +24,7 @@ services:
       dockerfile: Dockerfile.dev
     environment:
       - WDS_SOCKET_PORT=4002
+      - NODE_ENV=development
     volumes:
       - type: bind
         source: ./client
@@ -48,6 +50,7 @@ services:
       MONGO_URL: "mongodb://root:password@mongo/app"
       DATABASE_URL: "postgres://root:password@db/app"
       SECRET_KEY: RXCT34ZE5GFDSFD756
+      NODE_ENV: development
     volumes:
       - type: bind
         source: ./api/src
