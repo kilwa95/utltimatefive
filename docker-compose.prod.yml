@@ -7,6 +7,8 @@ services:
       dockerfile: Dockerfile.dev
     ports: 
       - 4001:3000
+    environment:
+      NODE_ENV: production
     restart: unless-stopped
       
   client:
@@ -15,6 +17,8 @@ services:
       dockerfile: Dockerfile.dev
     environment:
       - WDS_SOCKET_PORT=4002
+      - NODE_ENV=production
+
     ports: 
       - 4002:3000
     restart: unless-stopped
@@ -34,6 +38,7 @@ services:
       MONGO_URL: "mongodb://root:password@mongo/app"
       DATABASE_URL: "postgres://root:password@db/app"
       SECRET_KEY: RXCT34ZE5GFDSFD756
+      NODE_ENV: production
     ports:
       - 4000:4000
       - 9229:9229 
