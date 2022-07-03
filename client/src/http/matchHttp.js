@@ -5,6 +5,7 @@ const baseURL =
     ? 'http://174.138.4.15:4000'
     : 'http://localhost:4000'
 
+console.log('process.env.NODE_ENV', process.env)
 const matchesHttp = {
   getListMatches: async function () {
     const result = await axios.get(`${baseURL}/matchs`, {
