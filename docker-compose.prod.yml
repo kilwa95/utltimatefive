@@ -27,7 +27,7 @@ services:
     build:
       context: ./api
       dockerfile: Dockerfile.prod
-    args:
+    environment:
       EMAIL: "khaled.abdulhalim.pro@gmail.com"
       REFRESH_TOKEN: "1//04agyJcY7Hk-VCgYIARAAGAQSNwF-L9Irr4zWZeAq2SA3nTb8vL14HlSlGPy3CnjR8G1pRbNCTJTas1t49coRX0N8Hx56xnmkmMM"
       CLIENT_ID: "767730596196-2iqulqj82oa904dm0174ul68v0b209kc.apps.googleusercontent.com"
