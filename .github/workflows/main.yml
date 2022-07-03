@@ -27,22 +27,4 @@ jobs:
       - name: teste application
       - run: docker-compose exec api npm run test
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build_and_push
-    steps:
-    - name: Deploy to Digital Ocean droplet via SSH action
-      uses: appleboy/ssh-action@v0.1.3
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
 
-    - name: Setup project
-    - run: cd utltimatefive
-
-    - name: update version
-      run: git pull
-
-    - name: update containers
-      run: docker compose -f "docker-compose.yml" up -d --build
