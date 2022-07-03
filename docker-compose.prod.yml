@@ -5,19 +5,19 @@ services:
     build:
       context: ./admin
       dockerfile: Dockerfile.prod
+      args:
+        - NODE_ENV=production
     ports: 
       - 4001:3000
-    args:
-      - NODE_ENV=production
     restart: unless-stopped
       
   client:
     build:
       context: ./client
       dockerfile: Dockerfile.prod
-    args:
-      - WDS_SOCKET_PORT=4002
-      - NODE_ENV=production
+      args:
+        - WDS_SOCKET_PORT=4002
+        - NODE_ENV=production
     ports: 
       - 4002:3000
     restart: unless-stopped
