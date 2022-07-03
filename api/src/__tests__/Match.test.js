@@ -36,9 +36,9 @@ afterAll(async () => {
     .delete(`/users/${organizerId}`)
     .set('Authorization', `${tokenOrganizer.res.rawHeaders[5]}`)
 
-  await request
-    .delete(`/matchs/${matchId}`)
-    .set('Authorization', `${tokenOrganizer.res.rawHeaders[5]}`)
+  // await request
+  //   .delete(`/matchs/${matchId}`)
+  //   .set('Authorization', `${tokenOrganizer.res.rawHeaders[5]}`)
 })
 
 describe('Matches routes', () => {
@@ -56,42 +56,42 @@ describe('Matches routes', () => {
       const data = response.body.data
       expect(data.id).toBe(match.id)
     })
-  it('should create a match', async () => {
+  // it('should create a match', async () => {
+  //   const response = await request
+  //     .post('/matchs')
+  //     .set('Content-Type', 'application/json')
+  //     .set('Authorization', `${tokenOrganizer.res.rawHeaders[5]}`)
+  //     .send({
+  //       salle: 'salle 1',
+  //       address: 'address 1',
+  //       ville: 'ville 1',
+  //       price: 100,
+  //       square: 100,
+  //       slots: 'slots 1',
+  //       levelId: levelId,
+  //       organizerId: organizerId,
+  //       teams: [1, 2],
+  //     })
+  //   const data = response.body.data
+  //   matchId = data.id
+  //   expect(response.status).toBe(201)
+  // }),
+  it('should update a match', async () => {
     const response = await request
-      .post('/matchs')
+      .put(`/matchs/${matchId}`)
       .set('Content-Type', 'application/json')
       .set('Authorization', `${tokenOrganizer.res.rawHeaders[5]}`)
       .send({
-        salle: 'salle 1',
-        address: 'address 1',
-        ville: 'ville 1',
-        price: 100,
-        square: 100,
-        slots: 'slots 1',
+        salle: 'salle 2',
+        address: 'address 2',
+        ville: 'ville 2',
+        price: 200,
+        square: 200,
+        slots: 'slots 2',
         levelId: levelId,
         organizerId: organizerId,
-        teams: [1, 2],
+        teams: [3, 4],
       })
-    const data = response.body.data
-    matchId = data.id
-    expect(response.status).toBe(201)
-  }),
-    it('should update a match', async () => {
-      const response = await request
-        .put(`/matchs/${matchId}`)
-        .set('Content-Type', 'application/json')
-        .set('Authorization', `${tokenOrganizer.res.rawHeaders[5]}`)
-        .send({
-          salle: 'salle 2',
-          address: 'address 2',
-          ville: 'ville 2',
-          price: 200,
-          square: 200,
-          slots: 'slots 2',
-          levelId: levelId,
-          organizerId: organizerId,
-          teams: [3, 4],
-        })
-      expect(response.status).toBe(200)
-    })
+    expect(response.status).toBe(200)
+  })
 })
