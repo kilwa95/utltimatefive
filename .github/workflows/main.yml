@@ -17,4 +17,4 @@ jobs:
       - name: build containers
         run: docker-compose up -d
       - name: teste application
-        run: docker-compose exec api npm run test
+        run: docker-compose exec -T api npm run test
