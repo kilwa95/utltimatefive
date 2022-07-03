@@ -1,5 +1,5 @@
 import * as axios from 'axios'
-import { baseURL } from '../../config/config'
+import { baseURL } from '../config/config'
 
 const usersHttp = {
   loginUser: async function (body) {
