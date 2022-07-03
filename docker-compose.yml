@@ -50,7 +50,7 @@ services:
       MONGO_URL: "mongodb://root:password@mongo/app"
       DATABASE_URL: "postgres://root:password@db/app"
       SECRET_KEY: RXCT34ZE5GFDSFD756
-      NODE_ENV: production
+      NODE_ENV: development
     volumes:
       - type: bind
         source: ./api/src

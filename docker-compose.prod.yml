@@ -4,7 +4,7 @@ services:
   admin:
     build:
       context: ./admin
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.prod
     ports: 
       - 4001:3000
     environment:
@@ -14,7 +14,7 @@ services:
   client:
     build:
       context: ./client
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.prod
     environment:
       - WDS_SOCKET_PORT=4002
       - NODE_ENV=production
@@ -26,7 +26,7 @@ services:
   api:
     build:
       context: ./api
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.prod
     environment:
       EMAIL: "khaled.abdulhalim.pro@gmail.com"
       REFRESH_TOKEN: "1//04agyJcY7Hk-VCgYIARAAGAQSNwF-L9Irr4zWZeAq2SA3nTb8vL14HlSlGPy3CnjR8G1pRbNCTJTas1t49coRX0N8Hx56xnmkmMM"
