@@ -28,7 +28,9 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          script:  ls -al
+          script: |
+            ls -al
+            cd utltimatefive
       - name: update version
         run: git pull
       - name: update containers
