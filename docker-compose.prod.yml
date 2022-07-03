@@ -21,6 +21,7 @@ services:
     environment:
       - NODE_ENV=production
       - WDS_SOCKET_PORT=4002
+      - PUBLIC_URL=http://174.138.4.15:4000
     ports: 
       - 4002:3000
     restart: unless-stopped
