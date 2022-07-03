@@ -1,7 +1,6 @@
 import * as axios from 'axios'
 
-import { baseURL } from '../../config/config'
-
+import { baseURL } from '../config/config'
 
 console.log('process.env.NODE_ENV', process.env)
 const matchesHttp = {
