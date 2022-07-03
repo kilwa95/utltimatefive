@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "NODE_ENV=devlopement nodemon ./src/server.js",
-    "test": "jest --detectOpenHandles",
+    "test": "jest --silent",
     "prod": "NODE_ENV=production pm2-runtime ./src/server.js"
   },
   "keywords": [],

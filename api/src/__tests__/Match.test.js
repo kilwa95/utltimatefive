@@ -22,17 +22,17 @@ beforeAll(async () => {
       levelId: levelId,
       roles: ['organizer'],
     })
-  const adminResponse = await request
-    .post('/organizers')
-    .set('Content-Type', 'application/json')
-    .send({
-      firstName: 'adminA',
-      lastName: 'adminA',
-      email: 'adminA@gmail.com',
-      password: 'admin123',
-      levelId: levelId,
-      roles: ['organizer'],
-    })
+  // const adminResponse = await request
+  //   .post('/organizers')
+  //   .set('Content-Type', 'application/json')
+  //   .send({
+  //     firstName: 'adminA',
+  //     lastName: 'adminA',
+  //     email: 'adminA@gmail.com',
+  //     password: 'admin123',
+  //     levelId: levelId,
+  //     roles: ['organizer'],
+  //   })
   organizerId = organizerResponse.body.data.id
   tokenOrganizer = await request
     .post('/login')
