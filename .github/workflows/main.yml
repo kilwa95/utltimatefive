@@ -28,6 +28,8 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
+      - name: init project
+        run: ls
       - name: Setup project
         run: cd utltimatefive
       - name: update version
