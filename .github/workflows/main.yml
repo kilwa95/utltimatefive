@@ -18,3 +18,15 @@ jobs:
         run: docker-compose up -d
       - name: teste application
         run: docker-compose exec -T api npm run test
+  deploy:
+    name: Deploy to Digital Ocean
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Digital Ocean droplet via SSH action
+        uses: appleboy/ssh-action@v0.1.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+
+
