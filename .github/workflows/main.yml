@@ -28,12 +28,10 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          script: ls -al
+          script: pwd
       - name: update version
-        working-directory: utltimatefive
         run: git pull
       - name: update containers
-        working-directory: utltimatefive
         run: docker compose -f "docker-compose.yml" up -d --build
 
 
