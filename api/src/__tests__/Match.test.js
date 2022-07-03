@@ -5,6 +5,7 @@ const request = supertest(app)
 const Match = require('../models/sequelize/Match')
 
 let organizerId
+let adminId
 let levelId = 1
 let tokenOrganizer
 let matchId
@@ -18,6 +19,17 @@ beforeAll(async () => {
       lastName: 'organizer',
       email: 'organizer@gmail.com',
       password: 'organizer123',
+      levelId: levelId,
+      roles: ['organizer'],
+    })
+  const adminResponse = await request
+    .post('/organizers')
+    .set('Content-Type', 'application/json')
+    .send({
+      firstName: 'adminA',
+      lastName: 'adminA',
+      email: 'adminA@gmail.com',
+      password: 'admin123',
       levelId: levelId,
       roles: ['organizer'],
     })
