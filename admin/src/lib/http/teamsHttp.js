@@ -1,9 +1,6 @@
 import * as axios from "axios";
 
-const baseURL =
-  process.env.NODE_ENV === "production"
-    ? "http://174.138.4.15:4000"
-    : "http://localhost:4000";
+import { baseURL } from "../config/config";
 
 const teamsHttp = {
   getListTeams: async function () {

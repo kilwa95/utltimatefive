@@ -41,7 +41,8 @@ exports.createLevel = async (req, res) => {
       const dataJSON = data.toJSON()
       res.status(Helper.HTTP.CREATED).json({
         message: 'Level created',
-        data: dataJSON,
+        data: data,
+        levelId: level.id,
       })
     }
   } catch (error) {
