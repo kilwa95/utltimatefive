@@ -139,7 +139,7 @@ router.post(
 )
 router.get('/teams/:tid', authJwt, onlyCaptiner, isTeamExist, getTeamById)
 router.put('/teams/:tid', authJwt, isSelfCaptiner, updateTeam)
-router.delete('/teams/:tid', authJwt, isSelfCaptiner, deleteTeam)
+router.delete('/teams/:tid', authJwt, deleteTeam)
 router.post('/teams/:tid/join', authJwt, onlyPlayerOrOrganizer, joinTeamMember)
 router.delete('/teams/:tid/left', authJwt, onlyPlayer, leaveTeamMember)
 
