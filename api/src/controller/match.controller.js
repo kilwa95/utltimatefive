@@ -17,7 +17,7 @@ const {
   saveMatchTeam,
 } = require('../queries/team.queries')
 const Helper = require('../Helper')
-const { sendEmail } = require('../services/email')
+const { sendMail } = require('../services/email')
 
 exports.getListMatchs = async (req, res) => {
   try {
@@ -252,7 +252,7 @@ exports.joinMatchPlayers = async (req, res) => {
     })
     if (match) {
       const user = await findUserById(playerId)
-      await sendEmail({
+      await sendMail({
         subject: '[UltimateFive] Welcome to UltimateFive',
         text:
           'Merci de votre participation a cette match, vous serez notifié par email lorsque la match sera commencée',
