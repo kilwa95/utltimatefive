@@ -52,6 +52,24 @@ const sendEmail = async (emailOptions) => {
     console.log(error)
   }
 }
+
+const sendMail = async (emailOptions) => {
+  try {
+    let emailTransporter = nodemailer.createTransport({
+      host: 'smtp.mailtrap.io',
+      port: 2525,
+      auth: {
+        user: 'f24cf9d8d925ce',
+        pass: '0f57cca7523d61',
+      },
+    })
+
+    await emailTransporter.sendMail(emailOptions)
+  } catch (error) {
+    console.log(error)
+  }
+}
 module.exports = {
   sendEmail,
+  sendMail,
 }

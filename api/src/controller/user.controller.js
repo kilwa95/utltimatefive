@@ -12,7 +12,7 @@ const {
   updateOrCreateAddress,
 } = require('../queries/address.queries')
 const Helper = require('../Helper')
-const { sendEmail } = require('../services/email')
+const { sendMail } = require('../services/email')
 
 exports.getListUsers = async (req, res) => {
   try {
@@ -85,7 +85,7 @@ exports.createPlayer = async (req, res) => {
       roles: ['player'],
     })
     if (user) {
-      await sendEmail({
+      await sendMail({
         subject: '[UltimateFive] Welcome to UltimateFive',
         text: 'Merci de votre inscription dans UltimateFive',
         to: email,
@@ -182,7 +182,7 @@ exports.createOrganizer = async (req, res) => {
       roles: ['organizer'],
     })
     if (user) {
-      await sendEmail({
+      await sendMail({
         subject: '[UltimateFive] Welcome to UltimateFive',
         text: 'Merci de votre inscription dans UltimateFive',
         to: email,
@@ -289,7 +289,7 @@ exports.validatePlayer = async (req, res) => {
   try {
     const uid = parseInt(req.params.uid)
     const user = await updatePlayerStatus(uid, Helper.status.validated)
-    await sendEmail({
+    await sendMail({
       subject: '[UltimateFive] Welcome to UltimateFive',
       text: `Hello ${user.firstName},\n you can now participate in the matche`,
       to: user.email,

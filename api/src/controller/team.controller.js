@@ -9,7 +9,7 @@ const {
 } = require('../queries/team.queries')
 const { findUserById } = require('../queries/user.queries')
 const Helper = require('../Helper')
-const { sendEmail } = require('../services/email')
+const { sendMail } = require('../services/email')
 
 exports.getListTeams = async (req, res) => {
   try {
@@ -154,7 +154,7 @@ exports.joinTeamMember = async (req, res) => {
       const data = await findTeamById(tid)
       const dataJSON = data.toJSON()
       const userJSON = user.toJSON()
-      await sendEmail({
+      await sendMail({
         subject: '[UltimateFive] Welcome to UltimateFive',
         text: `Hello ${userJSON.firstName},\n You have been added to team ${dataJSON.name}`,
         to: user.email,
