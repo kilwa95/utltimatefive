@@ -14,6 +14,14 @@ let tokenOrganizer
 let tokenAdmin
 
 beforeAll(async () => {
+  const levelResponse = await request
+    .post('/levels')
+    .set('Authorization', `${tokenAdmin.res.rawHeaders[5]}`)
+    .send({
+      name: 'testeC',
+    })
+  levelId = levelResponse.body.data.id
+
   const organizerResponse = await request
     .post('/organizers')
     .set('Content-Type', 'application/json')
@@ -57,14 +65,6 @@ beforeAll(async () => {
       email: 'adminA@gmail.com',
       password: 'admin123',
     })
-
-  const levelResponse = await request
-    .post('/levels')
-    .set('Authorization', `${tokenAdmin.res.rawHeaders[5]}`)
-    .send({
-      name: 'testeC',
-    })
-  levelId = levelResponse.body.data.id
 
   const teamAResponse = await request
     .post('/admin/teams')
