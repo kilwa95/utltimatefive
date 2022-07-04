@@ -14,6 +14,27 @@ let tokenOrganizer
 let tokenAdmin
 
 beforeAll(async () => {
+  const adminResponse = await request
+    .post('/admins')
+    .set('Content-Type', 'application/json')
+    .send({
+      firstName: 'adminA',
+      lastName: 'adminA',
+      email: 'adminA@gmail.com',
+      password: 'admin123',
+      birthday: '2022-06-01',
+      road: '35 quai de grenelle',
+      postalcode: 75015,
+      city: 'Paris',
+    })
+  adminId = adminResponse.body.data.id
+  tokenAdmin = await request
+    .post('/login')
+    .set('Content-Type', 'application/json')
+    .send({
+      email: 'adminA@gmail.com',
+      password: 'admin123',
+    })
   const levelResponse = await request
     .post('/levels')
     .set('Authorization', `${tokenAdmin.res.rawHeaders[5]}`)
@@ -33,37 +54,14 @@ beforeAll(async () => {
       levelId: levelId,
       roles: ['organizer'],
     })
-  const adminResponse = await request
-    .post('/admins')
-    .set('Content-Type', 'application/json')
-    .send({
-      firstName: 'adminA',
-      lastName: 'adminA',
-      email: 'adminA@gmail.com',
-      password: 'admin123',
-      birthday: '2022-06-01',
-      road: '35 quai de grenelle',
-      postalcode: 75015,
-      city: 'Paris',
-    })
 
   organizerId = organizerResponse.body.data.id
-  adminId = adminResponse.body.data.id
-
   tokenOrganizer = await request
     .post('/login')
     .set('Content-Type', 'application/json')
     .send({
       email: 'organizer@gmail.com',
       password: 'organizer123',
-    })
-
-  tokenAdmin = await request
-    .post('/login')
-    .set('Content-Type', 'application/json')
-    .send({
-      email: 'adminA@gmail.com',
-      password: 'admin123',
     })
 
   const teamAResponse = await request
