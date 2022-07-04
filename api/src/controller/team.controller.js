@@ -50,7 +50,7 @@ exports.createTeam = async (req, res) => {
       const dataJSON = data.toJSON()
       res.status(Helper.HTTP.OK).json({
         message: 'Create team success',
-        data: dataJSON,
+        data: data,
       })
     } else {
       res

@@ -7,9 +7,11 @@ const Match = require('../models/sequelize/Match')
 let organizerId
 let adminId
 let levelId
+let matchId
+let teamIdA
+let teamIdB
 let tokenOrganizer
 let tokenAdmin
-let matchId
 
 beforeAll(async () => {
   const organizerResponse = await request
@@ -31,8 +33,10 @@ beforeAll(async () => {
       lastName: 'adminA',
       email: 'adminA@gmail.com',
       password: 'admin123',
-      levelId: levelId,
-      roles: ['admin'],
+      birthday: '2022-06-01',
+      road: '35 quai de grenelle',
+      postalcode: 75015,
+      city: 'Paris',
     })
 
   organizerId = organizerResponse.body.data.id
@@ -61,6 +65,24 @@ beforeAll(async () => {
       name: 'testeC',
     })
   levelId = levelResponse.body.data.id
+
+  const teamAResponse = await request
+    .post('/admin/teams')
+    .set('Authorization', `${tokenAdmin.res.rawHeaders[5]}`)
+    .send({
+      name: 'teamA',
+      levelId: levelId,
+    })
+  teamIdA = teamAResponse.body.data.id
+
+  const teamBResponse = await request
+    .post('/admin/teams')
+    .set('Authorization', `${tokenAdmin.res.rawHeaders[5]}`)
+    .send({
+      name: 'teamB',
+      levelId: levelId,
+    })
+  teamIdB = teamBResponse.body.data.id
 })
 
 afterAll(async () => {
@@ -71,6 +93,15 @@ afterAll(async () => {
   await request
     .delete(`/levels/${levelId}`)
     .set('Authorization', `${tokenAdmin.res.rawHeaders[5]}`)
+
+  await request
+    .delete(`/teams/${teamIdA}`)
+    .set('Authorization', `${tokenAdmin.res.rawHeaders[5]}`)
+
+  await request
+    .delete(`/teams/${teamIdB}`)
+    .set('Authorization', `${tokenAdmin.res.rawHeaders[5]}`)
+
   await request
     .delete(`/users/${organizerId}`)
     .set('Authorization', `${tokenOrganizer.res.rawHeaders[5]}`)
@@ -95,7 +126,7 @@ describe('Matches routes', () => {
         slots: 'slots 1',
         levelId: levelId,
         organizerId: organizerId,
-        teams: [1, 2],
+        teams: [teamIdA, teamIdB],
       })
     const data = response.body.data
     matchId = data.id
