@@ -28,6 +28,7 @@ beforeAll(async () => {
       city: 'Paris',
     })
   adminId = adminResponse.body.data.id
+
   tokenAdmin = await request
     .post('/login')
     .set('Content-Type', 'application/json')
@@ -35,6 +36,7 @@ beforeAll(async () => {
       email: 'adminA@gmail.com',
       password: 'admin123',
     })
+
   const levelResponse = await request
     .post('/levels')
     .set('Authorization', `${tokenAdmin.res.rawHeaders[5]}`)
