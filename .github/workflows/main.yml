@@ -16,7 +16,6 @@ jobs:
       - name: teste application
         run: docker-compose exec -T api npm run test
   deploy:
-    needs: build_and_test
     name: Deploy to Digital Ocean
     runs-on: ubuntu-latest
     steps:
