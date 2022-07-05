@@ -186,7 +186,6 @@ const CreateMatchPage = () => {
                   fullWidth
                   id="slots"
                   type="date"
-                  label="créneaux"
                   name="slots"
                   autoComplete="family-name"
                 />
@@ -217,11 +216,11 @@ const CreateMatchPage = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  onChange={(e) =>
-                    setImage(URL.createObjectURL(e.target.files[0]))}
+                  onChange={handleChange}
                   fullWidth
-                  name="file"
-                  type="file"
+                  name="image"
+                  label="image"
+                  type="text"
                 />
               </Grid>
               <Grid item xs={12}>
