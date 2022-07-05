@@ -103,13 +103,7 @@ router.get('/matchs/:mid', isMatchExist, getMatchById)
 router.put('/matchs/:mid', authJwt, onlyOrganizer, isMatchExist, updateMatch)
 router.delete('/matchs/:mid/players/:uid', authJwt, deletePlayerFromMatch)
 router.get('/matchs/player', authJwt, getAllMatchesPlayer)
-router.delete(
-  '/matchs/:mid',
-  authJwt,
-  onlyOrganizer,
-  // isSelfOrganizer,
-  deleteMatch,
-)
+router.delete('/matchs/:mid', authJwt, onlyOrganizer, deleteMatch)
 router.post(
   '/matchs/:mid/join',
   authJwt,
@@ -129,14 +123,7 @@ router.delete('/levels/:lid', authJwt, isLevelExist, onlyAdmin, deleteLevel)
  * API teams
  */
 router.get('/teams', getListTeams)
-router.post(
-  '/admin/teams',
-  authJwt,
-  onlyAdmin,
-  // upload.single('file'),
-  // uploadFile,
-  createTeam,
-)
+router.post('/admin/teams', authJwt, onlyAdmin, createTeam)
 router.get('/teams/:tid', authJwt, onlyCaptiner, isTeamExist, getTeamById)
 router.put('/teams/:tid', authJwt, isSelfCaptiner, updateTeam)
 router.delete('/teams/:tid', authJwt, deleteTeam)

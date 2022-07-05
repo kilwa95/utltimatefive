@@ -32,7 +32,7 @@ exports.getTeamById = async (req, res) => {
 }
 
 exports.createTeam = async (req, res) => {
-  const { name, levelId } = req.body
+  const { name, levelId, image } = req.body
   if (Helper.isEmpty([name, levelId])) {
     res
       .status(Helper.HTTP.BAD_REQUEST)
@@ -44,6 +44,7 @@ exports.createTeam = async (req, res) => {
       name: Helper.sqlescstr(name),
       adminId: parseInt(adminId),
       levelId: parseInt(levelId),
+      image: image,
     })
     if (team) {
       const data = await findTeamById(team.id)
