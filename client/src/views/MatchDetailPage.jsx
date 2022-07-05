@@ -49,14 +49,14 @@ const MatchDetailPage = (props) => {
     
         <Box sx={{ marginTop: "80px" ,display: "flex",width: "100%", justifyContent: "center",alignItems: "center"}}>
           <Box style={{display: "flex",flexDirection: "column", alignItems: "center"}}>
-            <img width="200" height="200" src="https://yt3.ggpht.com/0M4ca-lJ8DKvAh7R9RUKHPp97QgagJs5z0jF6jl8stqrYrvYSKshxVyvKCzZSU6wkx0AkmeZ=s900-c-k-c0x00ffffff-no-rj" />
+            <img width="200" height="200" src={teams[0]?.image} />
             <div>{teams[0]?.name}</div>
           </Box>
           <Box style={{display: "flex", alignItems: "center",marginLeft:"40px",marginRight: "40px"}} >
               <Typography style={{fontSize: "30px"}}>VS</Typography>
           </Box>
           <Box style={{display: "flex",flexDirection: "column", alignItems: "center"}}>
-            <img width="200" height="200" src="https://yt3.ggpht.com/0M4ca-lJ8DKvAh7R9RUKHPp97QgagJs5z0jF6jl8stqrYrvYSKshxVyvKCzZSU6wkx0AkmeZ=s900-c-k-c0x00ffffff-no-rj" />
+            <img width="200" height="200" src={teams[1]?.image} />
             <div>{teams[1]?.name}</div>
           </Box>
         </Box>

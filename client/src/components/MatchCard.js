@@ -31,7 +31,7 @@ const MatchCard = ({ isLoading, match }) => {
                 }}
               >
                 <Avatar
-                  src="https://yt3.ggpht.com/0M4ca-lJ8DKvAh7R9RUKHPp97QgagJs5z0jF6jl8stqrYrvYSKshxVyvKCzZSU6wkx0AkmeZ=s900-c-k-c0x00ffffff-no-rj"
+                  src={match.teams[0]?.image}
                   style={{
                     marginRight: '10px',
                   }}
@@ -66,7 +66,7 @@ const MatchCard = ({ isLoading, match }) => {
                 }}
               >
                 <Avatar
-                  src="https://yt3.ggpht.com/0M4ca-lJ8DKvAh7R9RUKHPp97QgagJs5z0jF6jl8stqrYrvYSKshxVyvKCzZSU6wkx0AkmeZ=s900-c-k-c0x00ffffff-no-rj"
+                  src={match.teams[1]?.image}
                   style={{
                     marginRight: '10px',
                   }}
