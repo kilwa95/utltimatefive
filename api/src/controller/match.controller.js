@@ -75,6 +75,7 @@ exports.getMatchById = async (req, res) => {
           name: team.name,
           level: team.level,
           numberPlace: team.numberPlace,
+          image: team.image,
           membres: team.membres.filter(
             (membre) => membre.status === 'validated',
           ),
@@ -118,7 +119,7 @@ exports.createMatch = async (req, res) => {
       slots: Helper.sqlescstr(slots),
       square: parseInt(square),
       price: parseInt(price),
-      image: Helper.sqlescstr(image),
+      image: image,
       levelId: parseInt(levelId),
       organizerId: parseInt(organizerId),
     })

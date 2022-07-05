@@ -244,7 +244,7 @@ exports.findMatchById = async (matchId) => {
         {
           model: Team,
           as: 'teams',
-          attributes: ['id', 'name', 'numberPlace'],
+          attributes: ['id', 'name', 'numberPlace', 'image'],
           include: [
             {
               model: Level,
