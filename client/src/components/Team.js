@@ -40,6 +40,7 @@ const Team = ({ team, isLoading }) => {
       <Card
         sx={{
           maxWidth: 345,
+          width: '250px',
           marginBottom: '32px',
           marginLeft: '16px',
           cursor: 'pointer',

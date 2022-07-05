@@ -39,7 +39,7 @@ const MatchesPage = () => {
             >
               touts les matches
             </div>
-            <Div direction="row" width="100%" alignItems="center">
+            {/* <Div direction="row" width="100%" alignItems="center">
               <div style={{ marginRight: "10px" }}>Filter :</div>
               <Select
                 style={{ width: "100px", marginRight: "10px" }}
@@ -59,7 +59,7 @@ const MatchesPage = () => {
                 id="demo-simple-select"
                 label="Age"
               />
-            </Div>
+            </Div> */}
           </Div>
           {filteredMatchs.map((match) => (
             <MatchCard key={match.id} isLoading={isLoading} match={match} />
