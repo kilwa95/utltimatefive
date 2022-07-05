@@ -14,7 +14,7 @@ jobs:
       - name: build containers
         run: docker-compose up -d
       - name: teste application
-        run: docker-compose exec -T api npm run test
+        run: docker-compose exec -T api npm run test -- Users.test.js
   deploy:
     name: Deploy to Digital Ocean
     runs-on: ubuntu-latest
