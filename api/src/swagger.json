@@ -11,6 +11,9 @@
     "servers": [
         {
             "url": "http://localhost:4000"
+        },
+        {
+            "url": "http://174.138.4.15:4000"
         }
     ],
     "tags": [
