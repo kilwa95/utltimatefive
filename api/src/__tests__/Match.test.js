@@ -1,5 +1,6 @@
 const supertest = require('supertest')
 const app = require('../app')
+const request = supertest(app)
 const Match = require('../models/sequelize/Match')
 
 let organizerId
@@ -158,7 +159,7 @@ describe('Matches routes', () => {
         slots: 'slots 2',
         levelId: levelId,
         organizerId: organizerId,
-        teams: [3, 4],
+        teams: [teamIdA, teamIdB],
       })
     expect(response.status).toBe(200)
   })
