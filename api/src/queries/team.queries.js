@@ -10,7 +10,7 @@ const Op = Sequelize.Op
 exports.findAllTeams = async () => {
   try {
     return await Team.findAll({
-      attributes: ['id', 'name'],
+      attributes: ['id', 'name', 'image'],
       include: [
         {
           model: Level,
@@ -44,7 +44,7 @@ exports.findAllTeamsByUserId = async (uid) => {
 exports.findTeamById = async (tid) => {
   try {
     return await Team.findOne({
-      attributes: ['id', 'name'],
+      attributes: ['id', 'name', 'image'],
       include: [
         {
           model: Level,
