@@ -40,6 +40,7 @@ const Team = ({ team, isLoading }) => {
       <Card
         sx={{
           maxWidth: 345,
+          width: '250px',
           marginBottom: '32px',
           marginLeft: '16px',
           cursor: 'pointer',
@@ -76,8 +77,9 @@ const Team = ({ team, isLoading }) => {
           <CardMedia
             component="img"
             height="194"
-            image="https://yt3.ggpht.com/0M4ca-lJ8DKvAh7R9RUKHPp97QgagJs5z0jF6jl8stqrYrvYSKshxVyvKCzZSU6wkx0AkmeZ=s900-c-k-c0x00ffffff-no-rj"
-            alt="Paella dish"
+            weight="194"
+            image={team.image}
+            alt={team.name}
           />
         )}
         {isLoading ? (
