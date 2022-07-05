@@ -1,6 +1,6 @@
 import * as axios from "axios";
 
-import { baseURL } from "../config/config";
+import { baseURL } from "../../config/config";
 
 const levelsHttp = {
   saveLevels: async function (body) {

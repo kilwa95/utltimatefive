@@ -13,6 +13,7 @@ services:
       - type: volume
         target: /home/node/app/node_modules
     environment:
+      - WDS_SOCKET_PORT=4002
       - NODE_ENV=development
     ports: 
       - 4001:3000
