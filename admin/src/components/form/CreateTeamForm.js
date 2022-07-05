@@ -6,6 +6,7 @@ const CreateTeamForm = ({ onSubmit, error }) => {
   const [values, setValues] = useState({
     name: "",
     levelId: null,
+    image: "",
   });
 
   const _onSubmit = (event) => {
@@ -44,9 +45,14 @@ const CreateTeamForm = ({ onSubmit, error }) => {
           name="levelId"
         />
       </CInputGroup>
-
       <CInputGroup className="mb-3">
-        <CInput type="file" onChange={handleFile} name="file" />
+        <CInput
+          type="text"
+          placeholder="image"
+          autoComplete="off"
+          onChange={handleChange}
+          name="image"
+        />
       </CInputGroup>
 
       <CInputGroup className="mb-3">
