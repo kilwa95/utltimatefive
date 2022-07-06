@@ -31,6 +31,14 @@ const teamsHttp = {
     )
     return result.data
   },
+  leaveTeam: async function (tid) {
+    const result = await axios.delete(`${baseURL}/teams/${tid}/leave`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+    return result
+  },
 }
 
 export default teamsHttp

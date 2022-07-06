@@ -201,10 +201,25 @@ exports.getListTeamsByPlayerId = async (req, res) => {
   try {
     const uid = parseInt(req.decoded.id)
     const teams = await findAllTeamsByPlayerId(uid)
+    const teamsJSON = teams.map((team) => team.toJSON())
+
+    for (let i = 0; i < teamsJSON.length; i++) {
+      const teamId = teamsJSON[i].TeamId
+      teamsJSON[i].team = await findTeamById(teamId)
+    }
+
+    const data = teamsJSON.map((team) => {
+      return {
+        id: team.team.id,
+        name: team.team.name,
+        image: team.team.image,
+      }
+    })
+
     if (teams) {
       res.status(Helper.HTTP.OK).json({
         message: 'Get list teams success',
-        data: teams,
+        data: data,
       })
     } else {
       res
