@@ -66,15 +66,17 @@ const MatchDetailPage = (props) => {
             {teams[0]?.membres.map((member) => (
               
               <Box style={{display: "flex",marginTop: '16px'}}>
-                <Avatar style={{backgroundColor: deepOrange[500],marginRight: "10px"}}>{member.firstName[0]}</Avatar>
+                {/* <Avatar style={{backgroundColor: deepOrange[500],marginRight: "10px"}}>{member.image}</Avatar> */}
+                <img style={{marginRight: "10px"}} width="50" height="50" src={member.image} alt="Member" />
                 <Typography style={{fontSize: "20px"}}>{member.firstName + " " + member.lastName}</Typography>
               </Box>
+              
             ))}
           </Box>
           <Box style={{display: "flex",flexDirection: "column",marginLeft: "130px"}}>
             {teams[1]?.membres?.map((member) => (
               <Box style={{display: "flex",marginTop: '16px'}}>
-                <Avatar style={{backgroundColor: deepOrange[500],marginRight: "10px"}}>{member.firstName[0]}</Avatar>
+                <Avatar style={{backgroundColor: deepOrange[500],marginRight: "10px",borderRadius:"32"}}>{member.image}</Avatar>
                 <Typography style={{fontSize: "20px"}}>{member.firstName + " " + member.lastName}</Typography>
               </Box>
             ))}
