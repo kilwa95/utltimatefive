@@ -103,7 +103,7 @@ router.post('/matchs', authJwt, onlyOrganizer, createMatch)
 router.get('/matchs/:mid', isMatchExist, getMatchById)
 router.put('/matchs/:mid', authJwt, onlyOrganizer, isMatchExist, updateMatch)
 router.delete('/matchs/:mid/players/:uid', authJwt, deletePlayerFromMatch)
-router.get('/matchs/player', authJwt, getAllMatchesPlayer)
+router.get('/matchs/player/list', authJwt, getAllMatchesPlayer)
 router.delete('/matchs/:mid', authJwt, onlyOrganizer, deleteMatch)
 router.post(
   '/matchs/:mid/join',

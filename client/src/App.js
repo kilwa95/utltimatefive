@@ -34,8 +34,8 @@ const App = () => {
                 />
                 <Route
                   exact
-                  path="/matches"
-                  name="matches"
+                  path="/matchsPlayer"
+                  name="matchsPlayer"
                   render={(props) => <MatchesplayerPage {...props} />}
                 />
                 <Route

@@ -46,7 +46,7 @@ const NavMenu = ({ searchQuery, setSearchQuery }) => {
   }
   const handleMatchesPlayers = () => {
     setAnchorEl(null)
-    history.push('/matches')
+    history.push('/matchsPlayer')
   }
   return (
     <Box sx={{ flexGrow: 1 }}>
