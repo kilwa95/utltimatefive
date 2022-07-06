@@ -232,7 +232,14 @@ exports.findMatchById = async (matchId) => {
         {
           model: User,
           as: 'players',
-          attributes: ['id', 'firstName', 'lastName', 'email', 'status'],
+          attributes: [
+            'id',
+            'firstName',
+            'lastName',
+            'email',
+            'status',
+            'image',
+          ],
           include: [
             {
               model: Team,
@@ -254,7 +261,14 @@ exports.findMatchById = async (matchId) => {
             {
               model: User,
               as: 'membres',
-              attributes: ['id', 'firstName', 'lastName', 'email', 'status'],
+              attributes: [
+                'id',
+                'firstName',
+                'lastName',
+                'email',
+                'status',
+                'image',
+              ],
             },
           ],
         },

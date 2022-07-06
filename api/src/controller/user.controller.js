@@ -79,7 +79,7 @@ exports.createPlayer = async (req, res) => {
       email: Helper.sqlescstr(email),
       password: Helper.sqlescstr(password),
       birthday: Helper.sqlescstr(birthday),
-      image: Helper.sqlescstr(image),
+      image: image,
       levelId: Helper.level.silverA,
       addressId: address.id,
       roles: ['player'],
