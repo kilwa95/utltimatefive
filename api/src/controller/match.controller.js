@@ -10,7 +10,7 @@ const {
   removePlayerFromMatch,
   findAllMatchesByPlayerId,
 } = require('../queries/match.queries')
-const { findUserById } = require('../queries/user.queries')
+const { findUserById, updatePlayerStatus } = require('../queries/user.queries')
 const {
   updateManyTeams,
   findAllTeams,
@@ -285,6 +285,7 @@ exports.deletePlayerFromMatch = async (req, res) => {
       matchId: parseInt(matchId),
       userId: parseInt(playerId),
     })
+    await updatePlayerStatus(playerId, 'created')
     if (match) {
       res.status(Helper.HTTP.OK).json({
         message: 'Match deleted',
