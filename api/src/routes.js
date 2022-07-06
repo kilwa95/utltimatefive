@@ -55,6 +55,7 @@ const {
   isTeamExist,
   joinTeamMember,
   leaveTeamMember,
+  getListTeamsByPlayerId,
 } = require('./controller/team.controller')
 const {
   getListSports,
@@ -102,7 +103,7 @@ router.post('/matchs', authJwt, onlyOrganizer, createMatch)
 router.get('/matchs/:mid', isMatchExist, getMatchById)
 router.put('/matchs/:mid', authJwt, onlyOrganizer, isMatchExist, updateMatch)
 router.delete('/matchs/:mid/players/:uid', authJwt, deletePlayerFromMatch)
-router.get('/matchs/player', authJwt, getAllMatchesPlayer)
+router.get('/matchs/player/list', authJwt, getAllMatchesPlayer)
 router.delete('/matchs/:mid', authJwt, onlyOrganizer, deleteMatch)
 router.post(
   '/matchs/:mid/join',
@@ -128,7 +129,8 @@ router.get('/teams/:tid', authJwt, onlyCaptiner, isTeamExist, getTeamById)
 router.put('/teams/:tid', authJwt, isSelfCaptiner, updateTeam)
 router.delete('/teams/:tid', authJwt, deleteTeam)
 router.post('/teams/:tid/join', authJwt, onlyPlayerOrOrganizer, joinTeamMember)
-router.delete('/teams/:tid/left', authJwt, onlyPlayer, leaveTeamMember)
+router.delete('/teams/:tid/leave', authJwt, onlyPlayer, leaveTeamMember)
+router.get('/teams/player/list', authJwt, getListTeamsByPlayerId)
 
 /**
  * API sports

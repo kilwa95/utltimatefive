@@ -5,6 +5,8 @@ import MatchCard from "../components/MatchCard";
 import { MatchContext } from "../contexts/MatchContext";
 import NavMenu from "../components/NavMenu";
 import { Select } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 const filterMatchs = (matches, query) => {
   if (!query) {
@@ -26,46 +28,37 @@ const MatchesPage = () => {
   return (
     <React.Fragment>
       <NavMenu searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-      <Container>
-        <Div direction="row" wrap="wrap" top="80px" width="100%">
-          <Div direction="row" top="80px" width="100%" alignItems="center">
-            <div
-              style={{
-                fontWeight: "500",
-                fontSize: "18px",
-                color: "#172C41",
-                width: "100%"
-              }}
-            >
-              touts les matches
-            </div>
-            {/* <Div direction="row" width="100%" alignItems="center">
-              <div style={{ marginRight: "10px" }}>Filter :</div>
-              <Select
-                style={{ width: "100px", marginRight: "10px" }}
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                label="Age"
-              />
-              <Select
-                style={{ width: "100px", marginRight: "10px" }}
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                label="Age"
-              />
-              <Select
-                style={{ width: "100px" }}
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                label="Age"
-              />
-            </Div> */}
+      {isLoading ? (
+        <Box
+          style={{ width: "100%", height: "100vh" }}
+          display="flex"
+          flexDirection="row"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <CircularProgress size={100} />
+        </Box>
+      ) : (
+        <Container>
+          <Div direction="row" wrap="wrap" top="80px" width="100%">
+            <Div direction="row" top="80px" width="100%" alignItems="center">
+              <div
+                style={{
+                  fontWeight: "500",
+                  fontSize: "18px",
+                  color: "#172C41",
+                  width: "100%"
+                }}
+              >
+                touts les matches
+              </div>
+            </Div>
+            {filteredMatchs.map((match) => (
+              <MatchCard key={match.id} isLoading={isLoading} match={match} />
+            ))}
           </Div>
-          {filteredMatchs.map((match) => (
-            <MatchCard key={match.id} isLoading={isLoading} match={match} />
-          ))}
-        </Div>
-      </Container>
+        </Container>
+      )}
     </React.Fragment>
   );
 };

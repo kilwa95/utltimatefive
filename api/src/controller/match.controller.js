@@ -9,6 +9,7 @@ const {
   findAllMatchesByUserId,
   removePlayerFromMatch,
   findAllMatchesByPlayerId,
+  findMatchByUserId,
 } = require('../queries/match.queries')
 const { findUserById, updatePlayerStatus } = require('../queries/user.queries')
 const {
@@ -308,8 +309,29 @@ exports.getAllMatchesPlayer = async (req, res) => {
   try {
     const playerId = req.decoded.id
     const matches = await findAllMatchesByPlayerId(playerId)
+    const matchesJSON = matches.map((match) => match.toJSON())
+
+    for (let i = 0; i < matchesJSON.length; i++) {
+      const matchId = matchesJSON[i].MatchId
+      matchesJSON[i].match = await findMatchById(matchId)
+    }
+    const data = matchesJSON.map((match) => {
+      return {
+        id: match.match.id,
+        address: match.match.address,
+        salle: match.match.salle,
+        price: match.match.price,
+        square: match.match.square,
+        slots: match.match.slots,
+        ville: match.match.ville,
+        date: match.match.date,
+        status: match.match.status,
+        players: [...match.match.players],
+        teams: [...match.match.teams],
+      }
+    })
     res.status(Helper.HTTP.OK).json({
-      matches: matches,
+      matches: data,
     })
   } catch (error) {
     console.error(error)

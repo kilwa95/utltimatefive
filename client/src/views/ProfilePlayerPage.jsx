@@ -11,14 +11,19 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Toast from "../components/toast";
-
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import teamsHttp from "../http/teamsHttp";
 
 const ProfilePlayerPage = () => {
+  const [ team, setTeam ] = useState({});
   const [ open, setOpen ] = useState(false);
   const [ color, setColor ] = useState("");
   const [ message, setMessage ] = useState("");
   const { token, user } = useContext(SecurityContext);
-  const { userCurrent, isLoading, getUserInfo, updateUser } = useContext(
+  const { userCurrent, isLoading, getUserInfo, updateUser,setIsLoading } = useContext(
     UserContext
   );
 
@@ -40,6 +45,12 @@ const ProfilePlayerPage = () => {
       [event.target.name]: event.target.value
     });
   };
+
+  const getListTeamsByUserId = async () => {
+    const reponse = await teamsHttp.getListTeamByPlayerId();
+    setTeam(reponse.data[0]);
+  };
+
   const _onSubmit =  async (event) => {
     event.preventDefault();
     const response = await updateUser(user.id, {
@@ -57,12 +68,31 @@ const ProfilePlayerPage = () => {
       setMessage("Votre profil a été mis à jour");
       setColor("success");
       setOpen(true);
+
     } else {
       setMessage("Une erreur est survenue");
       setColor("error");
       setOpen(true);
     }
   };
+
+  const leaveTeam = async (tid) => {
+    const response = await teamsHttp.leaveTeam(tid);
+    if (response.status === 200) {
+      setMessage("Vous avez quitté la team");
+      setColor("success");
+      setOpen(true);
+      setTeam({});
+    } else {
+      setMessage("Une erreur est survenue");
+      setColor("error");
+      setOpen(true);
+    }
+  }
+
+  useEffect(() => {
+    getListTeamsByUserId();
+  }, []);
 
   useEffect(() => {
     getUserInfo();
@@ -85,11 +115,17 @@ const ProfilePlayerPage = () => {
       <React.Fragment>
         <NavMenu />
         <Container maxWidth="md" sx={{ marginTop: "80px" }}>
-          <Card sx={{ width: "100%", padding: "24px" }}>
-            <Typography variant="h6" gutterBottom component="div">
-              My account
-            </Typography>
-            <Box
+
+        <Accordion >
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography>Mes informations</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Box
               component="form"
               onSubmit={_onSubmit}
               noValidate
@@ -181,7 +217,43 @@ const ProfilePlayerPage = () => {
                 </Button>
               </Box>
             </Box>
-          </Card>
+        </AccordionDetails>
+       </Accordion>
+       
+        <Accordion style={{marginTop: "24px",width: "100%"}}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography>Mon equibe</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Box display="flex" style={{width: "100%"}}>
+            <Box style={{width: "50%"}}>
+              <img  width="200"  src={team?.image} alt={team?.name} />
+            </Box>
+            <Box display="flex" flexDirection="column" justifyContent="center" style={{width: "50%"}}>
+              <Typography style={{textAlign: "center",marginBottom: "8px"}}>{team?.name}</Typography>
+              {
+              team?.name ? (
+              <Button
+              onClick={() => leaveTeam(team?.id)}
+              variant="contained"
+              color="error"
+              >
+              leave team
+              </Button>
+              ) : (
+              ''
+              )
+              }
+            </Box>
+          </Box>
+         
+        </AccordionDetails>
+       </Accordion>
+      
         </Container>
         <Toast message={message} color={color} open={open} setOpen={setOpen} />
       </React.Fragment>

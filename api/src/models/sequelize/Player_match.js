@@ -18,7 +18,11 @@ Match.belongsToMany(User, {
   as: 'players',
   onDelete: 'cascade',
 })
-User.belongsToMany(Match, { through: 'Player_match', onDelete: 'cascade' })
+User.belongsToMany(Match, {
+  through: 'Player_match',
+  as: 'matchsPlayers',
+  onDelete: 'cascade',
+})
 
 Player_match.sync({
   alter: true,

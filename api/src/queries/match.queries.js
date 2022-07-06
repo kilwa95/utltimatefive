@@ -140,63 +140,9 @@ exports.findAllMatchesByUserId = async (uid) => {
 
 exports.findAllMatchesByPlayerId = async (playerId) => {
   try {
-    return await Match.findAll({
-      attributes: [
-        'id',
-        'salle',
-        'status',
-        'ville',
-        'address',
-        'image',
-        'slots',
-        'square',
-        'price',
-      ],
-      include: [
-        {
-          model: User,
-          as: 'organizer',
-          attributes: ['id', 'firstName', 'lastName', 'email'],
-        },
-        {
-          model: Level,
-          as: 'level',
-          attributes: ['name'],
-        },
-        {
-          model: User,
-          as: 'players',
-          attributes: ['id', 'firstName', 'lastName', 'email', 'status'],
-          include: [
-            {
-              model: Team,
-              as: 'equibes',
-              attributes: ['name'],
-            },
-          ],
-        },
-        {
-          model: Team,
-          as: 'teams',
-          attributes: ['id', 'name', 'numberPlace'],
-          include: [
-            {
-              model: Level,
-              as: 'level',
-              attributes: ['name'],
-            },
-            {
-              model: User,
-              as: 'membres',
-              attributes: ['id', 'firstName', 'lastName', 'email'],
-            },
-          ],
-        },
-      ],
+    return await Player_match.findAll({
       where: {
-        players: {
-          [Op.contains]: [playerId],
-        },
+        UserId: playerId,
       },
     })
   } catch (error) {

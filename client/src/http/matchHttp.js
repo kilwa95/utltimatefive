@@ -13,7 +13,7 @@ const matchesHttp = {
     return result.data
   },
   getListMatchesPlayer: async function () {
-    const result = await axios.get(`${baseURL}/matchs/player`, {
+    const result = await axios.get(`${baseURL}/matchs/player/list`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },

@@ -158,3 +158,15 @@ exports.leaveTeam = async (data) => {
     console.error(error)
   }
 }
+
+exports.findAllTeamsByPlayerId = async (uid) => {
+  try {
+    return await Player_team.findAll({
+      where: {
+        UserId: uid,
+      },
+    })
+  } catch (error) {
+    console.error(error)
+  }
+}
