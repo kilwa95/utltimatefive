@@ -37,20 +37,11 @@ const MatchPage = () => {
           <CCardBody>
             <div className="d-flex justify-content-between">
               <div>Matchs</div>
-              <CButton onClick={toggle} color="primary">
-                add new match
-              </CButton>
             </div>
           </CCardBody>
         </CCard>
       </CRow>
-      <Modal
-        title={"add new user"}
-        description={"information user"}
-        buttonTitle={"save"}
-        modal={modal}
-        toggle={toggle}
-      ></Modal>
+
       {/* disply Users */}
       <CRow>
         <CCard>

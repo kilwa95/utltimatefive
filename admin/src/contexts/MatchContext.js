@@ -19,7 +19,7 @@ export default function MatchProvider({ children }) {
 
   const fields = [
     { key: "id" },
-    { key: "name" },
+    { key: "salle" },
     { key: "level" },
     { key: "status" },
     { key: "organizer" },

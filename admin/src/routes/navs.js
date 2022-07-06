@@ -8,10 +8,6 @@ const navs = [
     to: "/admin/matchs",
   },
   {
-    name: "Sports",
-    to: "/admin/sports",
-  },
-  {
     name: "Teams",
     to: "/admin/teams",
   },
