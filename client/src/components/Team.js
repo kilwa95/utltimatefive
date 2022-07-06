@@ -16,7 +16,7 @@ import {
   Button,
 } from '@mui/material'
 
-const Team = ({ team, isLoading }) => {
+const Team = ({ team, isLoading, teams, setPlayerAction }) => {
   const [membres, setMembres] = useState([])
   const { user } = useContext(SecurityContext)
   const history = useHistory()
@@ -27,6 +27,7 @@ const Team = ({ team, isLoading }) => {
     }
     const { data } = await teamsHttp.joinTeam(teamId)
     setMembres(data.dataJSON.membres)
+    setPlayerAction(true)
   }
 
   useEffect(() => {
@@ -95,7 +96,7 @@ const Team = ({ team, isLoading }) => {
                 <Button
                   disabled={
                     membres.map((m) => m.id).includes(user?.id) ||
-                    user?.teams.length > 0
+                    teams.length > 0
                       ? true
                       : false
                   }

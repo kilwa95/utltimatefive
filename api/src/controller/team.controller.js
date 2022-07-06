@@ -6,6 +6,7 @@ const {
   removeTeam,
   joinTeam,
   leaveTeam,
+  findAllTeamsByPlayerId,
 } = require('../queries/team.queries')
 const { findUserById } = require('../queries/user.queries')
 const Helper = require('../Helper')
@@ -189,6 +190,26 @@ exports.leaveTeamMember = async (req, res) => {
       })
     } else {
       res.status(Helper.HTTP.BAD_REQUEST).json({ message: 'Leave team failed' })
+    }
+  } catch (error) {
+    console.error(error)
+    res.status(Helper.HTTP.SERVER_ERROR).json(error)
+  }
+}
+
+exports.getListTeamsByPlayerId = async (req, res) => {
+  try {
+    const uid = parseInt(req.decoded.id)
+    const teams = await findAllTeamsByPlayerId(uid)
+    if (teams) {
+      res.status(Helper.HTTP.OK).json({
+        message: 'Get list teams success',
+        data: teams,
+      })
+    } else {
+      res
+        .status(Helper.HTTP.BAD_REQUEST)
+        .json({ message: 'Get list teams failed' })
     }
   } catch (error) {
     console.error(error)

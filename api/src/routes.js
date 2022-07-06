@@ -55,6 +55,7 @@ const {
   isTeamExist,
   joinTeamMember,
   leaveTeamMember,
+  getListTeamsByPlayerId,
 } = require('./controller/team.controller')
 const {
   getListSports,
@@ -129,6 +130,7 @@ router.put('/teams/:tid', authJwt, isSelfCaptiner, updateTeam)
 router.delete('/teams/:tid', authJwt, deleteTeam)
 router.post('/teams/:tid/join', authJwt, onlyPlayerOrOrganizer, joinTeamMember)
 router.delete('/teams/:tid/left', authJwt, onlyPlayer, leaveTeamMember)
+router.get('/teams/player/list', authJwt, getListTeamsByPlayerId)
 
 /**
  * API sports
