@@ -45,10 +45,10 @@ services:
       dockerfile: Dockerfile.dev
     environment:
       EMAIL: "khaled.abdulhalim.pro@gmail.com"
-      REFRESH_TOKEN: "1//04agyJcY7Hk-VCgYIARAAGAQSNwF-L9Irr4zWZeAq2SA3nTb8vL14HlSlGPy3CnjR8G1pRbNCTJTas1t49coRX0N8Hx56xnmkmMM"
-      CLIENT_ID: "767730596196-2iqulqj82oa904dm0174ul68v0b209kc.apps.googleusercontent.com"
-      CLIENT_SECRET: "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"
-      access_token: ya29.A0ARrdaM8nOQK293P_OJJA5uzrSOmKFY-Yek1yRtki5Wn2luykgD5D1cfEfkYVeonBYORqc--w9droV30mYboIDdbzbCHjRHkzdSMkUduK7__w3m-2rchlzIVI34fj8b89yZSl95XxOfJJyFHYUPdmNfhRqWJZYUNnWUtBVEFTQVRBU0ZRRl91NjFWbGtWN0hPWnBuMTkwNERWZW1sYkJTZw0163
+      REFRESH_TOKEN: "1//04zg9wISHAtDKCgYIARAAGAQSNwF-L9Ir3QmfUIw5I2tgRybQ9dLBzg5a8bKdq-edyuUzPCpCWytb_ONUs92ewb6-mzf2XUMVpv0"
+      CLIENT_ID: "386993347289-54t0r3l2rjflao31kd7dsg50l7lk6obs.apps.googleusercontent.com"
+      CLIENT_SECRET: "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"
+      access_token: ya29.a0AVA9y1tIv1o3pCtzvRLDCjmKDXpibnQYZ26BEXY-BtiXvvSW2XJblreLBWdmGTQpn-pJPsICkz69Kpn2qIbBz1haBRilXwklmRtb7cCdc6edo2IyZ5-D-32eEo3hFlL-ek9qE79OcCva0i0JTYnNE0vrf9WO
       PORT: 4000
       MONGO_URL: "mongodb://root:password@mongo/app"
       DATABASE_URL: "postgres://root:password@db/app"
